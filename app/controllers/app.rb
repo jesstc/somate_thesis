@@ -4,7 +4,7 @@ require 'roda'
 require 'html'
 require 'yaml'
 
-module MentalHealth
+module SoMate
   # Web App
   class App < Roda
     plugin :render, engine: 'html.erb', views: 'app/views'
@@ -34,6 +34,12 @@ module MentalHealth
         routing.is do
           # POST /index/
           routing.post do
+            # load testing data
+            if ENV['RACK_ENV'] == "development"
+              SoMate::InitializeDatabase::Create.load
+            end
+            
+            binding.irb
             account = routing.params['account']
             user = Database::UserOrm.where(account: account).first
             routing.redirect "index/#{user.url}"

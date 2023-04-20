@@ -6,7 +6,7 @@ require 'figaro'
 require 'sequel'
 require 'pry'
 
-module MentalHealth
+module SoMate
   # Configuration for the App
   class App < Roda
     plugin :environments

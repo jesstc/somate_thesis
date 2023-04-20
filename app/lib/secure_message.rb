@@ -3,7 +3,7 @@
 require 'base64'
 require 'rbnacl'
 
-module MentalHealth
+module SoMate
   class SecureMessage
     def self.encoded_random_bytes(length)
       bytes = RbNaCl::Random.random_bytes(length)

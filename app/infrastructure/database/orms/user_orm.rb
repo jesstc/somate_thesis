@@ -2,12 +2,12 @@
 
 require 'sequel'
 
-module MentalHealth
+module SoMate
   module Database
     # Object-Relational Mapper for Users
     class UserOrm < Sequel::Model(:users)
       one_to_many :owned_records,
-                  class: :'MentalHealth::Database::RecordOrm',
+                  class: :'SoMate::Database::RecordOrm',
                   key:   :owner_id
 
       plugin :timestamps, update_on_create: true

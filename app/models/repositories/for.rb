@@ -5,7 +5,7 @@ require_relative 'records'
 require_relative 'answers'
 
 
-module MentalHealth
+module SoMate
   module Repository
     # Finds the right repository for an entity object or class
     module For

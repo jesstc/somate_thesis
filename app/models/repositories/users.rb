@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module MentalHealth
+module SoMate
   module Repository
     # Repository for Users
     class Users

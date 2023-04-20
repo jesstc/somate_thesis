@@ -5,7 +5,7 @@ require 'dry-struct'
 
 require_relative 'user'
 
-module MentalHealth
+module SoMate
   module Entity
     # Domain entity for record
     class Record < Dry::Struct

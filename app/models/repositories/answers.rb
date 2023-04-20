@@ -2,7 +2,7 @@
 
 require_relative 'records'
 
-module MentalHealth
+module SoMate
   module Repository
     # Repository for Answer Entities
     class Answers

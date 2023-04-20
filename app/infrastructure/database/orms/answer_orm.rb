@@ -2,12 +2,12 @@
 
 require 'sequel'
 
-module MentalHealth
+module SoMate
   module Database
     # Object Relational Mapper for Answer
     class AnswerOrm < Sequel::Model(:answers)
       many_to_one :recordbook,
-                  class: :'MentalHealth::Database::RecordOrm'
+                  class: :'SoMate::Database::RecordOrm'
 
       plugin :timestamps, update_on_create: true
     end

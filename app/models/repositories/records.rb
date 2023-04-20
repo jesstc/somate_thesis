@@ -2,7 +2,7 @@
 
 require_relative 'users'
 
-module MentalHealth
+module SoMate
   module Repository
     # Repository for Record Entities
     class Records

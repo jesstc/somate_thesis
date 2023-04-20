@@ -5,7 +5,7 @@ require 'dry-struct'
 
 require_relative 'record'
 
-module MentalHealth
+module SoMate
   module Entity
     # Domain entity for answer
     class Answer < Dry::Struct

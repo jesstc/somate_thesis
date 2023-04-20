@@ -3,7 +3,7 @@
 require 'dry-types'
 require 'dry-struct'
 
-module MentalHealth
+module SoMate
   module Entity
     # Domain entity for users
     class User < Dry::Struct

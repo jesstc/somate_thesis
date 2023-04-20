@@ -4,7 +4,7 @@ USER_FILE = YAML.safe_load(File.read('app/infrastructure/database/local/user.yml
 RECORD_FILE = YAML.safe_load(File.read('app/infrastructure/database/local/record.yml'))
 ANSWER_FILE = YAML.safe_load(File.read('app/infrastructure/database/local/answer.yml'))
 
-module MentalHealth
+module SoMate
   module InitializeDatabase
     # InitializeDatabase for Create original data
     class Create

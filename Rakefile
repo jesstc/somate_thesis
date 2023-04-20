@@ -40,14 +40,14 @@ namespace :db do
     require_relative 'config/environment' # load config info
     require_relative 'spec/helpers/database_helper'
     
-    def app() = MentalHealth::App
+    def app() = SoMate::App
   end
 
   desc 'Run migrations'
   task migrate: :config do
     Sequel.extension :migration
     puts "Migrating #{app.environment} database to latest"
-    puts "Need to run 'MentalHealth::InitializeDatabase::Create.load'"
+    puts "Need to run 'SoMate::InitializeDatabase::Create.load'"
     Sequel::Migrator.run(app.DB, 'app/infrastructure/database/migrations')
   end
 
@@ -67,15 +67,10 @@ namespace :db do
       puts 'Do not damage production database!'
       return
     end
-
-    FileUtils.rm(MentalHealth::App.config.DB_FILENAME)
-    puts "Deleted #{MentalHealth::App.config.DB_FILENAME}"
+    
+    FileUtils.rm(SoMate::App.config.DB_FILENAME)
+    puts "Deleted #{SoMate::App.config.DB_FILENAME}"
   end
-end
-
-desc 'Run application console'
-task :console do
-  sh 'pry -r ./init'
 end
 
 namespace :vcr do
