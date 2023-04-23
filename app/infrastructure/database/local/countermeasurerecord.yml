@@ -1,0 +1,13 @@
+---
+- is_try: true
+  selected_content: "有幫助"
+- is_try: true
+  selected_content: "沒有幫助"
+- is_try: true
+  selected_content: "不太確定"
+- is_try: false
+  selected_content: "我不太清楚怎麼執行"
+- is_try: false
+  selected_content: "我現在剛好沒有時間"
+- is_try: false
+  selected_content: "我覺得不太需要"

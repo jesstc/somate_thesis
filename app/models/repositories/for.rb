@@ -10,6 +10,8 @@ module SoMate
     # Finds the right repository for an entity object or class
     module For
       ENTITY_REPOSITORY = {
+        Entity::Countermeasure => Countermeasures,
+        Entity::CountermeasureRecord => CountermeasureRecords,
         Entity::Answer => Answers,
         Entity::Record => Records,
         Entity::User => Users
