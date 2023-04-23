@@ -82,10 +82,6 @@
 
   <script>
     $(document).ready(function() {
-      if(<%= !user.is_guided %>) {  // 如果是對照組，hide實驗組題目
-          $(".guide").hide()
-      }
-
       // 把 ansers 存入 1~7 的答案
       const answers = <%= answers %>;
       answers.forEach((content, index) => {

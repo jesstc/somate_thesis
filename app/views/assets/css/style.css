@@ -247,7 +247,7 @@ h2 {
 }
 .count-down span em {
     background: #3e4044;
-    animation-duration: 60s;
+    animation-duration: 40s;
     border-radius: 999999999px;
     position: absolute;
     width: 100%;

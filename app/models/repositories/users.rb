@@ -23,7 +23,6 @@ module SoMate
           id:        db_record.id,
           account:   db_record.account,
           url:       db_record.url,
-          is_guided: db_record.is_guided
         )
       end
 

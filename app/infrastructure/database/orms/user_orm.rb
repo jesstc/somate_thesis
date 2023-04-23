@@ -7,8 +7,8 @@ module SoMate
     # Object-Relational Mapper for Users
     class UserOrm < Sequel::Model(:users)
       one_to_many :owned_records,
-                  class: :'SoMate::Database::RecordOrm',
-                  key:   :owner_id
+      class: :'SoMate::Database::RecordOrm',
+      key:   :owner_id
 
       plugin :timestamps, update_on_create: true
 

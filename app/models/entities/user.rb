@@ -12,7 +12,6 @@ module SoMate
       attribute :id,        Integer.optional
       attribute :account,   Strict::String
       attribute :url,       Strict::String
-      attribute :is_guided, Strict::Bool
 
       def to_attr_hash
         to_hash.reject { |key, _| [:id].include? key }

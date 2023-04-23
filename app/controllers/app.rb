@@ -39,7 +39,6 @@ module SoMate
               SoMate::InitializeDatabase::Create.load
             end
             
-            binding.irb
             account = routing.params['account']
             user = Database::UserOrm.where(account: account).first
             routing.redirect "index/#{user.url}"
@@ -92,7 +91,7 @@ module SoMate
             user = session[:watching]
             if user != nil
               record = Database::RecordOrm.create(access_time: 0, owner_id: session[:watching].id, fill_time: routing.params["fill_time"])
-              num = user.is_guided ? 7 : 3 #題數
+              num = 7 #題數
               (1..num).each { |i| Database::AnswerOrm.create(recordbook_id: record.id, question_num: i, answer_content: routing.params["#{i}"])}
             end
             routing.redirect "form_complete/#{user.url}}"

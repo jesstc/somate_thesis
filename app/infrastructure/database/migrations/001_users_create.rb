@@ -9,7 +9,6 @@ Sequel.migration do
 
       String   :account, unique: true
       String   :url, unique: true
-      Boolean  :is_guided, null: false
 
       DateTime :created_at
       DateTime :updated_at
