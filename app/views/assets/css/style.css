@@ -23,26 +23,123 @@
     margin-top: 35%;
 }
 
+/* ============================ text style start ============================ */
+
 .font {
-    font-family: Roboto;
+    font-family: 'Noto Sans';
     font-style: normal;
-    font-weight: bold;
+    font-weight: 700;
+    color: #484848;
 }
 
 h1 {
     font-size: 40px;
-    line-height: 47px;
+    line-height: 54px;
     letter-spacing: -0.02em;
-    color: #484848;
 }
 
 h2 {
     font-size: 24px;
-    line-height: 28px;
+    line-height: 150%;
     letter-spacing: -0.02em;
-    color: #2A868C;
-    text-align: center;
 }
+
+h3 {
+    font-size: 18px;
+    line-height: 29px;
+    letter-spacing: -0.02em;
+}
+
+.content {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+}
+
+.big-btn-string {
+    font-size: 30px;
+    line-height: 41px;
+    letter-spacing: 0.05em;
+}
+
+.small-btn-string {
+    font-size: 20px;
+    line-height: 27px;
+    letter-spacing: 0.05em;
+}
+
+.content-hieght {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+}
+
+.remark-string {
+    font-size: 13px;
+    line-height: 18px;
+}
+
+/* ============================ text style end ============================ */
+
+/* ============================ meditation start ============================ */
+
+.meditation-bottom-card {
+    background-color: white;
+    width: 100%;
+    margin-top: 15%;
+    overflow: hidden;
+    height: 31.5%; 
+    padding: 0px; 
+    padding-top: 50px; 
+    position: absolute; 
+    bottom: 0px;
+}
+
+/* ============================ meditation end ============================ */
+
+
+/* ============================ component start ============================ */
+
+.btn {
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 12px 27px;
+
+    background: #2A868C;
+    border: 1px solid #2A868C;
+    border-radius: 50px;
+    color: white;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.btn-second {
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 12px 27px;
+
+    background: #D4E7E8;
+    border: 1px solid #2A868C;
+    border-radius: 50px;
+    color: #2A868C;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+/* ============================ component end ============================ */
+
 
 .start_btn {
     background-color: #2A868C;

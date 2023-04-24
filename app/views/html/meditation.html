@@ -12,22 +12,22 @@
     <body class="meditation_body">
         <div class="container-fluid">
             <div class="col-12 up-container" align="center">
-                <h2 class="font start_msg" style="color: #484848; padding-top: 201px;">
+                <h2 class="font start_msg" style="padding-top: 20%;">
                     請找一個安靜的地方<br><br>
                     閉上眼睛，穩定呼吸，<br>
-                    想一下今天在 IG 上發生的事</h2>
+                    想一想今天在 IG 上發生的事</h2>
             </div>
             
-            <div class="col-12 font bottom_card" style="height: 31.5%; padding: 0px; padding-top: 61px;" align="center">
-                <input class="btn_click" type="button" value="開始冥想">
-                <h2 class="font" style="font-size: 18px; margin-top: 13px;">可以開啟聲音以幫助冥想</h2>
+            <div class="col-12 font meditation-bottom-card" align="center">
+                <input class="btn big-btn-string font" type="button" value="開始冥想">
+                <h3 class="font" style="margin-top: 13px;">請開啟聲音以幫助冥想</h3>
             </div>
         </div>
 
         <script>
-            $(".btn_click").click(function() {
+            $(".btn").click(function() {
                 $(this).next().hide();
-                $(this).replaceWith("<h2 class='font'>閉上眼睛 ...<br><br>保持穩定呼吸 ...</h2>")
+                $(this).replaceWith("<h2 class='font'>閉上眼睛 ...<br>保持穩定呼吸 ...</h2>")
                 // replace text with count down clock
                 const clock = `<div class="count-down">
                                     <span class="spanA">
@@ -65,7 +65,7 @@
                     // display finish img
                     $(".up-container").html("<img src='../public/finish_mediation.png' width='279px'>");
                     // replace bottom card as btn
-                    $(".bottom_card").html('<a href="form.html"><input class="form_btn" type="button" value="前往紀錄"></a>');
+                    $(".meditation-bottom-card").html('<a href="form.html"><input class="btn big-btn-string font" type="button" value="前往紀錄"></a>');
                 }
             }
         </script>
