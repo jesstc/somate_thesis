@@ -1,4 +1,6 @@
 .container-fluid {
+    min-height: 100vh;
+    height: auto;
     padding-right: 0px;
     margin-right: 0px;
     padding-left: 0px;
@@ -30,6 +32,7 @@
     font-style: normal;
     font-weight: 700;
     color: #484848;
+    margin: 0px;
 }
 
 h1 {
@@ -51,7 +54,7 @@ h3 {
 }
 
 .content {
-    font-weight: 500;
+    font-weight: 400;
     font-size: 18px;
     line-height: 25px;
 }
@@ -97,6 +100,148 @@ h3 {
 
 /* ============================ meditation end ============================ */
 
+/* ============================ form start ================================ */
+
+.form-top {
+    background-color: #2A868C;
+    color: white;
+    
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 48px 24px 32px;
+    gap: 32px;
+    
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.form-qnumber {
+    color: #AACFD1;
+    margin-bottom: 16px;
+}
+
+.form-qtitle {
+    color: white;
+}
+
+.form-progress-line-frame {
+    height: 0px;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.form-progress-line-progress {
+    height: 0px;
+    border: 3px solid #AACFD1;
+    margin: 0px;
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.form-progress-line-leave {
+    height: 0px;
+    border: 3px solid #146368;
+    margin: 0px;
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 1;
+}
+
+.form-q-d {
+    width: 88vw; 
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 12px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+form {
+    height: 100%;
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 48px 24px 0px 24px;
+
+    background: #D4E7E8;
+}
+
+.form-content {
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 16px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.q1-div {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 85px 16px;
+}
+
+.ans-text {
+    border: none; /* 取消邊框 */
+    border-bottom: 2px solid #484848; 
+    background-color: #D4E7E8; 
+    padding: 3px;
+    width: 80px;
+    text-align: center;
+}
+
+.form-footer {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 17px 0px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+/* ============================ form end =================================== */
 
 /* ============================ component start ============================ */
 
@@ -119,6 +264,10 @@ h3 {
     flex-grow: 0;
 }
 
+.btn:hover {
+    color: white;
+}
+
 .btn-second {
     box-sizing: border-box;
 
@@ -128,7 +277,7 @@ h3 {
     padding: 12px 27px;
 
     background: #D4E7E8;
-    border: 1px solid #2A868C;
+    border: 2px solid #2A868C;
     border-radius: 50px;
     color: #2A868C;
 
@@ -137,6 +286,42 @@ h3 {
     order: 0;
     flex-grow: 0;
 }
+
+.info-alert {
+    width: 88vw; 
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 12px 16px;
+
+    background: #D4E7E8;
+    border-radius: 10px;
+}
+
+.info-content {
+    width: 100%;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+    gap: 12px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 1;
+}
+
+.info-extend {
+    align-items: flex-start;
+    flex-grow: 0;
+}
+
+
 
 /* ============================ component end ============================ */
 
@@ -443,10 +628,6 @@ hr {
     letter-spacing: -0.02em;
     padding-left: 30px;
     padding-top: 30px;
-}
-
-#form_answers {
-    margin-bottom: 3%;
 }
 
 /* form complete page */

@@ -74,12 +74,29 @@ module SoMate
         end
       end
 
+      # questionnaire - question 1
       routing.on 'form' do
         routing.on String do |account|
           # GET /form/#{account}
           routing.get do
             user = session[:watching]
             view 'form', engine: 'html.erb', locals: { account: user.url, user: user }
+          end
+        end
+      end
+
+      # questionnaire - question 2
+      routing.on 'form_2' do
+        routing.on String do |account|
+          # POST /form_2/#{account}
+          routing.post do
+            user = session[:watching]
+
+            if user != nil
+              binding.irb
+            end
+
+            view 'form_2', engine: 'html.erb', locals: { account: user.url, user: user, fill_time: routing.params["fill_time"], q1_ans: outing.params["1"]}
           end
         end
       end

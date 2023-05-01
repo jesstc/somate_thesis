@@ -149,6 +149,18 @@
                 else if (!confirm("確認繳交？")) return false;
                 else return true;
             });
+
+            // hide or show the information alert div
+            $(function() {
+                $("#info-default").click(function() {
+                    $("#info-default").hide();
+                    $("#info-extend").show();
+                });
+                $("#info-extend").click(function() {
+                    $("#info-extend").hide();
+                    $("#info-default").show();
+                });
+            });
         </script>
     </body>
 </html>
