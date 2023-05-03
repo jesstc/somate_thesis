@@ -130,6 +130,7 @@ h3 {
 }
 
 .form-progress-line-frame {
+    width: 88vw;
     height: 0px;
 
     /* Auto layout */
@@ -156,6 +157,7 @@ h3 {
 }
 
 .form-progress-line-leave {
+    width: 0;
     height: 0px;
     border: 3px solid #146368;
     margin: 0px;
@@ -211,10 +213,21 @@ form {
 .q1-div {
     /* Auto layout */
     display: flex;
-    flex-direction: row;
+    flex-direction: row; 
     justify-content: space-between;
     align-items: flex-end;
     padding: 85px 16px;
+}
+
+.q-div {
+    width:100%;
+
+    /* Auto layout */
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column; 
+    padding: 0px 0px 32px 0px; 
+    gap: 16px;
 }
 
 .ans-text {
@@ -239,6 +252,91 @@ form {
     order: 1;
     align-self: stretch;
     flex-grow: 0;
+}
+
+.select-option {
+    box-sizing: border-box;
+    padding: 18px 16px;
+    border: 2px solid #2A868C;
+    border-radius: 10px;
+    margin: 0px;
+}
+
+.select-option > input {
+    display: none;
+}
+
+.select-option > label > p {
+    color: #2A868C;
+    margin: 0px;
+}
+
+.select-option > label > p > .other-text {
+    width: 100%;
+    border: none; /* 取消邊框 */
+    border-bottom: 2px solid #2A868C; 
+    color: #2A868C;
+    background-color: #D4E7E8; 
+    padding: 3px;
+    text-align: left;
+}
+
+.select-option-extend {
+    background-color: #2A868C;
+}
+
+.select-option-extend > label > p {
+    color: white;
+}
+
+.select-option-extend > label > p > .other-text {
+    border-bottom: 2px solid white; 
+    color: white;
+    background-color: #2A868C; 
+}
+
+.sub-select-option {
+    box-sizing: border-box;
+    padding: 18px 16px;
+    border: 2px solid #2A868C;
+    border-radius: 10px;
+}
+
+.sub-select-option-extend {
+    background-color: #2A868C;
+}
+
+.sub-select-option-extend > .sub-select-option-title > p {
+    color: white;
+}
+
+.sub-select-option-title {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sub-select-option-title > p {
+    color: #2A868C;
+}
+
+.sub-select-option-content {
+    margin-right: 18px;
+    padding-top: 10px;
+}
+
+.sub-select-option-content > input {
+    width: 18px;
+    height: 18px;
+    border: 2px solid white;
+    border-radius: 2px;
+}
+
+.sub-select-option-content > label > h3 {
+    color: white;
+    margin: 0px;
 }
 
 /* ============================ form end =================================== */
@@ -317,6 +415,7 @@ form {
 }
 
 .info-extend {
+    justify-content: flex-start;
     align-items: flex-start;
     flex-grow: 0;
 }

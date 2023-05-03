@@ -40,11 +40,11 @@
         <!-- Selections -->
         <form role="form" id="form_answers" method="POST" action="/form_2/<%= account %>">
             <div class="form-content">
-                <div class="q1-div" style="flex-direction: row;">
-                    <h1><input class="ans-text" name="1_hour" type="number" value="0" autofocus></h1>
+                <div class="q1-div">
+                    <h1><input class="ans-text" name="1_hour" type="number" value="<%= q1_hours %>" autofocus></h1>
                     <h3 class="font">&nbsp;小時</h3>
                     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                    <h1><input class="ans-text" name="1_min" type="number" value="0"></h1>
+                    <h1><input class="ans-text" name="1_min" type="number" value="<%= q1_mins %>"></h1>
                     <h3 class="font">&nbsp;分鐘</h3>
                 </div>
             </div>
@@ -93,11 +93,11 @@
             if (hours == 0 && mins == 0) {
                 alert("請填寫您的 IG 使用時間！");
                 return false;
-            } else if (hours >= 0 && mins >= 0) {
+            } else if (hours >= 0 && mins >= 0 && hours <= 24 && mins <= 60) {
                 var q1_ans = hours*60 + mins;
                 $(".q1_ans").val(q1_ans);
             } else {
-                alert("請輸入大於零的整數！");
+                alert("請輸入大於零的整數，且輸入的小時數與分鐘數必須為合理數值！");
                 return false;
             }
 

@@ -80,7 +80,7 @@ module SoMate
           # GET /form/#{account}
           routing.get do
             user = session[:watching]
-            view 'form', engine: 'html.erb', locals: { account: user.url, user: user }
+            view 'form', engine: 'html.erb', locals: { account: user.url, user: user, fill_time: 0, q1_hours: 0, q1_mins: 0 }
           end
         end
       end
@@ -92,11 +92,34 @@ module SoMate
           routing.post do
             user = session[:watching]
 
-            if user != nil
-              binding.irb
+            view 'form_2', engine: 'html.erb', locals: { account: user.url, user: user, fill_time: routing.params["fill_time"], q1_ans: routing.params["1"]}
+          end
+        end
+      end
+
+      # questionnaire - question 3
+      routing.on 'form_3' do
+        routing.on String do |account|
+          # POST /form_2/#{account}
+          routing.post do
+            user = session[:watching]
+
+            # Q2 ans string
+            q2_ans = ""
+            routing.params["q2_ans"].each_with_index do |ans, index|
+              if index !=0
+                q2_ans += "|"
+              end
+              q2_ans += ans
             end
 
-            view 'form_2', engine: 'html.erb', locals: { account: user.url, user: user, fill_time: routing.params["fill_time"], q1_ans: outing.params["1"]}
+            view 'form_3', engine: 'html.erb', locals: { 
+              account: user.url, 
+              user: user, 
+              fill_time: routing.params["fill_time"], 
+              q1_ans: routing.params["1"], 
+              q2_ans: q2_ans
+            }
           end
         end
       end
