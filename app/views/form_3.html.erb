@@ -3,21 +3,21 @@
         <!-- Form Question & Title -->
         <div class="form-top">
             <div style="width: 88vw;">
-                <h2 class="form-qnumber font">第二題</h2>
+                <h2 class="form-qnumber font">第三題</h2>
                 <div class="form-progress-line-frame">
-                    <hr class="form-progress-line-progress" style="width: 72px;">
+                    <hr class="form-progress-line-progress" style="width: 108px;">
                     <hr class="form-progress-line-leave">
                 </div>
             </div>
 
             <div class="form-q-d">
-                <h2 class="form-qtitle font">你/妳今天在哪些時段使用 IG？（可複選）</h2>
+                <h2 class="form-qtitle font">你/妳今天在使用 IG 時做了哪些事情？（可複選）</h2>
                 <!-- info alert -->
                 <div id="info-default" class="info-alert">
                     <div class="info-content info-default">
                         <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 12px;">
                             <img src="/information-icon.png" width="25px">
-                            <p class="font content">早上、下午、晚上的時間區間</p>
+                            <p class="font content">朋友與其他人的定義</p>
                         </div>
                         <img src="/arrow-down.png" width="25px">
                     </div>
@@ -26,11 +26,9 @@
                     <div class="info-content info-extend">
                         <img src="/information-icon.png" width="25px">
                         <div class="font content">
-                            時間區間：<br>
                             <ul style="margin: 0px;">
-                                <li>早上：6:00~11:59</li>
-                                <li>下午：12:00~17:59</li>
-                                <li>晚上：18:00~</li>
+                                <li><b>朋友：</b>指的是你在 IG 上有追蹤的帳號（如：現實生活中的朋友、網紅、藝人等）。</li>
+                                <li><b>其他人：</b>指的是你沒有追蹤的帳號（如：出現在放大鏡的貼文帳號）。</li>
                             </ul>
                         </div>
                     </div>
@@ -39,131 +37,61 @@
         </div>
 
         <!-- Selections -->
-        <form role="form" id="form_answers" method="POST" action="/form_3/<%= account %>">
+        <form role="form" id="form_answers" method="POST" action="/form_4/<%= account %>">
             <div class="form-content">
                 <div class="q-div">
 
                     <div class="form-check form-check-inline select-option">
-                        <input class="form-check-input" type="checkbox" id="option-wakeup" name="q2_ans" value="早上起床後 15 分鐘內">
-                        <label class="form-check-label font small-btn-string" for="option-wakeup"><p>早上起床後 15 分鐘內<p></label>
-                    </div>
-
-                    <div class="sub-select-option">
-                        <div class="sub-select-option-title">
-                            <p class="font small-btn-string">吃飯時</p>
-                            <img class="close-img" src="/arrow-down.png" width="25px">
-                            <img class="extend-img" src="/arrow-up.png" style="display: none;" width="25px">
-                        </div>
-                        <div class="form-check form-check-inline sub-select-option-content" style="display: none;">
-                            <input class="form-check-input" type="checkbox" id="option-eat-breakfast" name="q2_ans" value="吃早餐時">
-                            <label class="form-check-label font" for="option-eat-breakfast"><h3>早餐</h3></label>
-                        </div>
-                        <div class="form-check form-check-inline sub-select-option-content" style="display: none;">
-                            <input class="form-check-input" type="checkbox" id="option-eat-lunch" name="q2_ans" value="吃午餐時">
-                            <label class="form-check-label font" for="option-eat-lunch"><h3>午餐</h3></label>
-                        </div>
-                        <div class="form-check form-check-inline sub-select-option-content" style="display: none;">
-                            <input class="form-check-input" type="checkbox" id="option-eat-dinner" name="q2_ans" value="吃晚餐時">
-                            <label class="form-check-label font" for="option-eat-dinner"><h3>晚餐</h3></label>
-                        </div>
-                    </div>
-
-                    <div class="sub-select-option">
-                        <div class="sub-select-option-title">
-                            <p class="font small-btn-string">上廁所時</p>
-                            <img class="close-img" src="/arrow-down.png" width="25px">
-                            <img class="extend-img" src="/arrow-up.png" style="display: none;" width="25px">
-                        </div>
-                        <div class="form-check form-check-inline sub-select-option-content" style="display: none;">
-                            <input class="form-check-input" type="checkbox" id="option-toilet-morning" name="q2_ans" value="早上上廁所時">
-                            <label class="form-check-label font" for="option-toilet-morning"><h3>早上</h3></label>
-                        </div>
-                        <div class="form-check form-check-inline sub-select-option-content" style="display: none;">
-                            <input class="form-check-input" type="checkbox" id="option-toilet-afternoon" name="q2_ans" value="下午上廁所時">
-                            <label class="form-check-label font" for="option-toilet-afternoon"><h3>下午</h3></label>
-                        </div>
-                        <div class="form-check form-check-inline sub-select-option-content" style="display: none;">
-                            <input class="form-check-input" type="checkbox" id="option-toilet-evening" name="q2_ans" value="晚上上廁所時">
-                            <label class="form-check-label font" for="option-toilet-evening"><h3>晚上</h3></label>
-                        </div>
-                    </div>
-
-                    <div class="sub-select-option">
-                        <div class="sub-select-option-title">
-                            <p class="font small-btn-string">工作/讀書時</p>
-                            <img class="close-img" src="/arrow-down.png" width="25px">
-                            <img class="extend-img" src="/arrow-up.png" style="display: none;" width="25px">
-                        </div>
-                        <div class="form-check form-check-inline sub-select-option-content" style="display: none;">
-                            <input class="form-check-input" type="checkbox" id="option-workstudy-morning" name="q2_ans" value="早上工作/讀書時">
-                            <label class="form-check-label font" for="option-workstudy-morning"><h3>早上</h3></label>
-                        </div>
-                        <div class="form-check form-check-inline sub-select-option-content" style="display: none;">
-                            <input class="form-check-input" type="checkbox" id="option-workstudy-afternoon" name="q2_ans" value="下午工作/讀書時">
-                            <label class="form-check-label font" for="option-workstudy-afternoon"><h3>下午</h3></label>
-                        </div>
-                        <div class="form-check form-check-inline sub-select-option-content" style="display: none;">
-                            <input class="form-check-input" type="checkbox" id="option-workstudy-evening" name="q2_ans" value="晚上工作/讀書時">
-                            <label class="form-check-label font" for="option-workstudy-evening"><h3>晚上</h3></label>
-                        </div>
-                    </div>
-
-                    <div class="sub-select-option">
-                        <div class="sub-select-option-title">
-                            <p class="font small-btn-string">通勤時</p>
-                            <img class="close-img" src="/arrow-down.png" width="25px">
-                            <img class="extend-img" src="/arrow-up.png" style="display: none;" width="25px">
-                        </div>
-                        <div class="form-check form-check-inline sub-select-option-content" style="display: none;">
-                            <input class="form-check-input" type="checkbox" id="option-transportation-morning" name="q2_ans" value="早上通勤時">
-                            <label class="form-check-label font" for="option-transportation-morning"><h3>早上</h3></label>
-                        </div>
-                        <div class="form-check form-check-inline sub-select-option-content" style="display: none;">
-                            <input class="form-check-input" type="checkbox" id="option-transportation-afternoon" name="q2_ans" value="下午通勤時">
-                            <label class="form-check-label font" for="option-transportation-afternoon"><h3>下午</h3></label>
-                        </div>
-                        <div class="form-check form-check-inline sub-select-option-content" style="display: none;">
-                            <input class="form-check-input" type="checkbox" id="option-transportation-evening" name="q2_ans" value="晚上通勤時">
-                            <label class="form-check-label font" for="option-transportation-evening"><h3>晚上</h3></label>
-                        </div>
-                    </div>
-
-                    <div class="sub-select-option">
-                        <div class="sub-select-option-title">
-                            <p class="font small-btn-string">運動時</p>
-                            <img class="close-img" src="/arrow-down.png" width="25px">
-                            <img class="extend-img" src="/arrow-up.png" style="display: none;" width="25px">
-                        </div>
-                        <div class="form-check form-check-inline sub-select-option-content" style="display: none;">
-                            <input class="form-check-input" type="checkbox" id="option-exercise-morning" name="q2_ans" value="早上運動時">
-                            <label class="form-check-label font" for="option-exercise-morning"><h3>早上</h3></label>
-                        </div>
-                        <div class="form-check form-check-inline sub-select-option-content" style="display: none;">
-                            <input class="form-check-input" type="checkbox" id="option-exercise-afternoon" name="q2_ans" value="下午運動時">
-                            <label class="form-check-label font" for="option-exercise-afternoon"><h3>下午</h3></label>
-                        </div>
-                        <div class="form-check form-check-inline sub-select-option-content" style="display: none;">
-                            <input class="form-check-input" type="checkbox" id="option-exercise-evening" name="q2_ans" value="晚上運動時">
-                            <label class="form-check-label font" for="option-exercise-evening"><h3>晚上</h3></label>
-                        </div>
+                        <input class="form-check-input" type="checkbox" id="option-postory" name="q3_ans[]" value="發佈限時動態">
+                        <label class="form-check-label font small-btn-string" for="option-postory"><p>發佈限時動態<p></label>
                     </div>
 
                     <div class="form-check form-check-inline select-option">
-                        <input class="form-check-input" type="checkbox" id="option-bath" name="q2_ans" value="洗完澡後 15 分鐘內">
-                        <label class="form-check-label font small-btn-string" for="option-bath"><p>洗完澡後 15 分鐘內<p></label>
+                        <input class="form-check-input" type="checkbox" id="option-popost" name="q3_ans[]" value="發佈貼文">
+                        <label class="form-check-label font small-btn-string" for="option-popost"><p>發佈貼文<p></label>
                     </div>
 
                     <div class="form-check form-check-inline select-option">
-                        <input class="form-check-input" type="checkbox" id="option-sleep" name="q2_ans" value="晚上睡覺前 15 分鐘內">
-                        <label class="form-check-label font small-btn-string" for="option-sleep"><p>晚上睡覺前 15 分鐘內<p></label>
+                        <input class="form-check-input" type="checkbox" id="option-poreels" name="q3_ans[]" value="發佈短片 (Reels)">
+                        <label class="form-check-label font small-btn-string" for="option-poreels"><p>發佈短片 (Reels)<p></label>
                     </div>
 
                     <div class="form-check form-check-inline select-option">
-                        <input class="form-check-input" type="checkbox" id="option-other" name="q2_ans" value="其他">
+                        <input class="form-check-input" type="checkbox" id="option-replyandlike" name="q3_ans[]" value="回覆或按讚朋友的訊息/限時動態/貼文/短片 (Reels)">
+                        <label class="form-check-label font small-btn-string" for="option-replyandlike"><p>回覆或按讚朋友的訊息/限時動態/貼文/短片 (Reels)<p></label>
+                    </div>
+                    
+                    <div class="form-check form-check-inline select-option">
+                        <input class="form-check-input" type="checkbox" id="option-seenotification" name="q3_ans[]" value="查看通知 (追蹤要求、貼文通知)">
+                        <label class="form-check-label font small-btn-string" for="option-notification"><p>查看通知 (追蹤要求、貼文通知)<p></label>
+                    </div>
+
+                    <div class="form-check form-check-inline select-option">
+                        <input class="form-check-input" type="checkbox" id="option-seefstory" name="q3_ans[]" value="瀏覽朋友的限時動態">
+                        <label class="form-check-label font small-btn-string" for="option-seestory"><p>瀏覽朋友的限時動態<p></label>
+                    </div>
+
+                    <div class="form-check form-check-inline select-option">
+                        <input class="form-check-input" type="checkbox" id="option-seefpost" name="q3_ans[]" value="瀏覽朋友的短片 (Reels) 或貼文">
+                        <label class="form-check-label font small-btn-string" for="option-seefpost"><p>瀏覽朋友的短片 (Reels) 或貼文<p></label>
+                    </div>
+
+                    <div class="form-check form-check-inline select-option">
+                        <input class="form-check-input" type="checkbox" id="option-seeothers" name="q3_ans[]" value="瀏覽其他人（非朋友）的限時動態/連續短片/貼文">
+                        <label class="form-check-label font small-btn-string" for="option-seeothers"><p>瀏覽其他人（非朋友）的限時動態/連續短片/貼文<p></label>
+                    </div>
+
+                    <div class="form-check form-check-inline select-option">
+                        <input class="form-check-input" type="checkbox" id="option-shopping" name="q3_ans[]" value="購物">
+                        <label class="form-check-label font small-btn-string" for="option-shopping"><p>購物<p></label>
+                    </div>
+
+                    <div class="form-check form-check-inline select-option">
+                        <input class="form-check-input" type="checkbox" id="option-other" name="q3_ans[]" value="其他">
                         <label class="form-check-label font small-btn-string" for="option-other">
                             <p>
                                 其他：
-                                <input class="form-check-input other-text" type="text" name="q2_ans_other" value="">
+                                <input class="form-check-input other-text" type="text" name="q3_ans_other" value="">
                             <p>
                         </label>
                     </div>
@@ -174,9 +102,7 @@
             <div class="form-footer">
                 <input class="fill_time" name="fill_time" type="hidden" value="<%= fill_time %>">
                 <input class="q1_ans" name="1" type="hidden" value="<%= q1_ans %>">
-                <!-- 
-                <input id="to_last_page" class="btn-second font" type="button" value="上一題">
-                -->
+                <input class="q2_ans" name="2" type="hidden" value="<%= q2_ans %>">
                 <input class="btn font" type="submit" style="width:100%; justify-content: center;" value="下一題">
             </div>
         </form>
@@ -217,24 +143,6 @@
             }
         });
 
-        // sub-select-option-title close and extend
-        $(".sub-select-option-title").click(function() {
-            var parent = $(this).parent(".sub-select-option");
-            if(parent.hasClass("sub-select-option-extend")) {
-                // close
-                parent.removeClass("sub-select-option-extend");
-                $(this).siblings('.sub-select-option-content').hide();
-                $(this).find(".extend-img").hide()
-                $(this).find(".close-img").show()
-            } else {
-                // open aka extend
-                parent.addClass("sub-select-option-extend");
-                $(this).siblings('.sub-select-option-content').show();
-                $(this).find(".extend-img").show()
-                $(this).find(".close-img").hide()
-            }
-        });
-
         // other text input
         $(".other-text").change(function() {
             var ele = $(this).closest(".select-option")
@@ -259,24 +167,6 @@
             return((time_now.getTime() - clock_start)/1000 + <%= fill_time %>);   
         }
 
-        // to home page btn alert
-        $("#to_last_page").click(function() {
-            var data = { // Your data object
-                fill_time: get_time_spent(),
-                q1_ans: $(".q1_ans").val()
-            };
-            var link = "/form/<%= account %>";
-
-            $.post(link, data, function(response) {
-                // Success callback function
-                console.log("Post success");
-                console.log(response);
-            }).fail(function() {
-                // Error callback function
-                console.log("Post error");
-            });
-        });
-
         $('#form_answers').submit(function() {
             // 確認 select-option 的 selected 內容
             $(".select-option").each(function() {
@@ -298,7 +188,7 @@
 
             // 加入表單填寫時間
             $(".fill_time").val(get_time_spent());
-            
+            $('#form_answers').serialize()
             return true;
         });
     </script>

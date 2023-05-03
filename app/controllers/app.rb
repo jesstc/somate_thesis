@@ -100,7 +100,7 @@ module SoMate
       # questionnaire - question 3
       routing.on 'form_3' do
         routing.on String do |account|
-          # POST /form_2/#{account}
+          # POST /form_3/#{account}
           routing.post do
             user = session[:watching]
 
@@ -119,6 +119,54 @@ module SoMate
               fill_time: routing.params["fill_time"], 
               q1_ans: routing.params["1"], 
               q2_ans: q2_ans
+            }
+          end
+        end
+      end
+
+      # questionnaire - question 4
+      routing.on 'form_4' do
+        routing.on String do |account|
+          # POST /form_4/#{account}
+          routing.post do
+            user = session[:watching]
+
+            # Q2 ans string
+            q3_ans = ""
+            routing.params["q3_ans"].each_with_index do |ans, index|
+              if index !=0
+                q3_ans += "|"
+              end
+              q3_ans += ans
+            end
+
+            view 'form_4', engine: 'html.erb', locals: { 
+              account: user.url, 
+              user: user, 
+              fill_time: routing.params["fill_time"], 
+              q1_ans: routing.params["1"], 
+              q2_ans: routing.params["2"], 
+              q3_ans: q3_ans
+            }
+          end
+        end
+      end
+
+      # questionnaire - question 5
+      routing.on 'form_5' do
+        routing.on String do |account|
+          # POST /form_5/#{account}
+          routing.post do
+            user = session[:watching]
+            binding.irb
+            view 'form_5', engine: 'html.erb', locals: { 
+              account: user.url, 
+              user: user, 
+              fill_time: routing.params["fill_time"], 
+              q1_ans: routing.params["1"], 
+              q2_ans: routing.params["2"], 
+              q3_ans: routing.params["3"],
+              q4_ans: routing.params["4"]
             }
           end
         end
