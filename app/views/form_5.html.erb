@@ -3,34 +3,74 @@
         <!-- Form Question & Title -->
         <div class="form-top">
             <div style="width: 88vw;">
-                <h2 class="form-qnumber font">第四題</h2>
+                <h2 class="form-qnumber font">第五題</h2>
                 <div class="form-progress-line-frame">
-                    <hr class="form-progress-line-progress" style="width: 144px;">
+                    <hr class="form-progress-line-progress" style="width: 180px;">
                     <hr class="form-progress-line-leave">
                 </div>
             </div>
 
             <div class="form-q-d">
-                <h2 class="form-qtitle font">整體而言，你/妳今天在使用 IG 時的情緒如何？請根據你/妳的開心程度選擇。</h2>
+                <h2 class="form-qtitle font">今天使用 IG 時的情緒讓你/妳的身體有什麼感受？（如：因為悲傷我覺得頭暈暈的、因為開心我覺得肩頸鬆鬆的...）</h2>
+
+                <!-- info alert -->
+                <div class="info-alert">
+                    <div class="info-content info-extend">
+                        <img src="/information-icon.png" width="25px">
+                        <div class="font content">
+                            回答建議：可以試著用身體的角度去回想你/妳的情緒喔！
+                        </div>
+                    </div>
+                </div>
+
+                <!-- info alert -->
+                <div id="info-default" class="info-alert">
+                    <div class="info-content info-default">
+                        <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 12px;">
+                            <img src="/information-icon.png" width="25px">
+                            <p class="font content">「感受」與「情緒」的定義</p>
+                        </div>
+                        <img src="/arrow-down.png" width="25px">
+                    </div>
+                </div>
+                <div id="info-extend" class="info-alert" style="display: none;">
+                    <div class="info-content info-extend">
+                        <img src="/information-icon.png" width="25px">
+                        <div class="font content">
+                            <ul style="margin: 0px;">
+                                <li><b>感受：</b>人在面臨某事件後的身體反應。如：手指顫抖、頭腦昏沉、胸口悶痛等。</li>
+                                <li><b>情緒：</b>人在面臨某事件後的心理狀態。六種基本的情緒包括快樂、驚訝、悲傷、恐懼、憤怒、厭惡。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Selections -->
-        <form role="form" id="form_answers" method="POST" action="/form_5/<%= account %>">
+        <form role="form" id="form_answers" method="POST" action="/form_6/<%= account %>">
             <div class="form-content">
                 <div class="q-div">
 
-                    <img src="/emoji-scale.png" width="100%">
+                    <img src="/question5-body.png" width="100%" style="padding-bottom: 18px;">
 
-                    <div class="form-emoji-scale">
-                        <div class="emoji-scale">
-                            <input type="range" class="custom-range" min="0" max="10" id="emoji-scale" name="4">
-                            <div class="rangeValue"></div>
-                        </div>
-                        <div class="emoji-text">
-                            <p class="font remark-string">不開心</p>
-                            <p class="font remark-string">開心</p>
-                        </div>
+                    <div class="q5-text">
+                        <p class="font small-btn-string">因為</p>
+                        <input class="ans-text" name="emotion[]" type="text" value="" placeholder="情緒" style="width: 60px" autofocus>
+                        <p class="font small-btn-string">我覺得</p>
+                        <select class="ans-text" name="body[]" style="width: 60px; height: 32px;">
+                            <option disabled selected>身體</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                            <option value="G">G</option>
+                            <option value="H">H</option>
+                            <option value="I">I</option>
+                        </select>
+                        <input class="ans-text" name="feelings[]" type="text" value=""  placeholder="感受">
                     </div>
 
                 </div>
@@ -47,6 +87,16 @@
     </div>
 
     <script>
+        // hide or show the information alert div
+        $("#info-default").click(function() {
+            $("#info-default").hide();
+            $("#info-extend").show();
+        });
+        $("#info-extend").click(function() {
+            $("#info-extend").hide();
+            $("#info-default").show();
+        });
+
         // get the start time (計算填寫時間)
         var time_start = new Date();  
         var clock_start = time_start.getTime();  
@@ -57,17 +107,11 @@
             return((time_now.getTime() - clock_start)/1000 + <%= fill_time %>);   
         }
 
-        // 顯示 emoji-scale 拉到的數值
-        $('#emoji-scale').on('input', function() {
-            var rangeValue = $(this).val();
-            var rangeWidth = $(this).width() - 10; // 滑块宽度 - 提示框边距
-            var rangePosition = ((rangeValue - $(this).attr('min')) / ($(this).attr('max') - $(this).attr('min'))) * rangeWidth + 29;
-            var $tooltip = $('.rangeValue');
-            $tooltip.text(rangeValue).css('left', rangePosition + 'px').css('opacity', 0.5);
-          }).on('mouseleave', function() {
-            var $tooltip = $('.rangeValue');
-            $tooltip.css('opacity', 0);
-          });
+        // 浮動跳出答案 --------------------------------------------------------------------> ????
+        $(".ans-text").change(function() {
+            var all_cols = {"emotion[]": "emotion", "body[]": "body", "feelings[]": "feelings"};
+            var current_ans = $(this).attr('name');
+        });
 
         $('#form_answers').submit(function() {
             // 加入表單填寫時間

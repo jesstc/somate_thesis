@@ -343,6 +343,8 @@ form {
     margin: 0px;
 }
 
+/* Question 4 */
+
 .form-emoji-scale {
     /* Auto layout */
     display: flex;
@@ -388,6 +390,21 @@ form {
     align-items: flex-start;
     gap: 32px;
     width: 100%;
+}
+
+/* Question 5 */
+
+.q5-text {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 3px;  
+}
+
+.q5-text > .ans-text {
+    color: #A4A1A1;
+    border-bottom: 2px solid #A4A1A1;
 }
 
 /* ============================ form end =================================== */

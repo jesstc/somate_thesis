@@ -186,6 +186,16 @@
                 $(".other-text").closest("label").siblings("input").prop("checked", false);
             }
 
+            // 確認至少勾選一個選項
+            var empty = 1;
+            $("input[type=checkbox]").each(function() {
+                if ($(this).is(":checked")) empty = 0;
+            });
+            if(empty == 1) {
+                alert("請選擇你/妳今天使用 IG 的時段！");
+                return false;
+            }
+
             // 加入表單填寫時間
             $(".fill_time").val(get_time_spent());
             $('#form_answers').serialize()

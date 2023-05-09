@@ -158,7 +158,7 @@ module SoMate
           # POST /form_5/#{account}
           routing.post do
             user = session[:watching]
-            binding.irb
+
             view 'form_5', engine: 'html.erb', locals: { 
               account: user.url, 
               user: user, 
