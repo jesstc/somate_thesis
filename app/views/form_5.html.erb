@@ -54,12 +54,12 @@
 
                     <img src="/question5-body.png" width="100%" style="padding-bottom: 18px;">
 
-                    <div class="q5-text">
+                    <div id="q5-text-1" class="q5-text">
                         <p class="font small-btn-string">因為</p>
                         <input class="ans-text" name="emotion[]" type="text" value="" placeholder="情緒" style="width: 60px" autofocus>
                         <p class="font small-btn-string">我覺得</p>
                         <select class="ans-text" name="body[]" style="width: 60px; height: 32px;">
-                            <option disabled selected>身體</option>
+                            <option value="" selected>身體</option>
                             <option value="A">A</option>
                             <option value="B">B</option>
                             <option value="C">C</option>
@@ -107,10 +107,72 @@
             return((time_now.getTime() - clock_start)/1000 + <%= fill_time %>);   
         }
 
-        // 浮動跳出答案 --------------------------------------------------------------------> ????
-        $(".ans-text").change(function() {
-            var all_cols = {"emotion[]": "emotion", "body[]": "body", "feelings[]": "feelings"};
-            var current_ans = $(this).attr('name');
+        // 浮動跳出答案 --------------------------------------------------------------------
+        
+        // 確認一行的答案有沒有填寫完 (return: empty / completed / not_completed)
+        function check_one_ans (ans_obj) {
+            id = ans_obj.attr("id");
+            var emotion = $("#" + id + " input[name=emotion\\[\\]]").val();
+            var body = $("#" + id + " select[name=body\\[\\]]").val();
+            var feelings = $("#" + id + " input[name=feelings\\[\\]]").val();
+            if(emotion == "" && body == "" && feelings == "") {
+                return "empty";
+            } else if (emotion != "" && body != "" && feelings != "") {
+                return "completed";
+            } else {
+                return "not_completed";
+            }
+        }
+
+        $("#form_answers").on("change", ".ans-text", function() {
+            var current_obj = $(this).parent(".q5-text");
+            var current_status = check_one_ans(current_obj);
+
+            console.log(current_obj.attr("id"), current_status);
+            if(current_status == "completed") {
+                // 先確認所有的 ans 都是 completed 的狀態
+                var objs_completed = true;
+                $(".q5-text").each(function() {
+                    if(check_one_ans($(this)) != "completed") {
+                        objs_completed = false;
+                    }
+                });
+
+                if (objs_completed) {
+                    var ans_num = $(".q5-text").length + 1;
+                    var new_obj_html = `
+                        <div id="q5-text-` + ans_num + `" class="q5-text">
+                            <p class="font small-btn-string">因為</p>
+                            <input class="ans-text" name="emotion[]" type="text" value="" placeholder="情緒" style="width: 60px" autofocus>
+                            <p class="font small-btn-string">我覺得</p>
+                            <select class="ans-text" name="body[]" style="width: 60px; height: 32px;">
+                                <option value="" selected>身體</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                                <option value="F">F</option>
+                                <option value="G">G</option>
+                                <option value="H">H</option>
+                                <option value="I">I</option>
+                            </select>
+                            <input class="ans-text" name="feelings[]" type="text" value=""  placeholder="感受">
+                        </div>`;
+                    current_obj.parent(".q-div").append(new_obj_html);
+                }
+
+                
+            } else if(current_status == "empty") {
+                console.log("empty!!");
+                var obj_current_index = current_obj.index();
+                var obj_total_index = $(".q5-text").length;
+                console.log(obj_current_index, obj_total_index);
+                if (obj_current_index != -1 && obj_current_index < obj_total_index) {
+                    // remove current obj
+                    current_obj.remove();
+                }
+            }
         });
 
         $('#form_answers').submit(function() {
