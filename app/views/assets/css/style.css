@@ -460,7 +460,7 @@ form {
 
 .rangeValue {
     position: absolute;
-    top: 325px;
+    top: 345px;
     left: 50%;
     transform: translateX(-50%);
     padding: 5px;
@@ -502,6 +502,30 @@ form {
 /* Question 6 */
 .q-textarea {
     padding-bottom: 15vh;
+}
+
+/* Question 8 */
+.form-rate-scale {
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding-top: 10%;
+    padding-bottom: 40%;
+}
+
+.form-rate-scale > .rate-scale {
+    width: 100%;
+}
+.form-rate-scale > .rate-text {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 32px;
+    width: 100%;
 }
 
 /* ============================ form end =================================== */

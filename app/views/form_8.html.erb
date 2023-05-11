@@ -3,33 +3,30 @@
         <!-- Form Question & Title -->
         <div class="form-top">
             <div style="width: 88vw;">
-                <h2 class="form-qnumber font">第四題</h2>
+                <h2 class="form-qnumber font">第八題</h2>
                 <div class="form-progress-line-frame">
-                    <hr class="form-progress-line-progress" style="width: 40vw;">
+                    <hr class="form-progress-line-progress" style="width: 77vw;">
                     <hr class="form-progress-line-leave">
                 </div>
             </div>
 
             <div class="form-q-d">
-                <h2 class="form-qtitle font">整體而言，你/妳今天在使用 IG 時的情緒如何？請根據你/妳的開心程度選擇。</h2>
+                <h2 class="form-qtitle font">你/妳認為今天使用 IG 時，達成「<%= q7_ans %>」這個目標的程度為何？</h2>
             </div>
         </div>
 
         <!-- Selections -->
-        <form role="form" id="form_answers" method="POST" action="/form_5/<%= account %>">
+        <form role="form" id="form_answers" method="POST" action="/form_9/<%= account %>">
             <div class="form-content">
                 <div class="q-div">
-
-                    <img src="/emoji-scale.png" width="100%">
-
-                    <div class="form-emoji-scale">
-                        <div class="emoji-scale">
-                            <input type="range" class="custom-range" min="0" max="10" id="emoji-scale" name="4">
-                            <div class="rangeValue"></div>
+                    <div class="form-rate-scale">
+                        <div class="rate-scale">
+                            <input type="range" class="custom-range" min="0" max="10" id="rate-scale" name="8">
+                            <div class="rangeValue" style="top: 315px;"></div>
                         </div>
-                        <div class="emoji-text">
-                            <p class="font remark-string">不開心</p>
-                            <p class="font remark-string">開心</p>
+                        <div class="rate-text">
+                            <p class="font remark-string">0%</p>
+                            <p class="font remark-string">100%</p>
                         </div>
                     </div>
 
@@ -41,6 +38,10 @@
                 <input class="q1_ans" name="1" type="hidden" value="<%= q1_ans %>">
                 <input class="q2_ans" name="2" type="hidden" value="<%= q2_ans %>">
                 <input class="q3_ans" name="3" type="hidden" value="<%= q3_ans %>">
+                <input class="q4_ans" name="4" type="hidden" value="<%= q4_ans %>">
+                <input class="q5_ans" name="5" type="hidden" value="<%= q5_ans %>">
+                <input class="q6_ans" name="6" type="hidden" value="<%= q6_ans %>">
+                <input class="q7_ans" name="7" type="hidden" value="<%= q7_ans %>">
                 <input class="btn font" type="submit" style="width:100%; justify-content: center;" value="下一題">
             </div>
         </form>
@@ -57,13 +58,13 @@
             return((time_now.getTime() - clock_start)/1000 + <%= fill_time %>);   
         }
 
-        // 顯示 emoji-scale 拉到的數值
-        $('#emoji-scale').on('input', function() {
+        // 顯示 rate-scale 拉到的數值
+        $('#rate-scale').on('input', function() {
             var rangeValue = $(this).val();
             var rangeWidth = $(this).width() - 10; // 滑块宽度 - 提示框边距
             var rangePosition = ((rangeValue - $(this).attr('min')) / ($(this).attr('max') - $(this).attr('min'))) * rangeWidth + 29;
             var $tooltip = $('.rangeValue');
-            $tooltip.text(rangeValue).css('left', rangePosition + 'px').css('opacity', 0.5);
+            $tooltip.text(rangeValue*10).css('left', rangePosition + 'px').css('opacity', 0.5);
         }).on('mouseleave', function() {
             var $tooltip = $('.rangeValue');
             $tooltip.css('opacity', 0);

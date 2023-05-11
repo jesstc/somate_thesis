@@ -3,24 +3,24 @@
         <!-- Form Question & Title -->
         <div class="form-top">
             <div style="width: 88vw;">
-                <h2 class="form-qnumber font">第六題</h2>
+                <h2 class="form-qnumber font">第七題</h2>
                 <div class="form-progress-line-frame">
-                    <hr class="form-progress-line-progress" style="width: <%= q4_ans.to_i > 5 ? '86vw' : '60vw' %>;">
+                    <hr class="form-progress-line-progress" style="width: 67vw;">
                     <hr class="form-progress-line-leave">
                 </div>
             </div>
 
             <div class="form-q-d">
-                <h2 class="form-qtitle font">根據上一題的回答，你/妳認為是什麼原因，讓你/妳有這樣的情緒？</h2>
+                <h2 class="form-qtitle font">你/妳今天為什麼會想使用 IG? 你/妳用 IG 最主要的目的為何？（如：人際關係、成就感、打發時間等。最多不超過 15 個字）</h2>
             </div>
         </div>
 
         <!-- Selections -->
-        <form role="form" id="form_answers" method="POST" action="/<%= q4_ans.to_i > 5 ? 'form_complete' : 'form_7/'+account %>">
+        <form role="form" id="form_answers" method="POST" action="/form_8/<%= account %>">
             <div class="form-content">
                 <div class="q-div">
                     <div class="q-textarea">
-                        <textarea class="form-control" name="6" rows="5" placeholder="因為..."></textarea>
+                        <input class="form-control" name="7" type="text" placeholder="希望...">
                     </div>
 
                 </div>
@@ -33,7 +33,8 @@
                 <input class="q3_ans" name="3" type="hidden" value="<%= q3_ans %>">
                 <input class="q4_ans" name="4" type="hidden" value="<%= q4_ans %>">
                 <input class="q5_ans" name="5" type="hidden" value="<%= q5_ans %>">
-                <input class="btn font" type="submit" style="width:100%; justify-content: center;" value="<%= q4_ans.to_i > 5 ? '提交' : '下一題' %>">
+                <input class="q6_ans" name="6" type="hidden" value="<%= q6_ans %>">
+                <input class="btn font" type="submit" style="width:100%; justify-content: center;" value="下一題">
             </div>
         </form>
     </div>
@@ -53,9 +54,13 @@
             // 加入表單填寫時間
             $(".fill_time").val(get_time_spent());
 
-            $("textarea[name=6]").val($.trim($("textarea[name=6]").val()));
-            if($("textarea[name=6]").val() == "") {
-                alert("請填寫你/妳會有這樣的情緒的原因。");
+            // $("textarea[name=7]").val($.trim($("textarea[name=7]").val()));
+            // if($("textarea[name=7]").val() == "") {
+            if($("input[name=7]").val() == "") {
+                alert("請填寫你/妳使用 IG 的目的。");
+                return false;
+            } else if ($("input[name=7]").val().length > 15) {
+                alert("請填寫小於 15 個字。");
                 return false;
             } else return true;
         });

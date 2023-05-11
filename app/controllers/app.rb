@@ -193,6 +193,75 @@ module SoMate
         end
       end
 
+      # questionnaire - question 7
+      routing.on 'form_7' do
+        routing.on String do |account|
+          # POST /form_7/#{account}
+          routing.post do
+            user = session[:watching]
+
+            view 'form_7', engine: 'html.erb', locals: { 
+              account: user.url, 
+              user: user, 
+              fill_time: routing.params["fill_time"], 
+              q1_ans: routing.params["1"], 
+              q2_ans: routing.params["2"], 
+              q3_ans: routing.params["3"],
+              q4_ans: routing.params["4"],
+              q5_ans: routing.params["5"],
+              q6_ans: routing.params["6"]
+            }
+          end
+        end
+      end
+
+      # questionnaire - question 8
+      routing.on 'form_8' do
+        routing.on String do |account|
+          # POST /form_8/#{account}
+          routing.post do
+            user = session[:watching]
+
+            view 'form_8', engine: 'html.erb', locals: { 
+              account: user.url, 
+              user: user, 
+              fill_time: routing.params["fill_time"], 
+              q1_ans: routing.params["1"], 
+              q2_ans: routing.params["2"], 
+              q3_ans: routing.params["3"],
+              q4_ans: routing.params["4"],
+              q5_ans: routing.params["5"],
+              q6_ans: routing.params["6"],
+              q7_ans: routing.params["7"]
+            }
+          end
+        end
+      end
+
+      # questionnaire - question 9
+      routing.on 'form_9' do
+        routing.on String do |account|
+          # POST /form_9/#{account}
+          routing.post do
+            user = session[:watching]
+
+            view 'form_9', engine: 'html.erb', locals: { 
+              account: user.url, 
+              user: user, 
+              fill_time: routing.params["fill_time"], 
+              q1_ans: routing.params["1"], 
+              q2_ans: routing.params["2"], 
+              q3_ans: routing.params["3"],
+              q4_ans: routing.params["4"],
+              q5_ans: routing.params["5"],
+              q6_ans: routing.params["6"],
+              q7_ans: routing.params["7"],
+              q8_ans: routing.params["8"]
+            }
+          end
+        end
+      end
+
       routing.on 'form_complete' do
         routing.is do
           # POST /form_complete/
