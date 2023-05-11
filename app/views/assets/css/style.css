@@ -528,6 +528,24 @@ form {
     width: 100%;
 }
 
+/* form complete page */
+.form-complete-div {
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 24px;
+
+    position: absolute;
+    left: calc(50% - 100vw/2);
+    top: calc(50% - 456px/2);;
+}
+
+.form-complete-div > .btn {
+    margin-top: 18px;
+}
+
 /* ============================ form end =================================== */
 
 /* ============================ component start ============================ */
