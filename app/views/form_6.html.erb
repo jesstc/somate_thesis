@@ -16,11 +16,11 @@
         </div>
 
         <!-- Selections -->
-        <form role="form" id="form_answers" method="POST" action="/<%= q4_ans.to_i > 5 ? 'form_complete' : 'form_7' %>/<%= account %>">
+        <form role="form" id="form_answers" method="POST" action="/<%= q4_ans.to_i > 5 ? 'form_complete' : 'form_7/'+account %>">
             <div class="form-content">
                 <div class="q-div">
                     <div class="q-textarea">
-                        
+                        <textarea class="form-control" name="6" rows="5" placeholder="因為..."></textarea>
                     </div>
 
                 </div>
@@ -53,8 +53,10 @@
             // 加入表單填寫時間
             $(".fill_time").val(get_time_spent());
 
-            
-            return true;
+            if($.trim($("textarea[name=6]").val()) == "") {
+                alert("請填寫你/妳會有這樣的情緒的原因！");
+                return false;
+            } else return true;
         });
     </script>
 </body>
