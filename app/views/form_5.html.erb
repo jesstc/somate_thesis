@@ -5,7 +5,7 @@
             <div style="width: 88vw;">
                 <h2 class="form-qnumber font">第五題</h2>
                 <div class="form-progress-line-frame">
-                    <hr class="form-progress-line-progress" style="width: 180px;">
+                    <hr class="form-progress-line-progress" style="width: 50vw;">
                     <hr class="form-progress-line-leave">
                 </div>
             </div>
@@ -81,6 +81,8 @@
                 <input class="q1_ans" name="1" type="hidden" value="<%= q1_ans %>">
                 <input class="q2_ans" name="2" type="hidden" value="<%= q2_ans %>">
                 <input class="q3_ans" name="3" type="hidden" value="<%= q3_ans %>">
+                <input class="q4_ans" name="4" type="hidden" value="<%= q4_ans %>">
+                <input class="q5_ans" name="5" type="hidden" value="">
                 <input class="btn font" type="submit" style="width:100%; justify-content: center;" value="下一題">
             </div>
         </form>
@@ -128,7 +130,7 @@
             var current_obj = $(this).parent(".q5-text");
             var current_status = check_one_ans(current_obj);
 
-            console.log(current_obj.attr("id"), current_status);
+            //console.log(current_obj.attr("id"), current_status);
             if(current_status == "completed") {
                 // 先確認所有的 ans 都是 completed 的狀態
                 var objs_completed = true;
@@ -164,10 +166,9 @@
 
                 
             } else if(current_status == "empty") {
-                console.log("empty!!");
                 var obj_current_index = current_obj.index();
                 var obj_total_index = $(".q5-text").length;
-                console.log(obj_current_index, obj_total_index);
+
                 if (obj_current_index != -1 && obj_current_index < obj_total_index) {
                     // remove current obj
                     current_obj.remove();
@@ -178,8 +179,39 @@
         $('#form_answers').submit(function() {
             // 加入表單填寫時間
             $(".fill_time").val(get_time_spent());
+
+            // 確認所有的 ans 都是 completed 的狀態
+            var objs_completed = true;
+            $(".q5-text").each(function() {
+                if(check_one_ans($(this)) == "not_completed") {
+                    alert("尚有答案未完整填寫，請先確認所有答案接完整填寫後再前往下一題！");
+                    objs_completed = false;
+                }
+            });
             
-            return true;
+            if (objs_completed) {
+                // 把所有答案放到 class=q5_ans 的 element 裏面
+                var ans = "";
+                var emotion = "";
+                var body = "";
+                var feelings = "";
+
+                $(".q5-text").each(function() {
+                    if(check_one_ans($(this)) == "completed") {
+                        if($(this).index() != 1) ans += "|";
+                        
+                        emotion = $("#" + $(this).attr("id") + " input[name=emotion\\[\\]]").val();
+                        body = $("#" + $(this).attr("id") + " select[name=body\\[\\]]").val();
+                        feelings = $("#" + $(this).attr("id") + " input[name=feelings\\[\\]]").val();
+
+                        ans = ans + emotion + "&" + body + "&" + feelings;
+                    }
+                });
+                $(".q5_ans").val(ans);
+
+                return true;
+            }
+            else return false;
         });
     </script>
 </body>

@@ -1,0 +1,60 @@
+<body>
+    <div class="container-fluid">
+        <!-- Form Question & Title -->
+        <div class="form-top">
+            <div style="width: 88vw;">
+                <h2 class="form-qnumber font">第六題</h2>
+                <div class="form-progress-line-frame">
+                    <hr class="form-progress-line-progress" style="width: <%= q4_ans.to_i > 5 ? '86vw' : '60vw' %>;">
+                    <hr class="form-progress-line-leave">
+                </div>
+            </div>
+
+            <div class="form-q-d">
+                <h2 class="form-qtitle font">根據上一題的回答，你/妳認為是什麼原因，讓你/妳有這樣的情緒？</h2>
+            </div>
+        </div>
+
+        <!-- Selections -->
+        <form role="form" id="form_answers" method="POST" action="/<%= q4_ans.to_i > 5 ? 'form_complete' : 'form_7' %>/<%= account %>">
+            <div class="form-content">
+                <div class="q-div">
+                    <div class="q-textarea">
+                        
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-footer">
+                <input class="fill_time" name="fill_time" type="hidden" value="<%= fill_time %>">
+                <input class="q1_ans" name="1" type="hidden" value="<%= q1_ans %>">
+                <input class="q2_ans" name="2" type="hidden" value="<%= q2_ans %>">
+                <input class="q3_ans" name="3" type="hidden" value="<%= q3_ans %>">
+                <input class="q4_ans" name="4" type="hidden" value="<%= q4_ans %>">
+                <input class="q5_ans" name="5" type="hidden" value="<%= q5_ans %>">
+                <input class="btn font" type="submit" style="width:100%; justify-content: center;" value="<%= q4_ans.to_i > 5 ? '提交' : '下一題' %>">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // get the start time (計算填寫時間)
+        var time_start = new Date();  
+        var clock_start = time_start.getTime();  
+
+        // 計算填寫時間
+        function get_time_spent (){   
+            var time_now = new Date();  
+            return((time_now.getTime() - clock_start)/1000 + <%= fill_time %>);   
+        }
+
+        $('#form_answers').submit(function() {
+            // 加入表單填寫時間
+            $(".fill_time").val(get_time_spent());
+
+            
+            return true;
+        });
+    </script>
+</body>

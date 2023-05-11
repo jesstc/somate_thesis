@@ -172,6 +172,27 @@ module SoMate
         end
       end
 
+      # questionnaire - question 6
+      routing.on 'form_6' do
+        routing.on String do |account|
+          # POST /form_6/#{account}
+          routing.post do
+            user = session[:watching]
+
+            view 'form_6', engine: 'html.erb', locals: { 
+              account: user.url, 
+              user: user, 
+              fill_time: routing.params["fill_time"], 
+              q1_ans: routing.params["1"], 
+              q2_ans: routing.params["2"], 
+              q3_ans: routing.params["3"],
+              q4_ans: routing.params["4"],
+              q5_ans: routing.params["5"]
+            }
+          end
+        end
+      end
+
       routing.on 'form_complete' do
         routing.is do
           # POST /form_complete/
