@@ -88,6 +88,98 @@ h3 {
 
 /* ============================ text style end ============================ */
 
+/* ============================ homepage start ============================ */
+
+.home-div {
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 16px;
+}
+
+.logo-title {
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 28vw;
+    gap: 10px;
+    width: 100vw;
+
+    /* White */
+    background: #FFFFFF;
+}
+
+.home-prompt {
+    width: 88vw;
+    box-sizing: border-box;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 8px 12px;
+    gap: 10px;
+
+    background: #FEF8EA;
+    border: 3px dashed #F6BD2B;
+    border-radius: 10px;
+}
+
+.visualization-div {
+    width: 88vw;
+    height: 47vh;
+    background-color: white;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px;
+    margin-top: 16px;
+}
+
+.navbar-div {
+    position: fixed;
+    bottom: 0%;
+    width: 100vw;
+    height: 138px;
+}
+
+.start_btn {
+    position: absolute;
+    background-color: #2A868C;
+    width: 32vw;
+    height: 32vw;
+    border: 0px;
+    border-radius: 50%;
+    color: white;
+    /* position */
+    margin-top: -1%;
+    margin-left: calc(50% - 120px/2 + 0.5px);
+}
+
+.navbar-div-bottom {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 8px 20px;
+
+    position: absolute;
+    bottom: 0%;
+    width: 100vw;
+    background: #AACFD1;
+}
+
+/* ============================ homepage end ============================ */
+
 /* ============================ meditation start ============================ */
 
 .meditation-bottom-card {
@@ -632,16 +724,6 @@ form {
 /* ============================ component end ============================ */
 
 
-.start_btn {
-    background-color: #2A868C;
-    width: 133px;
-    height: 133px;
-    border: 0px;
-    border-radius: 50%;
-    margin-top: 10%;
-    color: white;
-    font-size: 35px;
-}
 
 .btn_click {
     background-color: #2A868C;
