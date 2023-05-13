@@ -3,6 +3,7 @@
 require 'roda'
 require 'html'
 require 'yaml'
+require 'date'
 
 module SoMate
   # Web App
@@ -66,6 +67,7 @@ module SoMate
       end
 
       routing.on 'fomo-dic' do
+        # GET /fomo-dic
         routing.is do
           routing.get do
             user = session[:watching]
@@ -81,8 +83,38 @@ module SoMate
         end
       end
 
-      routing.on 'my-history' do
+      routing.on 'my-history' do 
+        # routing.is do
+          routing.on 'change-date' do
+            routing.on String do |preorpost_currentstartday|
+              # GET /my-history/change-date/#{preorpost_currentstartday}
+              routing.get do
+                user = session[:watching]
+
+                records = user.owned_records
+                if !records.empty?
+                  freeze_time = 12*60*60 # 12小時內無法填寫
+                  is_record = records[-1].created_at + freeze_time > Time.now() ? true : false
+                end
+                pre_or_post = preorpost_currentstartday.split("&")[0]
+                date_start = Date.parse(preorpost_currentstartday.split("&")[1])
+                if pre_or_post == 'pre'
+                  date_start -= 7
+                else
+                  date_start += 7
+                end
+                date_end = date_start + 6
+                date_start = date_start.strftime('%m/%d')
+                date_end = date_end.strftime('%m/%d')
+
+                view 'my-history', engine: 'html.erb', locals: { account: user.url, is_record: is_record, date_start: date_start, date_end: date_end }
+              end
+            end
+          end
+        # end
+
         routing.on String do |account|
+          # GET /my-history/#{account}
           routing.get do
             user = session[:watching]
 
@@ -91,10 +123,26 @@ module SoMate
               freeze_time = 12*60*60 # 12小時內無法填寫
               is_record = records[-1].created_at + freeze_time > Time.now() ? true : false
             end
-            
-            view 'my-history', engine: 'html.erb', locals: { account: account, is_record: is_record }
+
+            # 算出一週的時間區間
+            current_date = Date.today
+            if current_date.strftime('%A') == "Sunday"
+              current_date -= 1
+            end
+            start_of_week = current_date - current_date.wday + 1
+            end_of_week = start_of_week + 6
+            # Format the dates as MM/DD
+            date_start = start_of_week.strftime('%m/%d')
+            date_end = end_of_week.strftime('%m/%d')
+
+            view 'my-history', engine: 'html.erb', locals: { account: account, is_record: is_record, date_start: date_start, date_end: date_end }
           end
         end
+      end
+
+      # questionnaire - question 2
+      routing.on 'my-history' do
+        
       end
 
       routing.on 'meditation' do

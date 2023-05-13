@@ -5,6 +5,28 @@
                 <img src="/SoMate-logo.png" width="100%">
             </div>
 
+            <div class="my-history-div">
+                <div class="page-title">
+                    <a href='/index/<%= account %>'>
+                        <img src="/left-arrow.png" width="25px">
+                    </a>
+                    <h2 class="font" align="center">我的歷史紀錄</h2>
+                    <img src="/left-arrow.png" width="25px" style="opacity: 0;">
+                </div>
+
+                <div class="page-title">
+                    <a href='/my-history/change-date/pre&<%= Date.strptime(date_start, '%m/%d') %>'>
+                        <img src="/date-left-arrow.png" width="30px">
+                    </a>
+                    <h3 class="font" align="center" style="color: #A4A1A1;">
+                        <%= date_start %>（一）～ <%= date_end %>（日）
+                    </h3>
+                    <a href='/my-history/change-date/post&<%= Date.strptime(date_start, '%m/%d') %>'>
+                        <img src="/date-right-arrow.png" width="30px">
+                    </a>
+                </div>
+            </div>
+
             <div class="navbar-div">
                 <div class="navbar-div-bottom">
                     <a href='/fomo-dic'>
