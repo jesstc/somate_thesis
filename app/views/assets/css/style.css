@@ -182,6 +182,16 @@ h3 {
 
 /* ============================ FoMO dictionary start ============================ */
 
+.fomo-dic-title {
+    width: 88vw;
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+}
+
 .fomo-dic-div {
     /* Auto layout */
     display: flex;
