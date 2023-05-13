@@ -15,8 +15,13 @@
 
             <div class="navbar-div">
                 <div class="navbar-div-bottom">
-                    <img src="/fomo-dic.png" width="97px">
-                    <img src="/my-history.png" width="97px">
+                    <a href='/fomo-dic'>
+                        <img src="/fomo-dic.png" width="97px">
+                    </a>
+
+                    <a href='/my-history/<%= account %>'>
+                        <img src="/my-history.png" width="97px">
+                    </a>
                 </div>
 
                 <% if is_record %>

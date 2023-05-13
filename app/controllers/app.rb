@@ -65,6 +65,38 @@ module SoMate
         end
       end
 
+      routing.on 'fomo-dic' do
+        routing.is do
+          routing.get do
+            user = session[:watching]
+            
+            records = user.owned_records
+            if !records.empty?
+              freeze_time = 12*60*60 # 12小時內無法填寫
+              is_record = records[-1].created_at + freeze_time > Time.now() ? true : false
+            end
+
+            view 'fomo-dic', engine: 'html.erb', locals: { account: user.url, is_record: is_record }
+          end
+        end
+      end
+
+      routing.on 'my-history' do
+        routing.on String do |account|
+          routing.get do
+            user = session[:watching]
+
+            records = user.owned_records
+            if !records.empty?
+              freeze_time = 12*60*60 # 12小時內無法填寫
+              is_record = records[-1].created_at + freeze_time > Time.now() ? true : false
+            end
+            
+            view 'my-history', engine: 'html.erb', locals: { account: account, is_record: is_record }
+          end
+        end
+      end
+
       routing.on 'meditation' do
         routing.on String do |account|
           routing.get do

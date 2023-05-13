@@ -1,0 +1,31 @@
+<body class="home_body">
+    <div class="container-fluid">
+        <div class="home-div">
+            <div class="logo-title">
+                <img src="/SoMate-logo.png" width="100%">
+            </div>
+
+            <div class="navbar-div">
+                <div class="navbar-div-bottom">
+                    <img src="/fomo-dic-click.png" width="97px">
+
+                    <a href='/my-history/<%= account %>'>
+                        <img src="/my-history.png" width="97px">
+                    </a>
+                </div>
+
+                <% if is_record %>
+                    <input class="start_btn small-btn-string font" type="button" disabled="disabled" style="color: #AACFD1;" value="已完成&#x00A;今日紀錄">
+                <% else %>
+                    <a href='/meditation/<%= account %>'>
+                        <input class="start_btn big-btn-string font" type="button" value="開始&#x00A;記錄">
+                    </a>
+                <% end %>
+            </div>
+        </div>
+
+    </div>
+    <script>
+    
+    </script>
+</body>
