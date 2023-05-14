@@ -107,7 +107,12 @@ module SoMate
                 date_start = date_start.strftime('%m/%d')
                 date_end = date_end.strftime('%m/%d')
 
-                view 'my-history', engine: 'html.erb', locals: { account: user.url, is_record: is_record, date_start: date_start, date_end: date_end }
+                view 'my-history', engine: 'html.erb', locals: { 
+                  account: user.url, 
+                  records: records, 
+                  is_record: is_record, 
+                  date_start: date_start, 
+                  date_end: date_end }
               end
             end
           end
@@ -135,7 +140,12 @@ module SoMate
             date_start = start_of_week.strftime('%m/%d')
             date_end = end_of_week.strftime('%m/%d')
 
-            view 'my-history', engine: 'html.erb', locals: { account: account, is_record: is_record, date_start: date_start, date_end: date_end }
+            view 'my-history', engine: 'html.erb', locals: { 
+              account: account, 
+              records: records, 
+              is_record: is_record, 
+              date_start: date_start, 
+              date_end: date_end }
           end
         end
       end
