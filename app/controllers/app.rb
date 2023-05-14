@@ -369,6 +369,47 @@ module SoMate
         end
       end
 
+      # to check if they practice the countermeasure and why
+      routing.on 'countermeasure_record' do
+        routing.is do
+          # POST /countermeasure_record/
+          routing.post do
+            user = session[:watching]
+            
+            # add countermeasure record
+            countermeasure_id = routing.params["countermeasure_id"]
+            is_try = routing.params["is_try"] == 'true' ? true : false
+            selected_content = routing.params["selected_content"]
+            countermeasurerecord = Database::CountermeasureRecordOrm.create(countermeasure_id: countermeasure_id, owner_id: session[:watching].id, is_try: is_try, selected_content: selected_content)
+
+            routing.redirect "form_complete/#{user.url}/countermeasure"
+          end
+        end
+
+        routing.on String do |countermeasure_id|
+          routing.on String do |countermeasure_status|
+            # GET /countermeasure_record/#{countermeasure_id}/try_next
+            # GET /countermeasure_record/#{countermeasure_id}/tried
+            # try_nex or tried --> #{countermeasure_status}
+            routing.get do
+              user = session[:watching]
+
+              if countermeasure_status == 'try_next'
+                is_try = false;
+              else 
+                is_try = true;
+              end
+
+              view 'countermeasure_record', engine: 'html.erb', locals: { 
+                account: user.url,
+                is_try: is_try,
+                countermeasure_id: countermeasure_id
+              }
+            end
+          end
+        end
+      end
+
       routing.on 'form_complete' do
         routing.is do
           # POST /form_complete/
@@ -389,9 +430,18 @@ module SoMate
           end
         end
         routing.on String do |account|
+          routing.on 'countermeasure' do
+            routing.is do
+              # GET /form_complete/#{account}/countermeasure
+              routing.get do
+                view 'form_complete', engine: 'html.erb', locals: { account: session[:watching].url, is_countermeasure: true }
+              end
+            end
+          end
+
           # GET /form_complete/#{account}
           routing.get do
-            view 'form_complete', engine: 'html.erb', locals: { account: session[:watching].url }
+            view 'form_complete', engine: 'html.erb', locals: { account: session[:watching].url, is_countermeasure: false }
           end
         end
       end

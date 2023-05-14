@@ -6,7 +6,10 @@
             <img src="/emoji-happy.png" width="50%">
             <h1 class="font">Congratulations!</h1>
             <input type="button" class="btn small-btn-string font" onclick="javascript:location.href='/index/<%= account %>'" value="回主頁">
-        </div>  
+            <% if is_countermeasure %> 
+                <a href="/fomo-dic"><h3 class="font" style="color: #2A868C; text-decoration: underline;">看看其他方法</h3></a>
+            <% end %> 
+        </div>
         
     </div>
 

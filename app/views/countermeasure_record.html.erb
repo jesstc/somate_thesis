@@ -1,0 +1,98 @@
+<body>
+    <div class="container-fluid countermeasure-record-page">
+        <!-- Title -->
+        <% if is_try %>
+            <h2 class="font" style="text-align: center;">練習完之後，你/妳覺得<br>這個方法有幫助嗎？</h2>
+        <% else %>
+            <h2 class="font" style="text-align: center;">為什麼你/妳選擇<br>「下次再試」呢？</h2>
+        <% end %>
+
+        <!-- Selections -->
+        <form role="form" id="form_answers" method="POST" action="/countermeasure_record">
+            <div class="form-content">
+                <div class="q-div">
+
+                <% if is_try %>
+                
+                    <div class="form-check form-check-inline select-option countermeasure-select-option">
+                        <input class="form-check-input" type="radio" id="can-help" name="selected_content" value="有幫助">
+                        <label class="form-check-label font small-btn-string" for="can-help"><p>有！<p></label>
+                    </div>
+
+                    <div class="form-check form-check-inline select-option countermeasure-select-option">
+                        <input class="form-check-input" type="radio" id="cannot-help" name="selected_content" value="沒有幫助">
+                        <label class="form-check-label font small-btn-string" for="cannot-help"><p>沒有幫助<p></label>
+                    </div>
+
+                    <div class="form-check form-check-inline select-option countermeasure-select-option">
+                        <input class="form-check-input" type="radio" id="not-sure" name="selected_content" value="不太確定">
+                        <label class="form-check-label font small-btn-string" for="not-sure"><p>不太確定<p></label>
+                    </div>
+
+                <% else %>
+
+                    <div class="form-check form-check-inline select-option countermeasure-select-option">
+                        <input class="form-check-input" type="radio" id="dont-know-execute" name="selected_content" value="我不太清楚怎麼執行">
+                        <label class="form-check-label font small-btn-string" for="dont-know-execute"><p>我不太清楚怎麼執行<p></label>
+                    </div>
+
+                    <div class="form-check form-check-inline select-option countermeasure-select-option">
+                        <input class="form-check-input" type="radio" id="no-time" name="selected_content" value="我現在剛好沒有時間">
+                        <label class="form-check-label font small-btn-string" for="no-time"><p>我現在剛好沒有時間<p></label>
+                    </div>
+
+                    <div class="form-check form-check-inline select-option countermeasure-select-option">
+                        <input class="form-check-input" type="radio" id="i-dont-need" name="selected_content" value="我覺得不太需要">
+                        <label class="form-check-label font small-btn-string" for="i-dont-need"><p>我覺得不太需要<p></label>
+                    </div>
+
+                    <div class="form-check form-check-inline select-option countermeasure-select-option">
+                        <input class="form-check-input" type="radio" id="option-other" name="selected_content" value="其他">
+                        <label class="font small-btn-string" for="option-other">
+                            <p style="display: inline;">
+                                其他：
+                                <input class="form-check-input other-text" type="text" name="ans_other" value="" style="width: 150px;">
+                            <p>
+                        </label>
+                    </div>
+
+                <% end %>
+
+                </div>
+            </div>
+
+            <input name="is_try" type="hidden" value="<%= is_try %>">
+            <input name="countermeasure_id" type="hidden" value="<%= countermeasure_id %>">
+
+        </form>
+    </div>
+
+    <script>
+        // select-option select
+        $(".select-option").click(function() {
+            if($(this).find("label").find("p") === undefined) {
+                // 非 other 
+                $(this).addClass("select-option-extend");
+                $(this).find("input[name=selected_content]").prop('checked', true);
+                $("#form_answers").submit();
+            }
+        });
+        $(".small-btn-string.form-check-label").click(function() { 
+            // can also add class if they tape text
+            $(this).parent(".select-option").addClass("select-option-extend");
+            $(this).parent(".select-option").find("input[name=selected_content]").prop('checked', true);
+            $("#form_answers").submit();
+        });
+
+        // other text input
+        $(".other-text").change(function() {
+            var ele = $(this).closest(".select-option")
+            if ($(this).val() !== "") {
+                ele.addClass("select-option-extend");
+                ele.find("input[name=selected_content]").prop('checked', true);
+                ele.find("input[name=selected_content]").val("其他：" + $(this).val());
+                $("#form_answers").submit();
+            }
+        });
+    </script>
+</body>

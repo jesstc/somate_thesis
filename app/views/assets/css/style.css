@@ -804,6 +804,35 @@ form {
     background: white;
 }
 
+
+/* countermeasure record page */
+.countermeasure-record-page {
+    height: auto;
+    min-height: auto;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+
+    position: absolute;
+    left: calc(50% - 375px/2);
+    top: calc(50% - 503px/2 + 0.5px);
+}
+
+.countermeasure-select-option {
+    width: 280px;
+    border-radius: 50px;
+    display: block;
+    align-items: center;
+    text-align: center;
+}
+
+.countermeasure-record-page > div > div > .q-div {
+    padding: 0px;
+}
+
 /* ============================ countermeasure end =================================== */
 
 /* ============================ component start ============================ */
