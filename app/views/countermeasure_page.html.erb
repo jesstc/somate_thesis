@@ -1,0 +1,34 @@
+<body style="background: white;">
+    <div class="container-fluid">
+        <!-- Form Question & Title -->
+        <div class="form-top countermeasure-top">
+            <div style="width: 88vw;">
+                <p class="font small-btn-string">如果想改善情緒的話，你/妳可以...</p>
+                <h1 class="form-qnumber font"><%= countermeasure.title %></h1>
+            </div>
+
+            <div class="form-q-d">
+                <h2 class="form-qtitle font"><%= countermeasure.guidance_content %></h2>
+            </div>
+        </div>
+
+        <!-- Selections -->
+        <div class="form-content countermeasure-content">
+            <div class="q-div">
+                <%= countermeasure.body_content %>
+            </div>
+        </div>
+
+        <div class="form-footer countermeasure-footer">
+            <a class="countermeasure_link" href="/countermeasure_record/<%= countermeasure.id %>/try_next">
+                <input class="btn-second font" type="submit" value="下次再試">
+            </a>
+            <a class="countermeasure_link" href="/countermeasure_record/<%= countermeasure.id %>/tried">
+                <input class="btn font" type="submit" value="我試過了">
+            </a>
+        </div>
+    </div>
+
+    <script>
+    </script>
+</body>

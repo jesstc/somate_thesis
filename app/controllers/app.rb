@@ -352,6 +352,23 @@ module SoMate
         end
       end
 
+      # countermeasure page after the form
+      routing.on 'countermeasure_page' do
+        routing.on String do |random_id|
+          # GET /countermeasure_page/#{random_id}
+          routing.get do
+            user = session[:watching]
+            countermeasure = Database::CountermeasureOrm.where(id: random_id).first
+
+            view 'countermeasure_page', engine: 'html.erb', locals: { 
+              account: user.url, 
+              user: user, 
+              countermeasure: countermeasure
+            }
+          end
+        end
+      end
+
       routing.on 'form_complete' do
         routing.is do
           # POST /form_complete/
@@ -362,7 +379,13 @@ module SoMate
               num = routing.params["question_num"].to_i #題數
               (1..num).each { |i| Database::AnswerOrm.create(recordbook_id: record.id, question_num: i, answer_content: routing.params["#{i}"])}
             end
-            routing.redirect "form_complete/#{user.url}}"
+
+            if routing.params["not-sure-check"] == "checked"
+              random_id = Date.today.yday % 10 + 1  
+              routing.redirect "countermeasure_page/#{random_id}"
+            else 
+              routing.redirect "form_complete/#{user.url}"
+            end
           end
         end
         routing.on String do |account|

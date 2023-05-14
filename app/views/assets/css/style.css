@@ -78,7 +78,7 @@ h3 {
 .content-hieght {
     font-weight: 500;
     font-size: 18px;
-    line-height: 25px;
+    line-height: 40px;
 }
 
 .remark-string {
@@ -721,7 +721,7 @@ form {
 
 /* Question 6 */
 .q-textarea {
-    padding-bottom: 15vh;
+    padding-bottom: 12vh;
 }
 
 /* Question 8 */
@@ -767,6 +767,44 @@ form {
 }
 
 /* ============================ form end =================================== */
+
+/* ============================ countermeasure start ============================ */
+
+.countermeasure-top {
+    background: #AACFD1;
+    gap: 28px;
+}
+
+.countermeasure-top > div > p {
+    color: #65A7AC;
+}
+
+.countermeasure-top > div > .form-qnumber {
+    margin: 16px 0 0 0;
+    color: #2A868C;
+}
+
+.countermeasure-top > .form-q-d > h2 {
+    color: #484848;
+}
+
+.countermeasure-content > .q-div {
+    padding: 32px 24px;
+}
+
+.countermeasure-footer {
+    padding: 18px 24px;
+}
+
+.countermeasure_link {
+    background: white;
+}
+
+.countermeasure_link > .btn-second {
+    background: white;
+}
+
+/* ============================ countermeasure end =================================== */
 
 /* ============================ component start ============================ */
 

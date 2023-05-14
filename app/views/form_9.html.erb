@@ -21,8 +21,12 @@
                 <div class="q-div">
                     <div class="q-textarea">
                         <textarea class="form-control" name="9" rows="5" placeholder="我可以..."></textarea>
+                    
+                        <input id="not-sure-check" name="not-sure-check" type="checkbox" value="checked" style="font-size: 20px;">
+                        <label class="font small-btn-string" for="not-sure-check" style="color: #2A868C; margin-top: 24px;">
+                            還不確定
+                        </label>
                     </div>
-
                 </div>
             </div>
 
@@ -58,7 +62,7 @@
             $(".fill_time").val(get_time_spent());
 
             $("textarea[name=9]").val($.trim($("textarea[name=9]").val()));
-            if($("textarea[name=9]").val() == "") {
+            if($("textarea[name=9]").val() == "" && !$("#not-sure-check").prop("checked")) {
                 alert("請填寫改善你/妳使用 IG 時的情緒的方法。");
                 return false;
             } else return true;
