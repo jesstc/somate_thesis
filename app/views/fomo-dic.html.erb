@@ -66,46 +66,26 @@
                         當你/妳發現正在經歷 FoMO 的時候，不妨嘗試看看下面幾種方法緩解 FoMO 的狀況！
                         </p>
 
-                        <div class="countermeasure-alert">
-                            <p class="font remark-string">1. 練習自我對話</p>
-                            <img src="/countermeasure-alert-arrow.png" width="18px">
-                        </div>
-                        <div class="countermeasure-alert">
-                            <p class="font remark-string">2. 保持正確的心態</p>
-                            <img src="/countermeasure-alert-arrow.png" width="18px">
-                        </div>
-                        <div class="countermeasure-alert">
-                            <p class="font remark-string">3. 遠離 3C、減少焦慮</p>
-                            <img src="/countermeasure-alert-arrow.png" width="18px">
-                        </div>
-                        <div class="countermeasure-alert">
-                            <p class="font remark-string">4. 問問自己</p>
-                            <img src="/countermeasure-alert-arrow.png" width="18px">
-                        </div>
-                        <div class="countermeasure-alert">
-                            <p class="font remark-string">5. 管理社群互動期待</p>
-                            <img src="/countermeasure-alert-arrow.png" width="18px">
-                        </div>
-                        <div class="countermeasure-alert">
-                            <p class="font remark-string">6. 減少對 IG 的依賴</p>
-                            <img src="/countermeasure-alert-arrow.png" width="18px">
-                        </div>
-                        <div class="countermeasure-alert">
-                            <p class="font remark-string">7. 篩選貼文與動態</p>
-                            <img src="/countermeasure-alert-arrow.png" width="18px">
-                        </div>
-                        <div class="countermeasure-alert">
-                            <p class="font remark-string">8. 設定優先清單</p>
-                            <img src="/countermeasure-alert-arrow.png" width="18px">
-                        </div>
-                        <div class="countermeasure-alert">
-                            <p class="font remark-string">9. 關閉 IG 的通知</p>
-                            <img src="/countermeasure-alert-arrow.png" width="18px">
-                        </div>
-                        <div class="countermeasure-alert">
-                            <p class="font remark-string">10. 有意識地分享動態</p>
-                            <img src="/countermeasure-alert-arrow.png" width="18px">
-                        </div>
+                        <% countermeasures.each do |countermeasure| %>
+                            <div class="countermeasure-alert" data-toggle="modal" data-target=".countermeasure-modal-<%= countermeasure.id %>">
+                                <p class="font remark-string"><%= countermeasure.id %>. <%= countermeasure.title %></p>
+                                <img src="/countermeasure-alert-arrow.png" width="18px">
+                            </div>
+
+                            <div class="modal fade countermeasure-modal-<%= countermeasure.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-sm" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <p class="modal-title font big-btn-string" id="exampleModalLongTitle" style="color: #2A868C;"><%= countermeasure.title %></p>
+                                            <h2 class="modal-title font" id="exampleModalLongTitle" style="font-size: 22px;"><%= countermeasure.guidance_content %></h2>
+                                        </div>
+                                        <div class="modal-body">
+                                            <%= countermeasure.body_content %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% end %>
 
                     </div>
                 </div>

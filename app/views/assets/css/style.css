@@ -914,7 +914,24 @@ form {
     flex-grow: 0;
 }
 
+.modal-dialog {
+    max-width: 80vw;
+    margin: 0px;
+    left: calc(50% - 80vw/2);
+    top: 70px;
+    border-radius: 10px;
+}
 
+.modal-header {
+    flex-direction: column;
+    gap: 28px;
+    background: #AACFD1;
+    padding: 32px 24px 24px 24px;
+}
+
+.modal-body {
+    padding: 24px 32px 24px 24px;
+}
 
 /* ============================ component end ============================ */
 

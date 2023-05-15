@@ -78,7 +78,9 @@ module SoMate
               is_record = records[-1].created_at + freeze_time > Time.now() ? true : false
             end
 
-            view 'fomo-dic', engine: 'html.erb', locals: { account: user.url, is_record: is_record }
+            countermeasures = Database::CountermeasureOrm.all
+
+            view 'fomo-dic', engine: 'html.erb', locals: { account: user.url, is_record: is_record, countermeasures: countermeasures }
           end
         end
       end

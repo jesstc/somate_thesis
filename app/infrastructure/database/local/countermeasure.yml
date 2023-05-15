@@ -6,15 +6,13 @@
                     <li>我不用即時確認每個通知。</li>
                     <li>我不需要知道和我朋友有關的所有事情。</li>
                     <li>我不用在 IG 上花費大把時間，因為我有更重要的事情要去做。</li>
-                </ul>
-                <br>"
+                </ul>"
 - title: "保持正確的心態"
   guidance_content: "用正確的心態使用 IG，試著告訴自己即便「不這麼做」或是「事情與我預期的不同」，我也不會因此成為不好的人。你/妳可以說："
   body_content: "<ul class='font content-hieght' style='margin: 0px;'>
                     <li>不是只有我沒有在 IG 上如預期地與朋友互動。</li>
                     <li>我不會因為沒有即時回覆訊息而變得不受歡迎。</li>
-                </ul>
-                <br>"
+                </ul>"
 - title: "遠離 3C、減少焦慮"
   guidance_content: "試著放下手機、遠離 3C 產品，透過從事不需要上網的活動，可以分散你/妳的注意力並減少焦慮。你/妳可以試著："
   body_content: "<ul class='font content-hieght' style='margin: 0px;'>
@@ -22,16 +20,14 @@
                     <li>打掃房間</li>
                     <li>到室外走走</li>
                     <li>做一些你/妳喜歡的事情（如：看書、聽音樂等）</li>
-                </ul>
-                <br>"
+                </ul>"
 - title: "問問自己"
   guidance_content: "試著以第三人稱的視角看待問題。想想看："
   body_content: "<ul class='font content-hieght' style='margin: 0px;'>
                     <li>想想你/妳現在正面臨的困擾或負面情緒...為什麼你/妳會有這樣的情緒呢？當你/妳的朋友面臨一樣的困擾的時候，你/妳會和他/她說什麼呢？</li>
                 </ul>
                 <br>
-                <p class='font content-hieght'>你/妳也可以試著這樣告訴自己！</p>
-                <br>"
+                <p class='font content-hieght'>你/妳也可以試著這樣告訴自己！</p>"
 - title: "管理社群互動期待"
   guidance_content: "在使用 IG 之前，先想想下面幾件事情，避免對社群的互動有過高的期待："
   body_content: "<ul class='font content-hieght' style='margin: 0px;'>
@@ -40,8 +36,7 @@
                     <li>可能沒有（或很少）人回覆我的貼文或限時動態。</li>
                     <li>我的貼文或限時動態可能會因為演算法而不被顯示。</li>
                     <li>朋友可能因為在忙別的事情而沒辦法看到我的動態。</li>
-                </ul>
-                <br>"
+                </ul>"
 - title: "減少對 IG 的依賴"
   guidance_content: "試著用下面幾個方式減少對 IG 的依賴："
   body_content: "<ul class='font content-hieght' style='margin: 0px;'>
@@ -57,8 +52,7 @@
                         <li>點選「設定休息一下的提醒」或「設定每日時間上限」進行設定</li>
                       </ol>
                     </li>
-                </ul>
-                <br>"
+                </ul>"
 - title: "篩選貼文與動態"
   guidance_content: "當你/妳使用 IG 感到情緒低落時，可以透過下面幾種方式篩選貼文與動態："
   body_content: "<p class='font content-hieght'>如果是因為看到某個特定朋友的動態而感到情緒低落，你/妳可以試著：</p>
@@ -80,8 +74,7 @@
                 <ol class='font content-hieght'>
                   <li>點選 IG 首頁左上方「Instagram」</li>
                   <li>點選「追蹤中」查看所有追蹤帳號的貼文；或點選「最愛」查看所有加入最愛清單帳號的貼文</li>
-                </ol>
-                <br>"
+                </ol>"
 - title: "設定優先清單"
   guidance_content: "透過設定「最愛」或「摯友」清單，IG 會優先顯示這些帳號的貼文或限時動態。"
   body_content: "<p class='font content-hieght'>設定「最愛」或「摯友」清單的步驟：</p>
@@ -89,8 +82,7 @@
                   <li>點選右下角的個人檔案</li>
                   <li>點選右上方「☰」</li>
                   <li>點選「摯友」或「最愛」編輯好友清單</li>
-                </ol>
-                <br>"
+                </ol>"
 - title: "關閉 IG 的通知"
   guidance_content: "透過關閉 IG 的通知，讓自己可以更專注在日常的生活，減少來自社群媒體的分心或干擾。"
   body_content: "<p class='font content-hieght'>關閉 IG 通知的步驟：</p>
@@ -118,5 +110,4 @@
                     <li>可能沒有（或很少）人回覆我的貼文或限時動態。</li>
                     <li>我的貼文或限時動態可能會因為演算法而不被顯示。</li>
                     <li>朋友可能因為在忙別的事情而沒辦法看到我的動態或即時回覆我。</li>
-                </ul>
-                <br>"
+                </ul>"
