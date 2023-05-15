@@ -99,20 +99,52 @@ module SoMate
                   is_record = records[-1].created_at + freeze_time > Time.now() ? true : false
                 end
                 pre_or_post = preorpost_currentstartday.split("&")[0]
-                date_start = Date.parse(preorpost_currentstartday.split("&")[1])
+                start_of_week = Date.parse(preorpost_currentstartday.split("&")[1])
                 if pre_or_post == 'pre'
-                  date_start -= 7
+                  start_of_week -= 7
                 else
-                  date_start += 7
+                  start_of_week += 7
                 end
-                date_end = date_start + 6
-                date_start = date_start.strftime('%m/%d')
-                date_end = date_end.strftime('%m/%d')
+                end_of_week = start_of_week + 6
+                date_start = start_of_week.strftime('%m/%d')
+                date_end = end_of_week.strftime('%m/%d')
+
+                # get the records from database
+                week_records = Database::RecordOrm.where(created_at: start_of_week..end_of_week).all
+                week_ans = []
+                if week_records.length != 0
+                  week_records.each do |record|
+                    answersorm_use_time = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 1).first
+                    answersorm_emoji_score = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 4).first
+
+                    if !answersorm_use_time.nil? && !answersorm_emoji_score.nil?
+                      answers_use_time = answersorm_use_time.answer_content
+                      answers_emoji_score = answersorm_emoji_score.answer_content
+                      answers_created_time = record.created_at.strftime("%m/%d (%a)")
+
+                      # change weekday from eng to chinese
+                      weekday_mapping = {
+                        'Mon' => '一',
+                        'Tue' => '二',
+                        'Wed' => '三',
+                        'Thu' => '四',
+                        'Fri' => '五',
+                        'Sat' => '六',
+                        'Sun' => '日'
+                      }
+                      answers_created_time = answers_created_time.sub(record.created_at.strftime("%a"), weekday_mapping[record.created_at.strftime("%a")]                )
+
+                      element = { key: record.id, value: [answers_created_time, answers_use_time, answers_emoji_score] }
+                      week_ans.push(element)
+                    end
+                  end
+                end
 
                 view 'my-history', engine: 'html.erb', locals: { 
                   account: user.url, 
                   records: records, 
                   is_record: is_record, 
+                  week_ans: week_ans,
                   date_start: date_start, 
                   date_end: date_end }
               end
@@ -142,33 +174,38 @@ module SoMate
             date_start = start_of_week.strftime('%m/%d')
             date_end = end_of_week.strftime('%m/%d')
 
+            # get the records from database
             week_records = Database::RecordOrm.where(created_at: start_of_week..end_of_week).all
             week_ans = []
-            week_records.each do |record|
-              answersorm_use_time = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 1).first
-              answersorm_emoji_score = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 4).first
+            if week_records.length != 0
+              week_records.each do |record|
+                answersorm_use_time = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 1).first
+                answersorm_emoji_score = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 4).first
 
-              if !answersorm_use_time.nil? && !answersorm_emoji_score.nil?
-                answers_use_time = answersorm_use_time.answer_content
-                answers_emoji_score = answersorm_emoji_score.answer_content
-                answers_created_time = record.created_at.strftime("%m/%d (%a)")
+                if !answersorm_use_time.nil? && !answersorm_emoji_score.nil?
+                  answers_use_time = answersorm_use_time.answer_content
+                  answers_emoji_score = answersorm_emoji_score.answer_content
+                  answers_created_time = record.created_at.strftime("%m/%d (%a)")
 
-                # change weekday from eng to chinese
-                weekday_mapping = {
-                  'Mon' => '一',
-                  'Tue' => '二',
-                  'Wed' => '三',
-                  'Thu' => '四',
-                  'Fri' => '五',
-                  'Sat' => '六',
-                  'Sun' => '日'
-                }
-                answers_created_time = answers_created_time.sub(record.created_at.strftime("%a"), weekday_mapping[record.created_at.strftime("%a")]                )
+                  # change weekday from eng to chinese
+                  weekday_mapping = {
+                    'Mon' => '一',
+                    'Tue' => '二',
+                    'Wed' => '三',
+                    'Thu' => '四',
+                    'Fri' => '五',
+                    'Sat' => '六',
+                    'Sun' => '日'
+                  }
+                  answers_created_time = answers_created_time.sub(record.created_at.strftime("%a"), weekday_mapping[record.created_at.strftime("%a")]                )
 
-                element = { key: record.id, value: [answers_created_time, answers_use_time, answers_emoji_score] }
-                week_ans.push(element)
+                  element = { key: record.id, value: [answers_created_time, answers_use_time, answers_emoji_score] }
+                  week_ans.push(element)
+                end
               end
             end
+
+            binding.irb
 
             view 'my-history', engine: 'html.erb', locals: { 
               account: account, 
