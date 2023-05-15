@@ -316,6 +316,86 @@ ol.content-hieght {
 
 /* ============================ my history end ============================ */
 
+/* ============================ form record start ============================ */
+
+.form-record {
+    width: 88vw;
+    background: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+
+    display: flex;
+    flex-direction: column;
+    padding: 24px 18px;
+    gap: 18px;
+}
+
+.form-record-ans {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    gap: 8px;
+}
+
+.form-record-ans.detail-cards {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.detail-card {
+    width: 40vw;
+
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
+    padding: 10px 8px;
+    gap: 8px;
+
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.form-record-ans > p {
+    color: #A4A1A1;
+}
+
+.form-record-ans > ul {
+    color: #A4A1A1;
+    padding-left: 20px;
+}
+
+.form-record-ans > * > span {
+    font-weight: 700;
+    color: #F6BD2B;
+}
+
+.my-badge-div {
+    display: -webkit-box;
+    width: inherit;
+    height: fit-content;
+}
+
+.my-badge {
+    box-sizing: border-box;
+    width: fit-content;
+
+    /* Auto layout */
+    display: inline-block;
+    flex-direction: row;
+    padding: 8px 12px;
+    margin: 0 8px 8px 0;
+
+    background: #FEF8EA;
+    border: 1.5px solid #F6BD2B;
+    border-radius: 50px;
+    color: #F6BD2B;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+/* ============================ form record end ============================ */
+
 /* ============================ meditation start ============================ */
 
 .meditation-bottom-card {

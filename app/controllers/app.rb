@@ -205,8 +205,6 @@ module SoMate
               end
             end
 
-            binding.irb
-
             view 'my-history', engine: 'html.erb', locals: { 
               account: account, 
               records: records,
@@ -216,11 +214,6 @@ module SoMate
               date_end: date_end }
           end
         end
-      end
-
-      # questionnaire - question 2
-      routing.on 'my-history' do
-        
       end
 
       routing.on 'meditation' do
@@ -530,10 +523,17 @@ module SoMate
           # GET /form_record/#{record}
           routing.get do
             user = session[:watching]
+
+            records = user.owned_records
+            if !records.empty?
+              freeze_time = 12*60*60 # 12小時內無法填寫
+              is_record = records[-1].created_at + freeze_time > Time.now() ? true : false
+            end
+
             record = Database::RecordOrm.where(id: record).first
             record.update(access_time: record.access_time+1)
             answers = record.owned_answers.map(&:answer_content)
-            view 'form_record', engine: 'html.erb', locals: { user: user, record: record, answers: answers }
+            view 'form_record', engine: 'html.erb', locals: { user: user, record: record, is_record: is_record, answers: answers }
           end
         end
       end
