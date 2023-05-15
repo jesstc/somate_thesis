@@ -75,6 +75,14 @@ h3 {
     letter-spacing: 0.05em;
 }
 
+ul.content-hieght {
+    padding-left: 24px;
+}
+
+ol.content-hieght {
+    padding-left: 24px;
+}
+
 .content-hieght {
     font-weight: 500;
     font-size: 18px;
@@ -916,6 +924,7 @@ form {
 
 .modal-dialog {
     max-width: 80vw;
+    max-height: 80vh;
     margin: 0px;
     left: calc(50% - 80vw/2);
     top: 70px;
