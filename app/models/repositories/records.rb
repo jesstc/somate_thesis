@@ -22,9 +22,8 @@ module SoMate
       #   find_origin_id(entity.origin_id)
       # end
 
-      def self.find_id(id)
-        db_record = Database::RecordOrm.first(id: id)
-        rebuild_entity(db_record)
+      def self.find_by_date(start_date, end_date)
+        Database::RecordOrm.where(created_at: start_date..end_date).all
       end
 
       # def self.find_origin_id(origin_id)

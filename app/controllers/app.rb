@@ -142,10 +142,27 @@ module SoMate
             date_start = start_of_week.strftime('%m/%d')
             date_end = end_of_week.strftime('%m/%d')
 
+            week_records = Database::RecordOrm.where(created_at: start_of_week..end_of_week).all
+            week_ans = []
+            week_records.each do |record|
+              answersorm_use_time = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 1).first
+              answersorm_emoji_score = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 4).first
+
+              if !answersorm_use_time.nil? && !answersorm_emoji_score.nil?
+                answers_use_time = answersorm_use_time.answer_content
+                answers_emoji_score = answersorm_emoji_score.answer_content
+                answers_created_time = record.created_at.strftime("%m/%d (%a)")
+
+                element = { key: record.id, value: [answers_created_time, answers_use_time, answers_emoji_score] }
+                week_ans.push(element)
+              end
+            end
+
             view 'my-history', engine: 'html.erb', locals: { 
               account: account, 
-              records: records, 
+              records: records,
               is_record: is_record, 
+              week_ans: week_ans,
               date_start: date_start, 
               date_end: date_end }
           end

@@ -26,22 +26,24 @@
                     </a>
                 </div>
 
-                <div class="history-record">
-                    <p class="font small-btn-string">3/20 (一)</p>
-                    <div class="history-record-content">
-                        <div class="history-record-content-data">
-                            <div class="use-time">
-                                <img src="/history-use-time.png" width="32px">
-                                <p class="font content">111</p>
+                <% week_ans.each do |ans_record| %>
+                    <div class="history-record">
+                        <p class="font small-btn-string"><%= ans_record[:value][0] %></p>
+                        <div class="history-record-content">
+                            <div class="history-record-content-data">
+                                <div class="use-time">
+                                    <img src="/history-use-time.png" width="32px">
+                                    <p class="font content"><%= ans_record[:value][1] %></p>
+                                </div>
+                                <div class="emoji-score">
+                                    <img src="/history-emoji.png" width="32px">
+                                    <p class="font content"><%= ans_record[:value][2] %></p>
+                                </div>
                             </div>
-                            <div class="emoji-score">
-                                <img src="/history-emoji.png" width="32px">
-                                <p class="font content">3</p>
-                            </div>
+                            <img src="/countermeasure-alert-arrow.png" width="18px">
                         </div>
-                        <img src="/countermeasure-alert-arrow.png" width="18px">
                     </div>
-                </div>
+                <% end %>
             </div>
 
             <div class="navbar-div">
