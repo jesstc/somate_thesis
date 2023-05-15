@@ -58,17 +58,20 @@
                             <h3 class="font">我會有這些情緒和感受的原因是...</h3>
                             <p class="font content"><%= answers[5] %></p>
                         </div>
-                        <div class="form-record-ans">
-                            <h3 class="font">我想用 IG 的原因</h3>
-                            <p class="font content">
-                                <%= answers[6] %> <br>
-                                → 達成率：<span><%= answers[7] %>0%</span>
-                            </p>
-                        </div>
-                        <div class="form-record-ans">
-                            <h3 class="font">我覺得我可以改善使用 IG 時的情緒的方法是...</h3>
-                            <p class="font content"><%= answers[8].empty? ? "還不清楚" : answers[8] %></p>
-                        </div>
+                        
+                        <% if answers.length > 6 %>
+                            <div class="form-record-ans">
+                                <h3 class="font">我想用 IG 的原因</h3>
+                                <p class="font content">
+                                    <%= answers[6] %> <br>
+                                    → 達成率：<span><%= answers[7] %>0%</span>
+                                </p>
+                            </div>
+                            <div class="form-record-ans">
+                                <h3 class="font">我覺得我可以改善使用 IG 時的情緒的方法是...</h3>
+                                <p class="font content"><%= answers[8].empty? ? "還不清楚" : answers[8] %></p>
+                            </div>
+                        <% end %>
                     </div>
                 <% else %>
                     <p class="font content">尚無紀錄</p>
