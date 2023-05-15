@@ -153,6 +153,18 @@ module SoMate
                 answers_emoji_score = answersorm_emoji_score.answer_content
                 answers_created_time = record.created_at.strftime("%m/%d (%a)")
 
+                # change weekday from eng to chinese
+                weekday_mapping = {
+                  'Mon' => '一',
+                  'Tue' => '二',
+                  'Wed' => '三',
+                  'Thu' => '四',
+                  'Fri' => '五',
+                  'Sat' => '六',
+                  'Sun' => '日'
+                }
+                answers_created_time = answers_created_time.sub(record.created_at.strftime("%a"), weekday_mapping[record.created_at.strftime("%a")]                )
+
                 element = { key: record.id, value: [answers_created_time, answers_use_time, answers_emoji_score] }
                 week_ans.push(element)
               end
