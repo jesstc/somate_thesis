@@ -103,7 +103,7 @@ ol.content-hieght {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0px;
+    padding: 0 0 150px 0;
     gap: 16px;
 }
 
@@ -138,6 +138,11 @@ ol.content-hieght {
 }
 
 .visualization-div {
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+
+.visualization-card {
     width: 88vw;
     height: 47vh;
     background-color: white;
@@ -186,6 +191,13 @@ ol.content-hieght {
     background: #AACFD1;
 }
 
+.footer {
+    width: 88vw; 
+    font-weight: 700;
+    font-size: 8px;
+    color: #A4A1A1;
+    text-align: center;
+}
 /* ============================ homepage end ============================ */
 
 /* ============================ FoMO dictionary start ============================ */
