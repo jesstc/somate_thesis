@@ -73,7 +73,20 @@ module SoMate
             date_end = end_of_week.strftime('%m/%d')
 
             # get record and ans records
-            # week_records = Database::RecordOrm.where(owner_id: user.id).all
+            # week_records = Database::RecordOrm.where(Sequel.lit("STR_TO_DATE(record_date, '%m/%d') BETWEEN ? AND ?", start_of_week, end_of_week))
+            #                                   .where(owner_id: user.id).all
+            # if week_records.length != 0
+            #   week_records.each do |record|
+            #     use_moment = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 2).first
+            #     use_activities = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 3).first
+            #     use_moment = use_moment.answer_content
+            #     use_activities = use_activities.answer_content
+
+            #     use_moment_arr = use_moment.split("&")
+            #     use_activities_arr = use_activities.split("&")
+            #     binding.irb
+            #   end
+            # end
             # binding.irb
             
             view 'index', engine: 'html.erb', locals: { 
