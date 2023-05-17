@@ -60,8 +60,25 @@ module SoMate
               freeze_time = 12*60*60 # 12小時內無法填寫
               is_record = records[-1].created_at + freeze_time > Time.now() ? true : false
             end
+
+            # 算出一週的時間區間
+            current_date = Date.today
+            if current_date.strftime('%A') == "Sunday"
+              current_date -= 1
+            end
+            start_of_week = current_date - current_date.wday + 1
+            end_of_week = start_of_week + 6
+            # Format the dates as MM/DD
+            date_start = start_of_week.strftime('%m/%d')
+            date_end = end_of_week.strftime('%m/%d')
             
-            view 'index', engine: 'html.erb', locals: { user: user, records: records, account: user.url, is_record: is_record}
+            view 'index', engine: 'html.erb', locals: { 
+              user: user, 
+              records: records, 
+              account: user.url, 
+              date_start: date_start,
+              date_end: date_end,
+              is_record: is_record}
           end
         end
       end
@@ -120,21 +137,12 @@ module SoMate
                     if !answersorm_use_time.nil? && !answersorm_emoji_score.nil?
                       answers_use_time = answersorm_use_time.answer_content
                       answers_emoji_score = answersorm_emoji_score.answer_content
-                      answers_created_time = record.created_at.strftime("%m/%d (%a)")
 
                       # change weekday from eng to chinese
-                      weekday_mapping = {
-                        'Mon' => '一',
-                        'Tue' => '二',
-                        'Wed' => '三',
-                        'Thu' => '四',
-                        'Fri' => '五',
-                        'Sat' => '六',
-                        'Sun' => '日'
-                      }
-                      answers_created_time = answers_created_time.sub(record.created_at.strftime("%a"), weekday_mapping[record.created_at.strftime("%a")]                )
+                      weekday_mapping = { 'Mon' => '一', 'Tue' => '二', 'Wed' => '三', 'Thu' => '四', 'Fri' => '五', 'Sat' => '六', 'Sun' => '日' }
+                      answers_created_time = weekday_mapping[Time.parse(record.record_date).strftime("%a")]
 
-                      element = { key: record.id, value: [answers_created_time, answers_use_time, answers_emoji_score] }
+                      element = { key: record.id, value: [record.record_date, answers_created_time, answers_use_time, answers_emoji_score] }
                       week_ans.push(element)
                     end
                   end
@@ -185,21 +193,12 @@ module SoMate
                 if !answersorm_use_time.nil? && !answersorm_emoji_score.nil?
                   answers_use_time = answersorm_use_time.answer_content
                   answers_emoji_score = answersorm_emoji_score.answer_content
-                  answers_created_time = record.created_at.strftime("%m/%d (%a)")
 
                   # change weekday from eng to chinese
-                  weekday_mapping = {
-                    'Mon' => '一',
-                    'Tue' => '二',
-                    'Wed' => '三',
-                    'Thu' => '四',
-                    'Fri' => '五',
-                    'Sat' => '六',
-                    'Sun' => '日'
-                  }
-                  answers_created_time = answers_created_time.sub(record.created_at.strftime("%a"), weekday_mapping[record.created_at.strftime("%a")]                )
+                  weekday_mapping = { 'Mon' => '一', 'Tue' => '二', 'Wed' => '三', 'Thu' => '四', 'Fri' => '五', 'Sat' => '六', 'Sun' => '日' }
+                  answers_created_time = weekday_mapping[Time.parse(record.record_date).strftime("%a")]
 
-                  element = { key: record.id, value: [answers_created_time, answers_use_time, answers_emoji_score] }
+                  element = { key: record.id, value: [record.record_date, answers_created_time, answers_use_time, answers_emoji_score] }
                   week_ans.push(element)
                 end
               end
@@ -477,7 +476,15 @@ module SoMate
           routing.post do
             user = session[:watching]
             if user != nil
-              record = Database::RecordOrm.create(access_time: 0, owner_id: session[:watching].id, fill_time: routing.params["fill_time"])
+              # 確認該筆資料在統計圖表上要歸屬哪一天
+              current_date = Date.today
+              current_hour = Time.now.strftime("%H").to_i
+              if current_hour <= 14
+                current_date -= 1
+              end
+              record_date = current_date.strftime('%m/%d')
+
+              record = Database::RecordOrm.create(access_time: 0, owner_id: session[:watching].id, fill_time: routing.params["fill_time"], record_date: record_date)
               num = routing.params["question_num"].to_i #題數
               (1..num).each { |i| Database::AnswerOrm.create(recordbook_id: record.id, question_num: i, answer_content: routing.params["#{i}"])}
             end

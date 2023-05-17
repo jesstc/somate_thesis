@@ -10,6 +10,7 @@ Sequel.migration do
       
       Integer :access_time
       Float   :fill_time
+      String  :record_date
 
       DateTime :created_at
       DateTime :updated_at
