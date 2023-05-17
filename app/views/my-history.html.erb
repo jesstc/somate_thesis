@@ -29,16 +29,16 @@
                 <% if week_ans.length != 0 %>
                     <% week_ans.each do |ans_record| %>
                         <div class="history-record">
-                            <p class="font small-btn-string"><%= ans_record[:value][0] %></p>
+                            <p class="font small-btn-string"><%= ans_record[:value][0] %> (<%= ans_record[:value][1] %>)</p>
                             <div class="history-record-content">
                                 <div class="history-record-content-data">
                                     <div class="use-time">
                                         <img src="/history-use-time.png" width="32px">
-                                        <p class="font content"><%= ans_record[:value][1] %></p>
+                                        <p class="font content"><%= ans_record[:value][2] %></p>
                                     </div>
                                     <div class="emoji-score">
                                         <img src="/history-emoji.png" width="32px">
-                                        <p class="font content"><%= ans_record[:value][2] %></p>
+                                        <p class="font content"><%= ans_record[:value][3] %></p>
                                     </div>
                                 </div>
                                 <a href="/form_record/<%= ans_record[:key] %>">

@@ -15,6 +15,7 @@ module SoMate
       attribute :owner,       User
       attribute :access_time, Strict::Integer
       attribute :fill_time,   Strict::Float
+      attribute :record_date, Strict::String
 
       def to_attr_hash
         to_hash.reject { |key, _| %i[id owner].include? key }
