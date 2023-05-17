@@ -4,3 +4,4 @@ coverage/*
 !coverage/.resultset.json
 _snippets/
 *.db
+.DS_Store
