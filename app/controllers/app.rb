@@ -71,6 +71,10 @@ module SoMate
             # Format the dates as MM/DD
             date_start = start_of_week.strftime('%m/%d')
             date_end = end_of_week.strftime('%m/%d')
+
+            # get record and ans records
+            # week_records = Database::RecordOrm.where(owner_id: user.id).all
+            # binding.irb
             
             view 'index', engine: 'html.erb', locals: { 
               user: user, 
