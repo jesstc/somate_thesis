@@ -6,6 +6,8 @@ ruby File.read('.ruby-version').strip
 # Configuration and Utilities
 gem 'figaro', '~> 1.2'
 gem 'rake'
+gem 'rack', '3.0.0'
+gem 'rack-session', '2.0.0'
 
 # Web Application
 gem 'puma', '~> 5.5'
