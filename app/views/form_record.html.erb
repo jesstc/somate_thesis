@@ -11,7 +11,7 @@
                         <img src="/left-arrow.png" width="25px">
                     </a>
                     <% weekdays = {"Mon"=>"一", "Tue"=>"二", "Wed"=>"三", "Thu"=>"四", "Fri"=>"五", "Sat"=>"六", "Sun"=>"日"} %> 
-                    <h2 class="font" align="center"><%= record.created_at.strftime('%Y/%m/%d') %> (<%= weekdays[record.created_at.strftime('%a')] %>)</h2>
+                    <h2 class="font" align="center"><%= record.record_date %> (<%= weekdays[Time.parse(record.record_date).strftime("%a")] %>)</h2>
                     <img src="/left-arrow.png" width="25px" style="opacity: 0;">
                 </div>
 

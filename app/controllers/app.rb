@@ -56,10 +56,8 @@ module SoMate
 
             session[:watching] = user
             records = user.owned_records
-            if !records.empty?
-              freeze_time = 12*60*60 # 12小時內無法填寫
-              is_record = records[-1].created_at + freeze_time > Time.now() ? true : false
-            end
+            current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
+            is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
 
             # 算出一週的時間區間
             current_date = Date.today
@@ -73,20 +71,22 @@ module SoMate
             date_end = end_of_week.strftime('%m/%d')
 
             # get record and ans records
-            # week_records = Database::RecordOrm.where(Sequel.lit("STR_TO_DATE(record_date, '%m/%d') BETWEEN ? AND ?", start_of_week, end_of_week))
-            #                                   .where(owner_id: user.id).all
-            # if week_records.length != 0
-            #   week_records.each do |record|
-            #     use_moment = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 2).first
-            #     use_activities = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 3).first
-            #     use_moment = use_moment.answer_content
-            #     use_activities = use_activities.answer_content
+            week_records = Database::RecordOrm.where(Sequel.lit("record_date BETWEEN ? AND ?", start_of_week, end_of_week))
+                                              .where(owner_id: user.id).all
+                                              # binding.irb
+            
+            if week_records.length != 0
+              week_records.each do |record|
+                use_moment = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 2).first
+                use_activities = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 3).first
+                use_moment = use_moment.answer_content
+                use_activities = use_activities.answer_content
 
-            #     use_moment_arr = use_moment.split("&")
-            #     use_activities_arr = use_activities.split("&")
-            #     binding.irb
-            #   end
-            # end
+                use_moment_arr = use_moment.split("&")
+                use_activities_arr = use_activities.split("&")
+                # binding.irb
+              end
+            end
             # binding.irb
             
             view 'index', engine: 'html.erb', locals: { 
@@ -104,13 +104,16 @@ module SoMate
         # GET /fomo-dic
         routing.is do
           routing.get do
-            user = session[:watching]
+            user = Database::UserOrm.where(url: session[:watching].url).first
+            if user.nil?
+              routing.redirect "/error"
+              routing.halt 400
+            end
+            session[:watching] = user
             
             records = user.owned_records
-            if !records.empty?
-              freeze_time = 12*60*60 # 12小時內無法填寫
-              is_record = records[-1].created_at + freeze_time > Time.now() ? true : false
-            end
+            current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
+            is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
 
             countermeasures = Database::CountermeasureOrm.all
 
@@ -128,10 +131,9 @@ module SoMate
                 user = session[:watching]
 
                 records = user.owned_records
-                if !records.empty?
-                  freeze_time = 12*60*60 # 12小時內無法填寫
-                  is_record = records[-1].created_at + freeze_time > Time.now() ? true : false
-                end
+                current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
+                is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
+
                 pre_or_post = preorpost_currentstartday.split("&")[0]
                 start_of_week = Date.parse(preorpost_currentstartday.split("&")[1])
                 if pre_or_post == 'pre'
@@ -144,7 +146,7 @@ module SoMate
                 date_end = end_of_week.strftime('%m/%d')
 
                 # get the records from database
-                week_records = Database::RecordOrm.where(created_at: start_of_week..end_of_week).all
+                week_records = Database::RecordOrm.where(record_date: start_of_week..end_of_week).all
                 week_ans = []
                 if week_records.length != 0
                   week_records.each do |record|
@@ -158,8 +160,9 @@ module SoMate
                       # change weekday from eng to chinese
                       weekday_mapping = { 'Mon' => '一', 'Tue' => '二', 'Wed' => '三', 'Thu' => '四', 'Fri' => '五', 'Sat' => '六', 'Sun' => '日' }
                       answers_created_time = weekday_mapping[Time.parse(record.record_date).strftime("%a")]
+                      record_date = Time.parse(record.record_date).strftime("%m/%d")
 
-                      element = { key: record.id, value: [record.record_date, answers_created_time, answers_use_time, answers_emoji_score] }
+                      element = { key: record.id, value: [record_date, answers_created_time, answers_use_time, answers_emoji_score] }
                       week_ans.push(element)
                     end
                   end
@@ -183,10 +186,8 @@ module SoMate
             user = session[:watching]
 
             records = user.owned_records
-            if !records.empty?
-              freeze_time = 12*60*60 # 12小時內無法填寫
-              is_record = records[-1].created_at + freeze_time > Time.now() ? true : false
-            end
+            current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
+            is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
 
             # 算出一週的時間區間
             current_date = Date.today
@@ -200,7 +201,7 @@ module SoMate
             date_end = end_of_week.strftime('%m/%d')
 
             # get the records from database
-            week_records = Database::RecordOrm.where(created_at: start_of_week..end_of_week).all
+            week_records = Database::RecordOrm.where(record_date: start_of_week..end_of_week).all
             week_ans = []
             if week_records.length != 0
               week_records.each do |record|
@@ -214,8 +215,9 @@ module SoMate
                   # change weekday from eng to chinese
                   weekday_mapping = { 'Mon' => '一', 'Tue' => '二', 'Wed' => '三', 'Thu' => '四', 'Fri' => '五', 'Sat' => '六', 'Sun' => '日' }
                   answers_created_time = weekday_mapping[Time.parse(record.record_date).strftime("%a")]
+                  record_date = Time.parse(record.record_date).strftime("%m/%d")
 
-                  element = { key: record.id, value: [record.record_date, answers_created_time, answers_use_time, answers_emoji_score] }
+                  element = { key: record.id, value: [record_date, answers_created_time, answers_use_time, answers_emoji_score] }
                   week_ans.push(element)
                 end
               end
@@ -499,7 +501,7 @@ module SoMate
               if current_hour <= 14
                 current_date -= 1
               end
-              record_date = current_date.strftime('%m/%d')
+              record_date = current_date.strftime('%Y-%m-%d')
 
               record = Database::RecordOrm.create(access_time: 0, owner_id: session[:watching].id, fill_time: routing.params["fill_time"], record_date: record_date)
               num = routing.params["question_num"].to_i #題數
@@ -549,10 +551,8 @@ module SoMate
             user = session[:watching]
 
             records = user.owned_records
-            if !records.empty?
-              freeze_time = 12*60*60 # 12小時內無法填寫
-              is_record = records[-1].created_at + freeze_time > Time.now() ? true : false
-            end
+            current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
+            is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
 
             record = Database::RecordOrm.where(id: record).first
             record.update(access_time: record.access_time+1)

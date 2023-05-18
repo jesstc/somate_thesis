@@ -1,19 +1,10 @@
 ---
 - access_time: 0
-  owner_id: 1
-  record_date: "05/15"
+  owner_id: 15
+  record_date: "2023-05-14"
 - access_time: 0
-  owner_id: 2
-  record_date: "05/15"
+  owner_id: 15
+  record_date: "2023-05-15"
 - access_time: 0
-  owner_id: 3
-  record_date: "05/16"
-- access_time: 0
-  owner_id: 4
-  record_date: "05/17"
-- access_time: 0
-  owner_id: 5
-  record_date: "05/18"
-- access_time: 0
-  owner_id: 5
-  record_date: "05/19"
+  owner_id: 15
+  record_date: "2023-05-16"
