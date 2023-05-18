@@ -6,6 +6,10 @@
     padding-left: 0px;
 }
 
+.container-fluid > .up-container {
+    padding-top: 20vh;
+}
+
 .home_body {
     background-color: #D4E7E8;
     background-image: url("/home_background.png");
@@ -22,7 +26,6 @@
     background-attachment: fixed;
     background-position: 0px 97px;
     background-size: 100% auto;
-    margin-top: 35%;
 }
 
 body {
