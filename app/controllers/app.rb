@@ -42,91 +42,97 @@ module SoMate
             
             account = routing.params['account']
             user = Database::UserOrm.where(account: account).first
-            routing.redirect "index/#{user.url}"
+            routing.redirect "index/#{user.url}/current"
           end
         end
         routing.on String do |account|
-          # GET /index/account
-          routing.get do
-            user = Database::UserOrm.where(url: account).first
-            if user.nil?
-              routing.redirect "/error"
-              routing.halt 400
-            end
-
-            session[:watching] = user
-            records = user.owned_records
-            current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
-            is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
-
-            # 算出一週的時間區間
-            current_date = Date.today
-            if current_date.strftime('%A') == "Sunday"
-              current_date -= 1
-            end
-            start_of_week = current_date - current_date.wday + 1
-            end_of_week = start_of_week + 6
-            # Format the dates as MM/DD
-            date_start = start_of_week.strftime('%m/%d')
-            date_end = end_of_week.strftime('%m/%d')
-
-            # get record and ans records
-            week_records = Database::RecordOrm.where(Sequel.lit("record_date BETWEEN ? AND ?", start_of_week, end_of_week))
-                                              .where(owner_id: user.id).all
-            use_moment_arr = []
-            use_activities_arr = []
-            use_emo_feel_arr = []
-            if week_records.length != 0
-              week_records.each do |record|
-                use_moment = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 2).first
-                use_activities = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 3).first
-                use_emo_feel = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 5).first
-                use_moment = use_moment.answer_content
-                use_activities = use_activities.answer_content
-                use_emo_feel = use_emo_feel.answer_content
-
-                use_moment.split("|").each { |moment| use_moment_arr.push(moment)}
-                use_activities.split("|").each { |activity| use_activities_arr.push(activity)}
-                use_emo_feel.split("|").each { |line| use_emo_feel_arr.push(line)}
+          routing.on String do |date|
+            # GET /index/#{account}/#{date}
+            routing.get do
+              user = Database::UserOrm.where(url: account).first
+              if user.nil?
+                routing.redirect "/error"
+                routing.halt 400
               end
-            end
 
-            # viz 2 data process
-            # count all activity in the current week and sort 
-            activity_count = Hash.new(0)
-            use_activities_arr.each { |activity| activity_count[activity] += 1 }
-            activity_count = activity_count.sort_by { |key, value| -value }
-            moment_count = Hash.new(0)
-            use_moment_arr.each { |moment| moment_count[moment] += 1 }
-            moment_count = moment_count.sort_by { |key, value| -value }
-            # check max index (前三名)
-            activity_max = 3
-            moment_max = 3
-            activity_count.each_with_index do |ele, index|
-              if index == activity_max
-                previous_count = activity_count[index-1][1]
-                current_count = ele[1]
-                activity_max = previous_count == current_count ? index + 1 : activity_max
-              end
-            end
-            moment_count.each_with_index do |ele, index|
-              if index == moment_max
-                previous_count = moment_count[index-1][1]
-                current_count = ele[1]
-                moment_max = previous_count == current_count ? index + 1 : moment_max
-              end
-            end
+              session[:watching] = user
+              records = user.owned_records
+              current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
+              is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
 
-            viz_2 = {activity_max: activity_max, activities: activity_count, moment_max: moment_max, moments: moment_count}
-            
-            view 'index', engine: 'html.erb', locals: { 
-              user: user, 
-              records: records, 
-              account: user.url, 
-              viz_2: viz_2,
-              date_start: date_start,
-              date_end: date_end,
-              is_record: is_record}
+              # 算出一週的時間區間
+              current_date = date == "current" ? Date.today : Date.parse(date)
+              if current_date.strftime('%A') == "Sunday"
+                current_date -= 1
+              end
+              start_of_week = current_date - current_date.wday + 1
+              end_of_week = start_of_week + 6
+              # Format the dates as MM/DD
+              date_start = start_of_week.strftime('%m/%d')
+              date_end = end_of_week.strftime('%m/%d')
+
+              # get record and ans records
+              week_records = Database::RecordOrm.where(Sequel.lit("record_date BETWEEN ? AND ?", start_of_week, end_of_week))
+                                                .where(owner_id: user.id).all
+              use_moment_arr = []
+              use_activities_arr = []
+              use_emo_feel_arr = []
+              if week_records.length != 0
+                has_data = true
+                week_records.each do |record|
+                  use_moment = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 2).first
+                  use_activities = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 3).first
+                  use_emo_feel = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 5).first
+                  use_moment = use_moment.answer_content
+                  use_activities = use_activities.answer_content
+                  use_emo_feel = use_emo_feel.answer_content
+
+                  use_moment.split("|").each { |moment| use_moment_arr.push(moment)}
+                  use_activities.split("|").each { |activity| use_activities_arr.push(activity)}
+                  use_emo_feel.split("|").each { |line| use_emo_feel_arr.push(line)}
+                end
+              else
+                has_data = false
+              end
+
+              # viz 2 data process
+              # count all activity in the current week and sort 
+              activity_count = Hash.new(0)
+              use_activities_arr.each { |activity| activity_count[activity] += 1 }
+              activity_count = activity_count.sort_by { |key, value| -value }
+              moment_count = Hash.new(0)
+              use_moment_arr.each { |moment| moment_count[moment] += 1 }
+              moment_count = moment_count.sort_by { |key, value| -value }
+              # check max index (前三名)
+              activity_max = 3
+              moment_max = 3
+              activity_count.each_with_index do |ele, index|
+                if index == activity_max
+                  previous_count = activity_count[index-1][1]
+                  current_count = ele[1]
+                  activity_max = previous_count == current_count ? index + 1 : activity_max
+                end
+              end
+              moment_count.each_with_index do |ele, index|
+                if index == moment_max
+                  previous_count = moment_count[index-1][1]
+                  current_count = ele[1]
+                  moment_max = previous_count == current_count ? index + 1 : moment_max
+                end
+              end
+
+              viz_2 = {activity_max: activity_max, activities: activity_count, moment_max: moment_max, moments: moment_count}
+              
+              view 'index', engine: 'html.erb', locals: { 
+                has_data: has_data,
+                user: user, 
+                records: records, 
+                account: user.url, 
+                viz_2: viz_2,
+                date_start: date_start,
+                date_end: date_end,
+                is_record: is_record}
+            end
           end
         end
       end
