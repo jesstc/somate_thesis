@@ -11,47 +11,65 @@
 
             <div class="visualization-div">
                 <div class="visualization-card">
-                    <div class="page-title" style="width:100%; padding: 0 0 8px 0;">
+                    <div class="page-title" style="width:100%;">
                         <img src="/date-left-arrow.png" width="18px">
                         <p class="font remark-string" align="center" style="color: #A4A1A1;">
                             <%= date_start %>（一）～ <%= date_end %>（日）
                         </p>
                         <img src="/date-right-arrow.png" width="18px">
                     </div>
-                    <h3 class="font">使用時間＆情緒</h3>
+                    <h3 class="font viz-title">使用時間＆情緒</h3>
 
 
                 </div>
 
                 <div class="visualization-card">
-                    <div class="page-title" style="width:100%; padding: 0 0 8px 0;">
+                    <div class="page-title" style="width:100%;">
                         <img src="/date-left-arrow.png" width="18px">
                         <p class="font remark-string" align="center" style="color: #A4A1A1;">
                             <%= date_start %>（一）～ <%= date_end %>（日）
                         </p>
                         <img src="/date-right-arrow.png" width="18px">
                     </div>
-                    <h3 class="font">我通常在 IG 做的事</h3>
-                    
 
-                    <h3 class="font">常用 IG 的時段</h3>
+                    <h3 class="font viz-title">我通常在 IG 做的事</h3>
+                    <div class="activities-viz-div">
+                    <% viz_2[:activities].each_with_index do |activity, index| %>
+                        <% if index < viz_2[:activity_max] %>
+                            <div class="activities-viz-line">
+                                <div class="activities-viz-num"><%= index + 1 %></div>
+                                <div class="font content activities-viz-text"><%= activity[0] %></div>
+                            </div>
+                        <% end %>
+                    <% end %>
+                    </div>
+
+                    <h3 class="font viz-title">常用 IG 的時段</h3>
+                    
+                    <div class="my-badge-div">
+                    <% viz_2[:moments].each_with_index do |moment, index| %>
+                        <% if index < viz_2[:moment_max] %>
+                            <div class="font my-badge"><%= moment[0] %></div>
+                        <% end %>
+                    <% end %>
+                    </div>
                     
                 </div>
 
                 <div class="visualization-card">
-                    <div class="page-title" style="width:100%; padding: 0 0 8px 0;">
+                    <div class="page-title" style="width:100%;">
                         <img src="/date-left-arrow.png" width="18px">
                         <p class="font remark-string" align="center" style="color: #A4A1A1;">
                             <%= date_start %>（一）～ <%= date_end %>（日）
                         </p>
                         <img src="/date-right-arrow.png" width="18px">
                     </div>
-                    <h3 class="font">我在 IG 做的事＆情緒</h3>
+                    <h3 class="font viz-title">我在 IG 做的事＆情緒</h3>
                     
                 </div>
 
                 <div class="visualization-card">
-                    <div class="page-title" style="width:100%; padding: 0 0 8px 0;">
+                    <div class="page-title" style="width:100%;">
                         <img src="/date-left-arrow.png" width="18px">
                         <p class="font remark-string" align="center" style="color: #A4A1A1;">
                             <%= date_start %>（一）～ <%= date_end %>（日）

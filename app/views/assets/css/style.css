@@ -198,6 +198,51 @@ ol.content-hieght {
     color: #A4A1A1;
     text-align: center;
 }
+
+.viz-title {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+/* Viz - 2 */
+.activities-viz-div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.activities-viz-line {
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 12px;
+}
+
+.activities-viz-num {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: #F6BD2B;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 29px;
+    color: white;
+}
+
+.activities-viz-text {
+    color: #A4A1A1;
+    width: 65vw;
+}
+
 /* ============================ homepage end ============================ */
 
 /* ============================ FoMO dictionary start ============================ */
@@ -383,9 +428,10 @@ ol.content-hieght {
 }
 
 .my-badge-div {
-    display: -webkit-box;
+    display: flex;
     width: inherit;
     height: fit-content;
+    flex-wrap: wrap;
 }
 
 .my-badge {

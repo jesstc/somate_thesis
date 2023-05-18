@@ -24,7 +24,7 @@
   answer_content: '早上起床後 15 分鐘內|吃午餐時|吃晚餐時|早上上廁所時|晚上通勤時'
   question_num: 2
 - recordbook_id: 2
-  answer_content: '發佈限時動態|發佈貼文|瀏覽朋友的限時動態'
+  answer_content: '發佈限時動態|發佈貼文|瀏覽朋友的限時動態|發佈短片 (Reels)'
   question_num: 3
 - recordbook_id: 2
   answer_content: '4'
@@ -51,7 +51,7 @@
   answer_content: '早上起床後 15 分鐘內|吃晚餐時|早上上廁所時|晚上通勤時'
   question_num: 2
 - recordbook_id: 3
-  answer_content: '發佈限時動態|發佈貼文|瀏覽朋友的限時動態'
+  answer_content: '發佈限時動態|發佈貼文|瀏覽朋友的限時動態|發佈短片 (Reels)'
   question_num: 3
 - recordbook_id: 3
   answer_content: '8'
