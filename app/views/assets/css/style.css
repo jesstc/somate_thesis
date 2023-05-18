@@ -206,6 +206,7 @@ ol.content-hieght {
 
 /* Viz - 2 */
 .activities-viz-div {
+    width: 80vw;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -241,6 +242,55 @@ ol.content-hieght {
 .activities-viz-text {
     color: #A4A1A1;
     width: 65vw;
+}
+
+.visualization-card > .my-badge-div {
+    width: 80vw;
+}
+
+/* Viz - 4 */
+
+.emofeel-viz-div {
+    width: 80vw;
+    height: 65vw;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0 0 0;
+}
+
+.emofeel-right {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 12px;
+}
+
+.emofeel-right-top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 3px;
+}
+
+.emofeel-right-top > p {
+    color: #A4A1A1;
+}
+
+.emofeel-select {
+    width: 40vw;
+    height: 28px;
+
+    background-color: #F6F6F6;
+    color: #A4A1A1;
+    border: 1px solid #A4A1A1;
+    border-radius: 5px;
 }
 
 /* ============================ homepage end ============================ */
