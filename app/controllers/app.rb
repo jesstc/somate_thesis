@@ -36,9 +36,7 @@ module SoMate
           # POST /index/
           routing.post do
             # load testing data
-            if ENV['RACK_ENV'] == "development"
-              SoMate::InitializeDatabase::Create.load
-            end
+            SoMate::InitializeDatabase::Create.load
             
             account = routing.params['account']
             user = Database::UserOrm.where(account: account).first
