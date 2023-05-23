@@ -131,12 +131,28 @@
                                         <option value="H">Ｈ: 腰</option>
                                         <option value="I">Ｉ: 下肢</option>
                                     </select>
-                                    <p class="font remark-string">平均開心程度：<span style="color: #FF4A3E;">3.5</span> /10 分</p>
-                                </div>
-                                <div class="form-record-ans">
-                                    <p class="font content">
-                                    ddddd
+                                    <p class="font remark-string">平均開心程度:
+                                        <span class="happy-avg" style="color: #FF4A3E;">
+                                            <% if viz_4[:emofeel_by_bodyparts]["A"] != 0 %>
+                                                <% happy_score_arr = viz_4[:emofeel_by_bodyparts]["A"][:happy_score] %>
+                                                <%= happy_score_arr.reduce(0, :+) / happy_score_arr.size.to_f %>
+                                            <% else %>
+                                                -
+                                            <% end %>
+                                        </span>
+                                        /10 分
                                     </p>
+                                </div>
+                                <div class="form-record-ans emo-feel-lines">
+                                    <% if viz_4[:emofeel_by_bodyparts]["A"] != 0 %>
+                                        <% viz_4[:emofeel_by_bodyparts]["A"][:emo_feel].each do |line| %>
+                                            <p class="font content">
+                                                <span> <%= line[1] %> </span> 因為 <span> <%= line[0] %> </span> 
+                                            </p>
+                                        <% end %>
+                                    <% else %>
+                                        <p class="font content no-record-text">查無紀錄資料</p>
+                                    <% end %>
                                 </div>
                             </div>
                         <% else %>

@@ -75,19 +75,27 @@ module SoMate
               use_moment_arr = []
               use_activities_arr = []
               use_emo_feel_arr = []
+              current_week_records = Hash.new(0)
               if week_records.length != 0
                 has_data = true
                 week_records.each do |record|
-                  use_moment = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 2).first
-                  use_activities = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 3).first
-                  use_emo_feel = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 5).first
-                  use_moment = use_moment.answer_content
-                  use_activities = use_activities.answer_content
-                  use_emo_feel = use_emo_feel.answer_content
-
+                  use_time = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 1).first.answer_content
+                  use_moment = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 2).first.answer_content
+                  use_activities = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 3).first.answer_content
+                  happy_score = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 4).first.answer_content
+                  use_emo_feel = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 5).first.answer_content
+                  
+                  # get all use_moment & use_activities for viz_2
                   use_moment.split("|").each { |moment| use_moment_arr.push(moment)}
                   use_activities.split("|").each { |activity| use_activities_arr.push(activity)}
-                  use_emo_feel.split("|").each { |line| use_emo_feel_arr.push(line)}
+
+                  current_week_records[record.record_date] = {
+                    use_time: use_time.to_i,
+                    use_moments: use_moment.split("|"),
+                    use_activities: use_activities.split("|"),
+                    happy_score: happy_score.to_i,
+                    use_emo_feel: use_emo_feel.split("|")
+                  }
                 end
               else
                 has_data = false
@@ -118,8 +126,27 @@ module SoMate
                   moment_max = previous_count == current_count ? index + 1 : moment_max
                 end
               end
-
               viz_2 = {activity_max: activity_max, activities: activity_count, moment_max: moment_max, moments: moment_count}
+              
+              # viz 4 data process
+              # get the emotions and feelings and sort by bodyparts
+              emo_feel_by_bodyparts = Hash.new(0)
+              emo_feel_arr = []
+              current_week_records.each do |record_date, content|
+                content[:use_emo_feel].each do |emo_feel|
+                  emo_feel_arr = emo_feel.split("&")
+
+                  if emo_feel_by_bodyparts[emo_feel_arr[1]] == 0
+                    emo_feel_by_bodyparts[emo_feel_arr[1]] = {}
+                    emo_feel_by_bodyparts[emo_feel_arr[1]][:happy_score] = []
+                    emo_feel_by_bodyparts[emo_feel_arr[1]][:emo_feel] = []
+                  end
+
+                  emo_feel_by_bodyparts[emo_feel_arr[1]][:happy_score].push(content[:happy_score])
+                  emo_feel_by_bodyparts[emo_feel_arr[1]][:emo_feel].push([emo_feel_arr[0], emo_feel_arr[2]])
+                end
+              end
+              viz_4 = {emofeel_by_bodyparts: emo_feel_by_bodyparts}
               
               view 'index', engine: 'html.erb', locals: { 
                 has_data: has_data,
@@ -127,6 +154,7 @@ module SoMate
                 records: records, 
                 account: user.url, 
                 viz_2: viz_2,
+                viz_4: viz_4,
                 date_start: date_start,
                 date_end: date_end,
                 is_record: is_record}
