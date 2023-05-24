@@ -107,7 +107,7 @@
                         <a href="/index/<%= account %>/<%= Date.strptime(date_start, '%m/%d') - 7 %>">
                             <img src="/date-left-arrow.png" width="18px">
                         </a>
-                        <p class="font remark-string" align="center" style="color: #A4A1A1;">
+                        <p class="font remark-string viz-4-date" align="center" style="color: #A4A1A1;" start-date="<%= date_start %>" end-date="<%= date_end %>">
                             <%= date_start %>（一）～ <%= date_end %>（日）
                         </p>
                         <a href="/index/<%= account %>/<%= Date.strptime(date_start, '%m/%d') + 7 %>">
@@ -135,7 +135,7 @@
                                         <span class="happy-avg" style="color: #FF4A3E;">
                                             <% if viz_4[:emofeel_by_bodyparts]["A"] != 0 %>
                                                 <% happy_score_arr = viz_4[:emofeel_by_bodyparts]["A"][:happy_score] %>
-                                                <%= happy_score_arr.reduce(0, :+) / happy_score_arr.size.to_f %>
+                                                <%= (happy_score_arr.reduce(0, :+) / happy_score_arr.size.to_f).round(1) %>
                                             <% else %>
                                                 -
                                             <% end %>
@@ -187,10 +187,46 @@
                 © Copyright 2023 NTHU ISS - SoMate Research Team
             </p>
         </div>
-
         
     </div>
     <script>
-        
+        $(".emofeel-select").on("change", function(){
+            var selected_bodypart = $(this).val();
+            var lines_content = "";
+            var happy_avg = "";
+
+            // get value from ruby
+            $.ajax({
+                type: 'POST',
+                url: '/get-viz4-arr',
+                data: { 
+                    selected_bodypart: selected_bodypart,
+                    start_date: $(".viz-4-date").attr("start-date"),
+                    end_date: $(".viz-4-date").attr("end-date"),
+                    userid: <%= user.id %>
+                },
+                success: function(response) {
+                    if (response != "{}") {
+                        response_arr = JSON.parse(response)
+                        emo_feel = response_arr[selected_bodypart]["emo_feel"];
+                        happy_avg = response_arr[selected_bodypart]["happy_score"];
+                        emo_feel.forEach(function(line) {
+                            lines_content += `<p class="font content">
+                                                <span> ${line[1]} </span> 因為 <span> ${line[0]} </span> 
+                                            </p>`;
+                        });
+                    } else {
+                        happy_avg = '-'
+                        lines_content = '<p class="font content no-record-text" style="padding:0;">（無資料）</p>';
+                    }
+
+                    // update the contents (viz_4)
+                    $(".happy-avg").html(happy_avg);
+                    $(".emo-feel-lines").html(lines_content);
+                },
+                error: function(xhr, status, error) {
+                }
+            });
+        });
     </script>
 </body>

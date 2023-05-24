@@ -4,6 +4,7 @@ require 'roda'
 require 'html'
 require 'yaml'
 require 'date'
+require 'json'
 
 module SoMate
   # Web App
@@ -27,6 +28,62 @@ module SoMate
         routing.is do
           routing.get do
             view 'error', engine: 'html.erb'
+          end
+        end
+      end
+
+      routing.on 'get-viz4-arr' do
+        routing.is do
+          # POST /get-viz4-arr/
+          routing.post do
+            # selected_bodypart = params[:selected_opt]
+            selected_bodypart = routing.params['selected_bodypart']
+            start_date = Date.strptime(routing.params['start_date'], "%m/%d")
+            end_date = Date.strptime(routing.params['end_date'], "%m/%d")
+            userid = routing.params['userid']
+
+            # viz 4 data process
+            current_week_records = Hash.new(0)
+            week_records = Database::RecordOrm.where(Sequel.lit("record_date BETWEEN ? AND ?", start_date, end_date))
+                                              .where(owner_id: userid).all
+            if week_records.length != 0
+              week_records.each do |record|
+                happy_score = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 4).first.answer_content
+                use_emo_feel = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 5).first.answer_content
+                
+                current_week_records[record.record_date] = {
+                  happy_score: happy_score.to_i,
+                  use_emo_feel: use_emo_feel.split("|")
+                }
+              end
+            end
+
+            # get the emotions and feelings and sort by bodyparts
+            emo_feel_hash = Hash.new(0)
+            emo_feel_arr = []
+            current_week_records.each do |record_date, content|
+              content[:use_emo_feel].each do |emo_feel|
+                emo_feel_arr = emo_feel.split("&")
+
+                if emo_feel_arr[1] == selected_bodypart
+                  if emo_feel_hash[emo_feel_arr[1]] == 0
+                    emo_feel_hash[emo_feel_arr[1]] = {}
+                    emo_feel_hash[emo_feel_arr[1]][:happy_score] = [] 
+                    emo_feel_hash[emo_feel_arr[1]][:emo_feel] = []
+                  end
+                  emo_feel_hash[emo_feel_arr[1]][:happy_score].push(content[:happy_score])
+                  emo_feel_hash[emo_feel_arr[1]][:emo_feel].push([emo_feel_arr[0], emo_feel_arr[2]])
+                end
+              end
+            end
+
+            # 直接計算 happy score 的平均值
+            if emo_feel_hash.length != 0
+              happy_score_arr = emo_feel_hash[selected_bodypart][:happy_score]
+              emo_feel_hash[selected_bodypart][:happy_score] = (happy_score_arr.reduce(0, :+) / happy_score_arr.size.to_f).round(1)
+            end
+
+            emo_feel_hash.to_json
           end
         end
       end
@@ -74,7 +131,6 @@ module SoMate
                                                 .where(owner_id: user.id).all
               use_moment_arr = []
               use_activities_arr = []
-              use_emo_feel_arr = []
               current_week_records = Hash.new(0)
               if week_records.length != 0
                 has_data = true
