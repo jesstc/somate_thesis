@@ -211,7 +211,6 @@ module SoMate
                 end
               end
               viz_4 = {emofeel_by_bodyparts: emo_feel_by_bodyparts}
-              binding.irb
               
               view 'index', engine: 'html.erb', locals: { 
                 has_data: has_data,
