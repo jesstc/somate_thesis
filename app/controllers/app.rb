@@ -202,7 +202,16 @@ module SoMate
                   emo_feel_by_bodyparts[emo_feel_arr[1]][:emo_feel].push([emo_feel_arr[0], emo_feel_arr[2]])
                 end
               end
+
+              # 直接計算 happy score 的平均值
+              if emo_feel_by_bodyparts.length != 0
+                emo_feel_by_bodyparts.each do |bodypart, happyscore_emofeel|
+                  happy_score_arr = happyscore_emofeel[:happy_score]
+                  happyscore_emofeel[:happy_score] = (happy_score_arr.reduce(0, :+) / happy_score_arr.size.to_f).round(1)
+                end
+              end
               viz_4 = {emofeel_by_bodyparts: emo_feel_by_bodyparts}
+              binding.irb
               
               view 'index', engine: 'html.erb', locals: { 
                 has_data: has_data,

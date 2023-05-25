@@ -117,7 +117,7 @@
                     <h3 class="font">我上週的身體感受與情緒</h3>
                     <div class="emofeel-viz-div">
                         <% if has_data %>
-                            <img src="/viz-body.svg" height="90%">
+                            <img src="/viz-body.svg" height="95%">
                             <div class="emofeel-right">
                                 <div class="emofeel-right-top">
                                     <select class="emofeel-select" name="body_part">
@@ -134,8 +134,7 @@
                                     <p class="font remark-string">平均開心程度:
                                         <span class="happy-avg" style="color: #FF4A3E;">
                                             <% if viz_4[:emofeel_by_bodyparts]["A"] != 0 %>
-                                                <% happy_score_arr = viz_4[:emofeel_by_bodyparts]["A"][:happy_score] %>
-                                                <%= (happy_score_arr.reduce(0, :+) / happy_score_arr.size.to_f).round(1) %>
+                                                <%= viz_4[:emofeel_by_bodyparts]["A"][:happy_score] %>
                                             <% else %>
                                                 -
                                             <% end %>
