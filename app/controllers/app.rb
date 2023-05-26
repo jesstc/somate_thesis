@@ -180,7 +180,6 @@ module SoMate
                 end
 
                 # generate week_happy_scores
-                # week_happy_scores[index] = {x: weekdays[index], y: current_happy_score, image: '../views/public/emoji-happy.png'}
                 week_happy_scores[index] = current_happy_score
               end
               viz_1 = { data: {
@@ -218,7 +217,52 @@ module SoMate
                 end
               end
               viz_2 = {activity_max: activity_max, activities: activity_count, moment_max: moment_max, moments: moment_count}
-              
+
+              # viz 3 data process
+              all_activities = ["發佈限時動態", "發佈貼文", "發佈短片 (Reels)", "回覆或按讚朋友的訊息/限時動態/貼文/短片 (Reels)", 
+                                "查看通知 (追蹤要求、貼文通知)", "瀏覽朋友的限時動態", "瀏覽朋友的短片 (Reels) 或貼文",
+                                "瀏覽其他人（非朋友）的限時動態/連續短片/貼文", "購物"]
+              activities_times = activity_count.to_h   # 這週在 IG 上所有有做過的事情 & 次數
+              # 這週做的事情對應到的 happy_score
+              activities_happyscore = {}
+              current_week_records.each do |date, record|
+                record[:use_activities].each do |activity|
+                  if activities_happyscore[activity].nil?   # array 還沒有這個值
+                    activities_happyscore[activity] = [record[:happy_score]]
+                  else
+                    activities_happyscore[activity].push(record[:happy_score])
+                  end
+                end
+              end
+              # 算 happy_score 的平均
+              activities_happyscore.each do |activity, happy_scores|
+                activities_happyscore[activity] = (happy_scores.reduce(0, :+) / happy_scores.size.to_f).round(1)
+              end
+              # 這週沒有做過的事情
+              activities_havenot_done = []
+              all_activities.each do |activity|
+                if activities_times[activity].nil?
+                  activities_havenot_done.push(activity)
+                end
+              end
+              # 根據上面的資料取出 viz_3 要用到的資料
+              label_activities = []
+              count_times = []
+              avg_happy_scores = []
+              activities_times.each do |activity, count_time|
+                label_activities.push(activity)
+                count_times.push(count_time)
+                avg_happy_scores.push(activities_happyscore[activity])
+              end
+              viz_3 = { data: {
+                          labels: label_activities, 
+                          datasets: [
+                            {type: "line", yAxisID: "line-y-axis", label: "平均情緒", borderColor: "#484848", backgroundColor: "#484848", borderWidth: 3, data: avg_happy_scores},
+                            {type: "bar", yAxisID: "bar-y-axis", label: "做的次數 (天/週)", backgroundColor: "#AACFD1", data: count_times}
+                        ]},
+                        activities_havenot_done: activities_havenot_done
+                      }
+
               # viz 4 data process
               # get the emotions and feelings and sort by bodyparts
               emo_feel_by_bodyparts = Hash.new(0)
@@ -254,6 +298,7 @@ module SoMate
                 account: user.url, 
                 viz_1: viz_1,
                 viz_2: viz_2,
+                viz_3: viz_3,
                 viz_4: viz_4,
                 date_start: date_start,
                 date_end: date_end,
