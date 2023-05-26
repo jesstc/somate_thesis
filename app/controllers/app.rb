@@ -150,12 +150,47 @@ module SoMate
                     use_moments: use_moment.split("|"),
                     use_activities: use_activities.split("|"),
                     happy_score: happy_score.to_i,
-                    use_emo_feel: use_emo_feel.split("|")
+                    use_emo_feel: use_emo_feel.split("|"),
+                    record_id: record.id
                   }
                 end
               else
                 has_data = false
               end
+              
+              # viz 1 data process
+              week_happy_scores = []
+              week_use_times = []
+              record_ids = []
+              weekdays = [start_of_week, start_of_week+1, start_of_week+2, start_of_week+3, start_of_week+4, start_of_week+5, end_of_week]
+              weekdays.each_with_index do |date, index|
+                # generate weekdays
+                weekdays[index] = date.strftime('%m/%d')
+
+                # generate week_use_times
+                current_week_records_index = date.strftime('%Y-%m-%d')
+                if current_week_records[current_week_records_index] != 0
+                  week_use_times[index] = current_week_records[current_week_records_index][:use_time]
+                  current_happy_score = current_week_records[current_week_records_index][:happy_score]
+                  record_ids[index] = current_week_records[current_week_records_index][:record_id]
+                else
+                  week_use_times[index] = 0
+                  current_happy_score = 0
+                  record_ids[index] = 0
+                end
+
+                # generate week_happy_scores
+                # week_happy_scores[index] = {x: weekdays[index], y: current_happy_score, image: '../views/public/emoji-happy.png'}
+                week_happy_scores[index] = current_happy_score
+              end
+              viz_1 = { data: {
+                          labels: weekdays, 
+                          datasets: [
+                            {type: "line", yAxisID: "line-y-axis", label: "情緒", borderColor: "#484848", backgroundColor: "#484848", borderWidth: 3, data: week_happy_scores},
+                            {type: "bar", yAxisID: "bar-y-axis", label: "使用時間 (mins)", backgroundColor: "#AACFD1", data: week_use_times}
+                        ]},
+                        record_ids: record_ids
+                      }
 
               # viz 2 data process
               # count all activity in the current week and sort 
@@ -217,6 +252,7 @@ module SoMate
                 user: user, 
                 records: records, 
                 account: user.url, 
+                viz_1: viz_1,
                 viz_2: viz_2,
                 viz_4: viz_4,
                 date_start: date_start,

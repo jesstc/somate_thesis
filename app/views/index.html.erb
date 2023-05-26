@@ -26,7 +26,7 @@
                     <h3 class="font viz-title">使用時間與情緒</h3>
                     <div class="timeemo-viz-div">
                         <% if has_data %>
-                        
+                            <canvas id="viz-1-chart" ></canvas>
                         <% else %>
                             <p class="font content no-record-text">查無紀錄資料</p>
                         <% end %>
@@ -94,7 +94,7 @@
                     </div>
                     <h3 class="font viz-title">我在 IG 做的事與情緒</h3>
                         <% if has_data %>
-                        
+                            <canvas id="viz-3-chart" ></canvas>
                         <% else %>
                             <p class="font content no-record-text">查無紀錄資料</p>
                         <% end %>
@@ -276,8 +276,96 @@
             });
         });
 
-        // change bodyparts visualization svg fill color
         $(document).ready(function() {
+            // viz 1 chart
+            var data_viz1 = <%= viz_1[:data].to_json %>;
+
+            // 根據 data 看 line chart 對應的點的圖片要顯示哪一個
+            const pointImg_happy = new Image(28, 28);
+            const pointImg_normal = new Image(28, 28);
+            const pointImg_unhappy = new Image(28, 28);
+            pointImg_happy.src = "/emoji-happy.png";
+            pointImg_normal.src = "/emoji-normal.png";
+            pointImg_unhappy.src = "/emoji-unhappy.png";
+            var happy_scores_arr = data_viz1.datasets[0].data;
+            var line_points = [];
+            happy_scores_arr.forEach(function(current_happy_score) {
+                if(current_happy_score == 0) {
+                    line_points.push("line");
+                } else if(current_happy_score == 5) {
+                    line_points.push(pointImg_happy);
+                }  else if(current_happy_score > 5) {
+                    line_points.push(pointImg_happy);
+                } else {
+                    line_points.push(pointImg_unhappy);
+                }
+            });
+
+            var options_viz1 = {
+                responsive: true,
+                maintainAspectRatio: false,
+                elements: {
+                    point: {
+                        pointStyle: line_points     // line chart 上每個點對應的圖示
+                    }
+                },
+                scales: {
+                    "bar-y-axis": { position: 'left', display: false, },
+                    "line-y-axis": { position: 'right', display: false, min: 0, max: 10 }
+                },
+                onClick: function(event, elements) {
+                    // 導向至當天詳細的內容
+                    var clickedIndex = elements[0].index;
+                    var record_ids = <%= viz_1[:record_ids].to_json %>;
+                    if (typeof(clickedIndex) === typeof(0) && record_ids[clickedIndex] != 0) {
+                        // record_ids[clickedIndex] ==0 >> 沒有資料
+                        window.location.href = "/form_record/" + record_ids[clickedIndex];
+                    }
+                },
+                plugins: {
+                    // data labels
+                    datalabels: {
+                        anchor: "end",
+                        align: "start",
+                        offset: "1",
+                        color: "red",
+                        font: {
+                            family: 'Noto Sans',
+                            style: 'normal',
+                            weight: '700',
+                            size: 13,
+                            lineHeight: 18
+                        },
+                        formatter: function(value, context) {
+                            // 檢查資料集索引以判斷是否要顯示標籤
+                            if (context.datasetIndex === 0) {
+                                return ''; // 取消特定資料集的標籤，返回空字串
+                            } else {
+                                return value === 0 ? '' : value; // 資料 == 0 時不顯示
+                            }
+                        }
+                    }
+                }
+            };
+
+            // create viz_1
+            var ctx = document.getElementById('viz-1-chart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: data_viz1,
+                options: options_viz1,
+                plugins:[ChartDataLabels]
+            });
+            // create viz_3
+            // var ctx = document.getElementById('viz-3-chart').getContext('2d');
+            // var myChart = new Chart(ctx, {
+            //     type: 'bar',
+            //     data: data_viz1,
+            //     options: options_viz1,
+            //     plugins:[ChartDataLabels]
+            // });
+
+            // viz_4: change bodyparts visualization svg fill color
             var bodyparts_viz_data = <%= viz_4[:emofeel_by_bodyparts].to_json %>;
             Object.entries(bodyparts_viz_data).forEach(function([key, value]) {
                 var bodypart = key;

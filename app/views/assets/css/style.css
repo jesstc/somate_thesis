@@ -210,6 +210,13 @@ ol.content-hieght {
 /* Viz - 1 */
 .timeemo-viz-div {
     width: 80vw;
+    height: 100%;
+}
+#viz-1-chart {
+    height: 100%;
+}
+#viz-3-chart {
+    height: 100%;
 }
 
 /* Viz - 2 */
