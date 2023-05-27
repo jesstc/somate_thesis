@@ -50,8 +50,9 @@
             </div>
 
             <div class="form-footer">
-                <input class="fill_time" name="fill_time" type="hidden" value="">
-                <input class="q1_ans" name="1" type="hidden" value="0">
+                <input class="fill_time" name="fill_time" type="hidden" value="<%= fill_time %>">
+                <input class="q1_ans" name="1" type="hidden" value="<%= defined?(q1_ans).nil? ? "0" : q1_ans %>">
+                <input class="q2_ans" name="2" type="hidden" value="<%= defined?(q2_ans).nil? ? "" : q2_ans %>">
                 <input id="to_homepage" class="btn-second font" type="button" value="回首頁">
                 <input class="btn font" type="submit" value="下一題">
             </div>
@@ -83,7 +84,7 @@
         // 計算填寫時間
         function get_time_spent (){   
             var time_now = new Date();  
-            return((time_now.getTime() - clock_start)/1000);   
+            return((time_now.getTime() - clock_start)/1000 + <%= fill_time %>);   
         }
 
         $('#form_answers').submit(function() {

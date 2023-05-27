@@ -39,7 +39,7 @@
         </div>
 
         <!-- Selections -->
-        <form role="form" id="form_answers" method="POST" action="/form_3/<%= account %>">
+        <form role="form" id="form_answers" method="POST">
             <div class="form-content">
                 <div class="q-div">
 
@@ -174,10 +174,10 @@
             <div class="form-footer">
                 <input class="fill_time" name="fill_time" type="hidden" value="<%= fill_time %>">
                 <input class="q1_ans" name="1" type="hidden" value="<%= q1_ans %>">
-                <!-- 
-                <input id="to_last_page" class="btn-second font" type="button" value="上一題">
-                -->
-                <input class="btn font" type="submit" style="width:100%; justify-content: center;" value="下一題">
+                <input class="q2_ans" name="2" type="hidden" value="<%= defined?(q2_ans).nil? ? "" : q2_ans %>">
+
+                <input class="btn-second font" type="submit" formaction="/form/<%= account %>" value="上一題">
+                <input class="btn font" type="submit" formaction="/form_3/<%= account %>" value="下一題">
             </div>
         </form>
     </div>
@@ -259,25 +259,8 @@
             return((time_now.getTime() - clock_start)/1000 + <%= fill_time %>);   
         }
 
-        // to home page btn alert ------------------------> not use
-        $("#to_last_page").click(function() {
-            var data = { // Your data object
-                fill_time: get_time_spent(),
-                q1_ans: $(".q1_ans").val()
-            };
-            var link = "/form/<%= account %>";
-
-            $.post(link, data, function(response) {
-                // Success callback function
-                console.log("Post success");
-                console.log(response);
-            }).fail(function() {
-                // Error callback function
-                console.log("Post error");
-            });
-        });
-
-        $('#form_answers').submit(function() {
+        // 提交前確認勾選的內容
+        function check_selected_options () {
             // 確認 select-option 的 selected 內容
             $(".select-option").each(function() {
                 if ($(this).hasClass("select-option-extend")) {
@@ -296,6 +279,22 @@
             } else {
                 $(".other-text").closest("label").siblings("input").prop("checked", false);
             }
+        }
+
+        // post and redirect to previous page  
+        $("#to_previous_page").submit(function() {
+            // 確認勾選的內容
+            check_selected_options()
+
+            // 加入表單填寫時間
+            $(".fill_time").val(get_time_spent());
+            
+            return true;
+        });
+
+        $('#form_answers').submit(function() {
+            // 確認勾選的內容
+            check_selected_options()
 
             // 確認至少勾選一個選項
             var empty = 1;
@@ -311,6 +310,41 @@
             $(".fill_time").val(get_time_spent());
             
             return true;
+        });
+
+        // 如果 $(".q2_ans") 有值代表已經勾選過了，所以要把選的值勾選回去
+        $(document).ready(function() {
+            var selected_opts = $(".q2_ans").val();
+            if(selected_opts != "") {
+                $.each(selected_opts.split("|"), function(index, option) {
+                    var ele = $("input[value='" + option +"']");
+                    if (ele.length != 0) {
+                        ele.prop("checked", true);
+                        // 把相對應的選項展開、變色
+                        var select_opt = ele.parent(".select-option");
+                        var sub_select_opt = ele.parent(".sub-select-option-content").parent(".sub-select-option");
+                        if (select_opt.length != 0) {
+                            // 沒有子項目的 selection bar
+                            if (!select_opt.hasClass("select-option-extend")) {
+                                select_opt.addClass("select-option-extend");
+                            }
+                        } else if (sub_select_opt.length != 0) {
+                            // 有子項目的 selection bar
+                            if (!sub_select_opt.hasClass("sub-select-option-extend")) {
+                                sub_select_opt.addClass("sub-select-option-extend");
+                                ele.parent(".sub-select-option-content").siblings(".sub-select-option-content").addBack().show();
+                                sub_select_opt.find(".extend-img").show();
+                                sub_select_opt.find(".close-img").hide();
+                            }
+                        }
+                    } else {
+                        // 其他
+                        $(".other-text").val(option.slice(3));
+                        $("#option-other").prop("checked", true);
+                        $(".other-text").closest(".select-option").addClass("select-option-extend");
+                    }
+                });
+            }
         });
     </script>
 </body>

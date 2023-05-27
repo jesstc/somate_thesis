@@ -475,6 +475,31 @@ module SoMate
             user = session[:watching]
             view 'form', engine: 'html.erb', locals: { account: user.url, user: user, fill_time: 0, q1_hours: 0, q1_mins: 0 }
           end
+          # POST /form/#{account}
+          routing.post do
+            user = session[:watching]
+            fill_time = routing.params["fill_time"]
+            q1_ans = routing.params["1"].to_i
+
+            # Q2 ans string
+            q2_ans = ""
+            routing.params["q2_ans"].each_with_index do |ans, index|
+              if index !=0
+                q2_ans += "|"
+              end
+              q2_ans += ans
+            end
+
+            view 'form', engine: 'html.erb', locals: { 
+              account: user.url, 
+              user: user, 
+              fill_time: fill_time, 
+              q1_hours: q1_ans/60, 
+              q1_mins: q1_ans%60, 
+              q1_ans: q1_ans, 
+              q2_ans: q2_ans 
+            }
+          end
         end
       end
 
@@ -484,8 +509,13 @@ module SoMate
           # POST /form_2/#{account}
           routing.post do
             user = session[:watching]
-
-            view 'form_2', engine: 'html.erb', locals: { account: user.url, user: user, fill_time: routing.params["fill_time"], q1_ans: routing.params["1"]}
+            view 'form_2', engine: 'html.erb', locals: { 
+              account: user.url, 
+              user: user, 
+              fill_time: routing.params["fill_time"], 
+              q1_ans: routing.params["1"],
+              q2_ans: routing.params["2"],
+            }
           end
         end
       end
