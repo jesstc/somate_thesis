@@ -220,7 +220,6 @@ ol.content-hieght {
 /* Viz - 2 */
 .viz-2-div {
     overflow: auto;
-    height: 45vh;
 }
 
 .activities-viz-div {
@@ -345,6 +344,10 @@ ol.content-hieght {
     text-align: center;
     align-items: center;
     padding-top: 20px;
+}
+
+.emo-feel-lines {
+    overflow: auto;
 }
 
 /* ============================ homepage end ============================ */
