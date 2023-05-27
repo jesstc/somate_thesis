@@ -47,34 +47,36 @@
                         </a>
                     </div>
 
-                    <h3 class="font viz-title">我通常在 IG 做的事</h3>
-                    <div class="activities-viz-div">
+                    <div class="viz-2-div">
+                        <h3 class="font viz-title">我通常在 IG 做的事</h3>
+                        <div class="activities-viz-div">
+                            <% if has_data %>
+                                <% viz_2[:activities].each_with_index do |activity, index| %>
+                                    <% if index < viz_2[:activity_max] %>
+                                        <div class="activities-viz-line">
+                                            <div class="activities-viz-num"><%= index + 1 %></div>
+                                            <div class="font content activities-viz-text"><%= activity[0] %></div>
+                                        </div>
+                                    <% end %>
+                                <% end %>
+                            <% else %>
+                                <p class="font content no-record-text" style="height: 20vw">查無紀錄資料</p>
+                            <% end %>
+                        </div>
+
+                        <h3 class="font viz-title">常用 IG 的時段</h3>
+                        
+                        <div class="my-badge-div">
                         <% if has_data %>
-                            <% viz_2[:activities].each_with_index do |activity, index| %>
-                                <% if index < viz_2[:activity_max] %>
-                                    <div class="activities-viz-line">
-                                        <div class="activities-viz-num"><%= index + 1 %></div>
-                                        <div class="font content activities-viz-text"><%= activity[0] %></div>
-                                    </div>
+                            <% viz_2[:moments].each_with_index do |moment, index| %>
+                                <% if index < viz_2[:moment_max] %>
+                                    <div class="font my-badge"><%= moment[0] %></div>
                                 <% end %>
                             <% end %>
                         <% else %>
                             <p class="font content no-record-text" style="height: 20vw">查無紀錄資料</p>
                         <% end %>
-                    </div>
-
-                    <h3 class="font viz-title">常用 IG 的時段</h3>
-                    
-                    <div class="my-badge-div">
-                    <% if has_data %>
-                        <% viz_2[:moments].each_with_index do |moment, index| %>
-                            <% if index < viz_2[:moment_max] %>
-                                <div class="font my-badge"><%= moment[0] %></div>
-                            <% end %>
-                        <% end %>
-                    <% else %>
-                        <p class="font content no-record-text" style="height: 20vw">查無紀錄資料</p>
-                    <% end %>
+                        </div>
                     </div>
                     
                 </div>

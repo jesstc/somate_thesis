@@ -218,6 +218,11 @@ ol.content-hieght {
 }
 
 /* Viz - 2 */
+.viz-2-div {
+    overflow: auto;
+    height: 45vh;
+}
+
 .activities-viz-div {
     width: 80vw;
     display: flex;
