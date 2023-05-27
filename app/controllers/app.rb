@@ -557,11 +557,15 @@ module SoMate
 
             # Q2 ans string
             q2_ans = ""
-            routing.params["q2_ans"].each_with_index do |ans, index|
-              if index !=0
-                q2_ans += "|"
+            if !routing.params["q2_ans"].nil?
+              routing.params["q2_ans"].each_with_index do |ans, index|
+                if index !=0
+                  q2_ans += "|"
+                end
+                q2_ans += ans
               end
-              q2_ans += ans
+            else
+              q2_ans = routing.params["2"]
             end
 
             view 'form_3', engine: 'html.erb', locals: { 
@@ -591,11 +595,15 @@ module SoMate
 
             # Q3 ans string
             q3_ans = ""
-            routing.params["q3_ans"].each_with_index do |ans, index|
-              if index !=0
-                q3_ans += "|"
+            if !routing.params["q3_ans"].nil?
+              routing.params["q3_ans"].each_with_index do |ans, index|
+                if index !=0
+                  q3_ans += "|"
+                end
+                q3_ans += ans
               end
-              q3_ans += ans
+            else
+              q3_ans = routing.params["3"]
             end
 
             view 'form_4', engine: 'html.erb', locals: { 
