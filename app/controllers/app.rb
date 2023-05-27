@@ -254,6 +254,22 @@ module SoMate
                 count_times.push(count_time)
                 avg_happy_scores.push(activities_happyscore[activity])
               end
+              # 把太長的 activity 文字縮短
+              shorten_text = {"發佈限時動態" => "發佈限動", "發佈短片 (Reels)" => "發佈短片", 
+                              "回覆或按讚朋友的訊息/限時動態/貼文/短片 (Reels)" => "回覆或按讚朋友的訊息與動態",
+                              "查看通知 (追蹤要求、貼文通知)" => "查看通知", "瀏覽朋友的限時動態" => "瀏覽朋友的限動", 
+                              "瀏覽朋友的短片 (Reels) 或貼文" => "瀏覽朋友的短片或貼文", 
+                              "瀏覽其他人（非朋友）的限時動態/連續短片/貼文" => "瀏覽其他人的限動/短片/貼文"}
+              label_activities.each_with_index do |activity, index| 
+                if !shorten_text[activity].nil?
+                  label_activities[index] = shorten_text[activity] 
+                end
+              end
+              activities_havenot_done.each_with_index do |activity, index| 
+                if !shorten_text[activity].nil?
+                  activities_havenot_done[index] = shorten_text[activity]
+                end
+              end
               viz_3 = { data: {
                           labels: label_activities, 
                           datasets: [
