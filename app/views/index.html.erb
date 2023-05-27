@@ -361,10 +361,7 @@
                         offset: "1",
                         color: "white",
                         font: {
-                            family: 'Noto Sans',
-                            style: 'normal',
                             weight: '700',
-                            size: 13
                         },
                         formatter: function(value, context) {
                             // 檢查資料集索引以判斷是否要顯示標籤
@@ -391,11 +388,7 @@
                         ticks: {
                             callback: function(value, index, ticks_array) {
                                 let label = this.getLabelForValue(value);
-                                if (label.length >= 3) {
-                                    return label.substring(0, 3) + '...';
-                                } else {
-                                    return label;
-                                }
+                                return label.length >= 3 ? label.substring(0, 3) + '...' : label
                             }
                         },
                         maxRotation: 0,
@@ -408,25 +401,19 @@
                     // data labels
                     datalabels: {
                         anchor: "end",
-                        align: (context) => {
-                            // console.log(context)
-                            const align = [];
-                            if (context.dataset.data[context.datasetIndex] > 1) {
-                                align.push("bottom");
-                            } else {
-                                align.push("top");
+                        align: function(value, context) {
+                            if (value.datasetIndex == 1) {      // value.datasetIndex == 1: bar chart
+                                return value.dataset.data[value.dataIndex] > 1 ? "bottom" : "top";
                             }
-                            // console.log("align", align)
-
-                            return align;
                         },
                         offset: "1",
-                        color: "white",
+                        color: function(value, context) {
+                            if (value.datasetIndex == 1) {      // value.datasetIndex == 1: bar chart
+                                return value.dataset.data[value.dataIndex] > 1 ? "white" : "#AACFD1";
+                            }
+                        },
                         font: {
-                            family: 'Noto Sans',
-                            style: 'normal',
                             weight: '700',
-                            size: 13
                         },
                         formatter: function(value, context) {
                             // 檢查資料集索引以判斷是否要顯示標籤
