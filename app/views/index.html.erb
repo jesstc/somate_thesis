@@ -94,7 +94,21 @@
                     </div>
                     <h3 class="font viz-title">我在 IG 做的事與情緒</h3>
                         <% if has_data %>
-                            <canvas id="viz-3-chart" ></canvas>
+                            <div class="viz-3-div">
+                                <canvas id="viz-3-chart" ></canvas>
+                                <div class="not-done-activities">
+                                    <p class="font remark-string">我上週在 IG 沒做的事情</p>
+                                    <% if viz_3[:activities_havenot_done].length !=0 %>
+                                        <div class="my-badge-div">
+                                        <% viz_3[:activities_havenot_done].each do |activity| %>
+                                            <div class="viz-3-badge font my-badge" style="color: #A4A1A1; border: 1.5px solid #A4A1A1; font-size: 10px; line-height: 14px; padding: 3px 8px;">
+                                                <%= activity %>
+                                            </div>
+                                        <% end %>
+                                        </div>
+                                    <% end %>
+                                </div>
+                            </div>
                         <% else %>
                             <p class="font content no-record-text">查無紀錄資料</p>
                         <% end %>
@@ -279,6 +293,8 @@
         $(document).ready(function() {
             // viz 1 chart
             var data_viz1 = <%= viz_1[:data].to_json %>;
+            // viz 3 chart
+            var data_viz3 = <%= viz_3[:data].to_json %>;
 
             // 根據 data 看 line chart 對應的點的圖片要顯示哪一個
             const pointImg_happy = new Image(28, 28);
@@ -287,17 +303,30 @@
             pointImg_happy.src = "/emoji-happy.png";
             pointImg_normal.src = "/emoji-normal.png";
             pointImg_unhappy.src = "/emoji-unhappy.png";
-            var happy_scores_arr = data_viz1.datasets[0].data;
-            var line_points = [];
-            happy_scores_arr.forEach(function(current_happy_score) {
+            var happy_scores_arr_viz1 = data_viz1.datasets[0].data;
+            var line_points_viz1 = [];
+            happy_scores_arr_viz1.forEach(function(current_happy_score) {
                 if(current_happy_score == 0) {
-                    line_points.push("line");
+                    line_points_viz1.push("line");
                 } else if(current_happy_score == 5) {
-                    line_points.push(pointImg_happy);
+                    line_points_viz1.push(pointImg_happy);
                 }  else if(current_happy_score > 5) {
-                    line_points.push(pointImg_happy);
+                    line_points_viz1.push(pointImg_happy);
                 } else {
-                    line_points.push(pointImg_unhappy);
+                    line_points_viz1.push(pointImg_unhappy);
+                }
+            });
+            var happy_scores_arr_viz3 = data_viz3.datasets[0].data;
+            var line_points_viz3 = [];
+            happy_scores_arr_viz3.forEach(function(current_happy_score) {
+                if(current_happy_score == 0) {
+                    line_points_viz3.push("line");
+                } else if(current_happy_score == 5) {
+                    line_points_viz3.push(pointImg_happy);
+                }  else if(current_happy_score > 5) {
+                    line_points_viz3.push(pointImg_happy);
+                } else {
+                    line_points_viz3.push(pointImg_unhappy);
                 }
             });
 
@@ -306,7 +335,7 @@
                 maintainAspectRatio: false,
                 elements: {
                     point: {
-                        pointStyle: line_points     // line chart 上每個點對應的圖示
+                        pointStyle: line_points_viz1     // line chart 上每個點對應的圖示
                     }
                 },
                 scales: {
@@ -326,15 +355,50 @@
                     // data labels
                     datalabels: {
                         anchor: "end",
-                        align: "start",
+                        align: "bottom",
                         offset: "1",
-                        color: "red",
+                        color: "white",
                         font: {
                             family: 'Noto Sans',
                             style: 'normal',
                             weight: '700',
-                            size: 13,
-                            lineHeight: 18
+                            size: 13
+                        },
+                        formatter: function(value, context) {
+                            // 檢查資料集索引以判斷是否要顯示標籤
+                            if (context.datasetIndex === 0) {
+                                return ''; // 取消特定資料集的標籤，返回空字串
+                            } else {
+                                return value === 0 ? '' : value; // 資料 == 0 時不顯示
+                            }
+                        }
+                    }
+                }
+            };
+            var options_viz3 = {
+                responsive: true,
+                maintainAspectRatio: false,
+                elements: {
+                    point: {
+                        pointStyle: line_points_viz3     // line chart 上每個點對應的圖示
+                    }
+                },
+                scales: {
+                    "bar-y-axis": { position: 'left', display: false, min: 0, max: 7 },
+                    "line-y-axis": { position: 'right', display: false, min: 0, max: 10 }
+                },
+                plugins: {
+                    // data labels
+                    datalabels: {
+                        anchor: "end",
+                        align: "bottom",
+                        offset: "1",
+                        color: "white",
+                        font: {
+                            family: 'Noto Sans',
+                            style: 'normal',
+                            weight: '700',
+                            size: 13
                         },
                         formatter: function(value, context) {
                             // 檢查資料集索引以判斷是否要顯示標籤
@@ -357,13 +421,13 @@
                 plugins:[ChartDataLabels]
             });
             // create viz_3
-            // var ctx = document.getElementById('viz-3-chart').getContext('2d');
-            // var myChart = new Chart(ctx, {
-            //     type: 'bar',
-            //     data: data_viz1,
-            //     options: options_viz1,
-            //     plugins:[ChartDataLabels]
-            // });
+            var ctx = document.getElementById('viz-3-chart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: data_viz3,
+                options: options_viz3,
+                plugins:[ChartDataLabels]
+            });
 
             // viz_4: change bodyparts visualization svg fill color
             var bodyparts_viz_data = <%= viz_4[:emofeel_by_bodyparts].to_json %>;

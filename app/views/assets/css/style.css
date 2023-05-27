@@ -212,10 +212,8 @@ ol.content-hieght {
     width: 80vw;
     height: 100%;
 }
+
 #viz-1-chart {
-    height: 100%;
-}
-#viz-3-chart {
     height: 100%;
 }
 
@@ -261,6 +259,33 @@ ol.content-hieght {
 
 .visualization-card > .my-badge-div {
     width: 80vw;
+}
+
+/* Viz - 3 */
+.viz-3-div {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 5px;
+}
+
+.viz-3-div > canvas {
+    height: 50%;
+}
+
+.not-done-activities {
+    width: 100%;
+    height: fit-content;
+    background: #FEF8EA;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 8px 12px;
+    gap: 5px;
 }
 
 /* Viz - 4 */
