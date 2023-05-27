@@ -386,14 +386,40 @@
                     }
                 },
                 scales: {
-                    "bar-y-axis": { position: 'left', display: false, min: 0, max: 7 },
+                    x: {
+                        // label 字數超過三個字之後顯示 ... (但還是可以用點選的方式知道完整的活動)
+                        ticks: {
+                            callback: function(value, index, ticks_array) {
+                                let label = this.getLabelForValue(value);
+                                if (label.length >= 3) {
+                                    return label.substring(0, 3) + '...';
+                                } else {
+                                    return label;
+                                }
+                            }
+                        },
+                        maxRotation: 0,
+                        autoSkip: false
+                    },
+                    "bar-y-axis": { position: 'left', display: false, min: 0, max: 7},
                     "line-y-axis": { position: 'right', display: false, min: 0, max: 10 }
                 },
                 plugins: {
                     // data labels
                     datalabels: {
                         anchor: "end",
-                        align: "bottom",
+                        align: (context) => {
+                            // console.log(context)
+                            const align = [];
+                            if (context.dataset.data[context.datasetIndex] > 1) {
+                                align.push("bottom");
+                            } else {
+                                align.push("top");
+                            }
+                            // console.log("align", align)
+
+                            return align;
+                        },
                         offset: "1",
                         color: "white",
                         font: {
