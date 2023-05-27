@@ -37,7 +37,7 @@
         </div>
 
         <!-- Selections -->
-        <form role="form" id="form_answers" method="POST" action="/form_4/<%= account %>">
+        <form role="form" id="form_answers" method="POST">
             <div class="form-content">
                 <div class="q-div">
 
@@ -103,7 +103,16 @@
                 <input class="fill_time" name="fill_time" type="hidden" value="<%= fill_time %>">
                 <input class="q1_ans" name="1" type="hidden" value="<%= q1_ans %>">
                 <input class="q2_ans" name="2" type="hidden" value="<%= q2_ans %>">
-                <input class="btn font" type="submit" style="width:100%; justify-content: center;" value="下一題">
+                <input class="q3_ans" name="3" type="hidden" value="<%= defined?(q3_ans).nil? ? "" : q3_ans %>">
+                <input class="q4_ans" name="4" type="hidden" value="<%= defined?(q4_ans).nil? ? "" : q4_ans %>">
+                <input class="q5_ans" name="5" type="hidden" value="<%= defined?(q5_ans).nil? ? "" : q5_ans %>">
+                <input class="q6_ans" name="6" type="hidden" value="<%= defined?(q6_ans).nil? ? "" : q6_ans %>">
+                <input class="q7_ans" name="7" type="hidden" value="<%= defined?(q7_ans).nil? ? "" : q7_ans %>">
+                <input class="q8_ans" name="8" type="hidden" value="<%= defined?(q8_ans).nil? ? "" : q8_ans %>">
+                <input class="q9_ans" name="9" type="hidden" value="<%= defined?(q9_ans).nil? ? "" : q9_ans %>">
+                
+                <input class="btn-second font" type="submit" formaction="/form_2/<%= account %>" value="上一題">
+                <input class="btn font" type="submit" formaction="/form_4/<%= account %>" value="下一題">
             </div>
         </form>
     </div>
@@ -200,6 +209,33 @@
             $(".fill_time").val(get_time_spent());
             $('#form_answers').serialize()
             return true;
+        });
+
+        // 如果 $(".q3_ans") 有值代表已經勾選過了，所以要把選的值勾選回去
+        $(document).ready(function() {
+            var selected_opts = $(".q3_ans").val();
+            if(selected_opts != "") {
+                $.each(selected_opts.split("|"), function(index, option) {
+                    var ele = $("input[value='" + option +"']");
+                    if (ele.length != 0) {
+                        ele.prop("checked", true);
+                        // 把相對應的選項展開、變色
+                        var select_opt = ele.parent(".select-option");
+                        var sub_select_opt = ele.parent(".sub-select-option-content").parent(".sub-select-option");
+                        if (select_opt.length != 0) {
+                            // 沒有子項目的 selection bar
+                            if (!select_opt.hasClass("select-option-extend")) {
+                                select_opt.addClass("select-option-extend");
+                            }
+                        }
+                    } else {
+                        // 其他
+                        $(".other-text").val(option.slice(3));
+                        $("#option-other").prop("checked", true);
+                        $(".other-text").closest(".select-option").addClass("select-option-extend");
+                    }
+                });
+            }
         });
     </script>
 </body>

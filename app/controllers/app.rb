@@ -497,7 +497,14 @@ module SoMate
               q1_hours: q1_ans/60, 
               q1_mins: q1_ans%60, 
               q1_ans: q1_ans, 
-              q2_ans: q2_ans 
+              q2_ans: q2_ans,
+              q3_ans: routing.params["3"],
+              q4_ans: routing.params["4"],
+              q5_ans: routing.params["5"],
+              q6_ans: routing.params["6"],
+              q7_ans: routing.params["7"],
+              q8_ans: routing.params["8"],
+              q9_ans: routing.params["9"],
             }
           end
         end
@@ -509,12 +516,33 @@ module SoMate
           # POST /form_2/#{account}
           routing.post do
             user = session[:watching]
+
+            # Q3 ans string
+            q3_ans = ""
+            if !routing.params["q3_ans"].nil?
+              routing.params["q3_ans"].each_with_index do |ans, index|
+                if index !=0
+                  q3_ans += "|"
+                end
+                q3_ans += ans
+              end
+            else
+              q3_ans = routing.params["3"]
+            end
+
             view 'form_2', engine: 'html.erb', locals: { 
               account: user.url, 
               user: user, 
               fill_time: routing.params["fill_time"], 
               q1_ans: routing.params["1"],
               q2_ans: routing.params["2"],
+              q3_ans: q3_ans,
+              q4_ans: routing.params["4"],
+              q5_ans: routing.params["5"],
+              q6_ans: routing.params["6"],
+              q7_ans: routing.params["7"],
+              q8_ans: routing.params["8"],
+              q9_ans: routing.params["9"]
             }
           end
         end
@@ -541,7 +569,14 @@ module SoMate
               user: user, 
               fill_time: routing.params["fill_time"], 
               q1_ans: routing.params["1"], 
-              q2_ans: q2_ans
+              q2_ans: q2_ans,
+              q3_ans: routing.params["3"],
+              q4_ans: routing.params["4"],
+              q5_ans: routing.params["5"],
+              q6_ans: routing.params["6"],
+              q7_ans: routing.params["7"],
+              q8_ans: routing.params["8"],
+              q9_ans: routing.params["9"]
             }
           end
         end
@@ -554,7 +589,7 @@ module SoMate
           routing.post do
             user = session[:watching]
 
-            # Q2 ans string
+            # Q3 ans string
             q3_ans = ""
             routing.params["q3_ans"].each_with_index do |ans, index|
               if index !=0
@@ -569,7 +604,13 @@ module SoMate
               fill_time: routing.params["fill_time"], 
               q1_ans: routing.params["1"], 
               q2_ans: routing.params["2"], 
-              q3_ans: q3_ans
+              q3_ans: q3_ans,
+              q4_ans: routing.params["4"],
+              q5_ans: routing.params["5"],
+              q6_ans: routing.params["6"],
+              q7_ans: routing.params["7"],
+              q8_ans: routing.params["8"],
+              q9_ans: routing.params["9"]
             }
           end
         end
@@ -589,7 +630,12 @@ module SoMate
               q1_ans: routing.params["1"], 
               q2_ans: routing.params["2"], 
               q3_ans: routing.params["3"],
-              q4_ans: routing.params["4"]
+              q4_ans: routing.params["4"],
+              q5_ans: routing.params["5"],
+              q6_ans: routing.params["6"],
+              q7_ans: routing.params["7"],
+              q8_ans: routing.params["8"],
+              q9_ans: routing.params["9"]
             }
           end
         end
@@ -610,7 +656,11 @@ module SoMate
               q2_ans: routing.params["2"], 
               q3_ans: routing.params["3"],
               q4_ans: routing.params["4"],
-              q5_ans: routing.params["5"]
+              q5_ans: routing.params["5"],
+              q6_ans: routing.params["6"],
+              q7_ans: routing.params["7"],
+              q8_ans: routing.params["8"],
+              q9_ans: routing.params["9"]
             }
           end
         end
@@ -642,6 +692,9 @@ module SoMate
               q4_ans: routing.params["4"],
               q5_ans: routing.params["5"],
               q6_ans: routing.params["6"],
+              q7_ans: routing.params["7"],
+              q8_ans: routing.params["8"],
+              q9_ans: routing.params["9"],
               previous_q7ans: past_record_q7_ans
             }
           end
@@ -665,7 +718,9 @@ module SoMate
               q4_ans: routing.params["4"],
               q5_ans: routing.params["5"],
               q6_ans: routing.params["6"],
-              q7_ans: routing.params["7"]
+              q7_ans: routing.params["7"],
+              q8_ans: routing.params["8"],
+              q9_ans: routing.params["9"],
             }
           end
         end
@@ -689,7 +744,8 @@ module SoMate
               q5_ans: routing.params["5"],
               q6_ans: routing.params["6"],
               q7_ans: routing.params["7"],
-              q8_ans: routing.params["8"]
+              q8_ans: routing.params["8"],
+              q9_ans: routing.params["9"]
             }
           end
         end
