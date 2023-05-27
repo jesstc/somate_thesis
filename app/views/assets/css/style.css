@@ -141,8 +141,12 @@ ol.content-hieght {
 }
 
 .visualization-div {
-    overflow-x: scroll;
-    white-space: nowrap;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    width: 100vw;
+    overflow-x: auto;
+    padding: 0 6vw;
 }
 
 .visualization-card {
@@ -267,6 +271,7 @@ ol.content-hieght {
 
 /* Viz - 3 */
 .viz-3-div {
+    width: 80vw;
     height: 45vw;
     display: flex;
     flex-direction: column;
