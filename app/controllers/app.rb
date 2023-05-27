@@ -593,6 +593,15 @@ module SoMate
           routing.post do
             user = session[:watching]
 
+            user_records = Database::RecordOrm.where(owner_id: user.id).all
+            past_record_q7_ans = ""
+            user_records.each do |record|
+              q7_ans_record = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 7).first
+              if !q7_ans_record.nil? 
+                past_record_q7_ans = q7_ans_record.answer_content
+              end
+            end
+
             view 'form_7', engine: 'html.erb', locals: { 
               account: user.url, 
               user: user, 
@@ -602,7 +611,8 @@ module SoMate
               q3_ans: routing.params["3"],
               q4_ans: routing.params["4"],
               q5_ans: routing.params["5"],
-              q6_ans: routing.params["6"]
+              q6_ans: routing.params["6"],
+              previous_q7ans: past_record_q7_ans
             }
           end
         end
