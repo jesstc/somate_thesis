@@ -16,7 +16,7 @@
         </div>
 
         <!-- Selections -->
-        <form role="form" id="form_answers" method="POST" action="/form_8/<%= account %>">
+        <form role="form" id="form_answers" method="POST">
             <div class="form-content">
                 <div class="q-div">
                     <div class="q-textarea">
@@ -34,7 +34,11 @@
                 <input class="q4_ans" name="4" type="hidden" value="<%= q4_ans %>">
                 <input class="q5_ans" name="5" type="hidden" value="<%= q5_ans %>">
                 <input class="q6_ans" name="6" type="hidden" value="<%= q6_ans %>">
-                <input class="btn font" type="submit" style="width:100%; justify-content: center;" value="下一題">
+                <input class="q8_ans" name="8" type="hidden" value="<%= defined?(q8_ans).nil? ? "" : q8_ans %>">
+                <input class="q9_ans" name="9" type="hidden" value="<%= defined?(q9_ans).nil? ? "" : q9_ans %>">
+                
+                <input class="btn-second font" type="submit" formaction="/form_6/<%= account %>" value="上一題">
+                <input class="btn font" type="submit" formaction="/form_8/<%= account %>" value="下一題">
             </div>
         </form>
     </div>
@@ -54,8 +58,6 @@
             // 加入表單填寫時間
             $(".fill_time").val(get_time_spent());
 
-            // $("textarea[name=7]").val($.trim($("textarea[name=7]").val()));
-            // if($("textarea[name=7]").val() == "") {
             if($("input[name=7]").val() == "") {
                 alert("請填寫你/妳使用 IG 的目的。");
                 return false;

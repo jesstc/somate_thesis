@@ -683,11 +683,15 @@ module SoMate
 
             user_records = Database::RecordOrm.where(owner_id: user.id).all
             past_record_q7_ans = ""
-            user_records.each do |record|
-              q7_ans_record = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 7).first
-              if !q7_ans_record.nil? 
-                past_record_q7_ans = q7_ans_record.answer_content
+            if routing.params["7"].empty?
+              user_records.each do |record|
+                q7_ans_record = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 7).first
+                if !q7_ans_record.nil? 
+                  past_record_q7_ans = q7_ans_record.answer_content
+                end
               end
+            else
+              past_record_q7_ans = routing.params["7"]
             end
 
             view 'form_7', engine: 'html.erb', locals: { 
