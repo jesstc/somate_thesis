@@ -16,12 +16,12 @@
         </div>
 
         <!-- Selections -->
-        <form role="form" id="form_answers" method="POST" action="/form_9/<%= account %>">
+        <form role="form" id="form_answers" method="POST">
             <div class="form-content">
                 <div class="q-div">
                     <div class="form-rate-scale">
                         <div class="rate-scale">
-                            <input type="range" class="custom-range" min="0" max="10" id="rate-scale" name="8">
+                            <input type="range" class="custom-range" min="0" max="10" id="rate-scale" name="8" value="<%= defined?(q8_ans).nil? ? "5" : q8_ans %>">
                             <div class="rangeValue" style="top: 315px;"></div>
                         </div>
                         <div class="rate-text">
@@ -42,7 +42,10 @@
                 <input class="q5_ans" name="5" type="hidden" value="<%= q5_ans %>">
                 <input class="q6_ans" name="6" type="hidden" value="<%= q6_ans %>">
                 <input class="q7_ans" name="7" type="hidden" value="<%= q7_ans %>">
-                <input class="btn font" type="submit" style="width:100%; justify-content: center;" value="下一題">
+                <input class="q9_ans" name="9" type="hidden" value="<%= defined?(q9_ans).nil? ? "" : q9_ans %>">
+                
+                <input class="btn-second font" type="submit" formaction="/form_7/<%= account %>" value="上一題">
+                <input class="btn font" type="submit" formaction="/form_9/<%= account %>" value="下一題">
             </div>
         </form>
     </div>
