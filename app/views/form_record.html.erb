@@ -45,14 +45,14 @@
                         </div>
                         <div class="form-record-ans">
                             <h3 class="font">我的情緒和感受</h3>
-                            <p class="font content">
-                                <% answers[4].split("|").each do |row| %>
+                            <% answers[4].split("|").each do |row| %>
+                                <p class="font content">
                                     <% row_ans = row.split("&") %> 
                                     <% body_parts = {"A"=>"頭", "B"=>"眼睛", "C"=>"臉", "D"=>"肩頸", "E"=>"上肢", "F"=>"胸腔", "G"=>"腹部（胃）", "H"=>"腰", "I"=>"下肢"} %> 
                                     因為 <span> <%= row_ans[0] %> </span> 
                                     我覺得 <span> <%= body_parts[row_ans[1]] %> </span>  <span> <%= row_ans[2] %> </span> 
-                                <% end %>
-                            </p>
+                                </p>
+                            <% end %>
                         </div>
                         <div class="form-record-ans">
                             <h3 class="font">我會有這些情緒和感受的原因是...</h3>
