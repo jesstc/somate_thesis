@@ -48,13 +48,42 @@
         </div>
 
         <!-- Selections -->
-        <form role="form" id="form_answers" method="POST" action="/form_6/<%= account %>">
+        <form role="form" id="form_answers" method="POST">
             <div class="form-content">
                 <div class="q-div">
 
                     <img src="/question5-body.png" width="100%" style="padding-bottom: 18px;">
 
-                    <div id="q5-text-1" class="q5-text">
+                    <% if !defined?(q5_ans).nil? && !q5_ans.empty? %>
+                    <!-- 如果已經有填好答案的話帶入 --> 
+                        <% q5_ans.split("|").each_with_index do |line_string, index| %>
+                            <% line = line_string.split("&") %>
+                            <!-- emo: line[0] / body: line[1] / feel: line[2] --> 
+                            <div id="q5-text-<%= (index + 1).to_s %>" class="q5-text">
+                                <p class="font small-btn-string">因為</p>
+                                <input class="ans-text" name="emotion[]" type="text" value="<%= line[0] %>" placeholder="情緒" style="width: 60px">
+                                <p class="font small-btn-string">我覺得</p>
+                                <select class="ans-text" name="body[]" style="width: 60px; height: 32px;">
+                                    <option value="">身體</option>
+                                    <option value="A" <%= "selected" if line[1] == "A" %>>A</option>
+                                    <option value="B" <%= "selected" if line[1] == "B" %>>B</option>
+                                    <option value="C" <%= "selected" if line[1] == "C" %>>C</option>
+                                    <option value="D" <%= "selected" if line[1] == "D" %>>D</option>
+                                    <option value="E" <%= "selected" if line[1] == "E" %>>E</option>
+                                    <option value="F" <%= "selected" if line[1] == "F" %>>F</option>
+                                    <option value="G" <%= "selected" if line[1] == "G" %>>G</option>
+                                    <option value="H" <%= "selected" if line[1] == "H" %>>H</option>
+                                    <option value="I" <%= "selected" if line[1] == "I" %>>I</option>
+                                </select>
+                                <input class="ans-text" name="feelings[]" type="text" value="<%= line[2] %>"  placeholder="感受">
+                            </div>
+                        <% end %>
+                        <% newline_index = q5_ans.split("|").length + 1 %>
+                    <% else %>
+                        <% newline_index = 1 %>
+                    <% end %>
+
+                    <div id="q5-text-<%= newline_index %>" class="q5-text">
                         <p class="font small-btn-string">因為</p>
                         <input class="ans-text" name="emotion[]" type="text" value="" placeholder="情緒" style="width: 60px">
                         <p class="font small-btn-string">我覺得</p>
@@ -82,8 +111,14 @@
                 <input class="q2_ans" name="2" type="hidden" value="<%= q2_ans %>">
                 <input class="q3_ans" name="3" type="hidden" value="<%= q3_ans %>">
                 <input class="q4_ans" name="4" type="hidden" value="<%= q4_ans %>">
-                <input class="q5_ans" name="5" type="hidden" value="">
-                <input class="btn font" type="submit" style="width:100%; justify-content: center;" value="下一題">
+                <input class="q5_ans" name="5" type="hidden" value="<%= defined?(q5_ans).nil? ? "" : q5_ans %>">
+                <input class="q6_ans" name="6" type="hidden" value="<%= defined?(q6_ans).nil? ? "" : q6_ans %>">
+                <input class="q7_ans" name="7" type="hidden" value="<%= defined?(q7_ans).nil? ? "" : q7_ans %>">
+                <input class="q8_ans" name="8" type="hidden" value="<%= defined?(q8_ans).nil? ? "" : q8_ans %>">
+                <input class="q9_ans" name="9" type="hidden" value="<%= defined?(q9_ans).nil? ? "" : q9_ans %>">
+                
+                <input class="btn-second font" type="submit" formaction="/form_4/<%= account %>" value="上一題">
+                <input class="btn font" type="submit" formaction="/form_6/<%= account %>" value="下一題">
             </div>
         </form>
     </div>
@@ -145,7 +180,7 @@
                     var new_obj_html = `
                         <div id="q5-text-` + ans_num + `" class="q5-text">
                             <p class="font small-btn-string">因為</p>
-                            <input class="ans-text" name="emotion[]" type="text" value="" placeholder="情緒" style="width: 60px" autofocus>
+                            <input class="ans-text" name="emotion[]" type="text" value="" placeholder="情緒" style="width: 60px">
                             <p class="font small-btn-string">我覺得</p>
                             <select class="ans-text" name="body[]" style="width: 60px; height: 32px;">
                                 <option value="" selected>身體</option>
