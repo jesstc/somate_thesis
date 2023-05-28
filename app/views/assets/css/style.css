@@ -934,6 +934,9 @@ form {
 
 /* change slidebar color */
 .custom-range::-webkit-slider-thumb {
+    width: 23px;
+    height: 23px;
+    margin-top: -8px;
     background-color: #2A868C;
 }
 .custom-range::-webkit-slider-runnable-track {
