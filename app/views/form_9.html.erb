@@ -16,11 +16,11 @@
         </div>
 
         <!-- Selections -->
-        <form role="form" id="form_answers" method="POST" action="/form_complete">
+        <form role="form" id="form_answers" method="POST">
             <div class="form-content">
                 <div class="q-div">
                     <div class="q-textarea">
-                        <textarea class="form-control" name="9" rows="5" placeholder="我可以..."></textarea>
+                        <textarea class="form-control" name="9" rows="5" placeholder="我可以..."><%= defined?(q9_ans).nil? ? "" : q9_ans %></textarea>
                     
                         <input id="not-sure-check" name="not-sure-check" type="checkbox" value="checked" style="font-size: 20px;">
                         <label class="font small-btn-string" for="not-sure-check" style="color: #2A868C; margin-top: 24px;">
@@ -41,7 +41,8 @@
                 <input class="q7_ans" name="7" type="hidden" value="<%= q7_ans %>">
                 <input class="q8_ans" name="8" type="hidden" value="<%= q8_ans %>">
                 <input name="question_num" type="hidden" value="9">
-                <input class="btn font" type="submit" style="width:100%; justify-content: center;" value="提交">
+                <input class="btn-second font" type="submit" formaction="/form_8/<%= account %>" value="上一題">
+                <input class="btn font" type="submit" formaction="/form_complete" value="提交">
             </div>
         </form>
     </div>
