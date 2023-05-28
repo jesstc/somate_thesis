@@ -354,7 +354,6 @@ module SoMate
               routing.redirect "/error"
               routing.halt 400
             end
-            session[:watching] = user
             
             is_record = false
             current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
@@ -378,7 +377,6 @@ module SoMate
               routing.get do
                 user = session[:watching]
 
-                session[:watching] = user
                 is_record = false
                 current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
                 records = user.owned_records
@@ -398,7 +396,8 @@ module SoMate
                 date_end = end_of_week.strftime('%m/%d')
 
                 # get the records from database
-                week_records = Database::RecordOrm.where(record_date: start_of_week..end_of_week).all
+                week_records = Database::RecordOrm.where(record_date: start_of_week..end_of_week)
+                                                  .where(owner_id: user.id).all
                 week_ans = []
                 if week_records.length != 0
                   week_records.each do |record|
@@ -435,7 +434,7 @@ module SoMate
         routing.on String do |account|
           # GET /my-history/#{account}
           routing.get do
-            user = session[:watching]
+            user = Database::UserOrm.where(url: account).first
 
             session[:watching] = user
             is_record = false
@@ -457,7 +456,8 @@ module SoMate
             date_end = end_of_week.strftime('%m/%d')
 
             # get the records from database
-            week_records = Database::RecordOrm.where(record_date: start_of_week..end_of_week).all
+            week_records = Database::RecordOrm.where(record_date: start_of_week..end_of_week)
+                                              .where(owner_id: user.id).all
             week_ans = []
             if week_records.length != 0
               week_records.each do |record|
@@ -823,7 +823,7 @@ module SoMate
             countermeasure_id = routing.params["countermeasure_id"]
             is_try = routing.params["is_try"] == 'true' ? true : false
             selected_content = routing.params["selected_content"]
-            countermeasurerecord = Database::CountermeasureRecordOrm.create(countermeasure_id: countermeasure_id, owner_id: session[:watching].id, is_try: is_try, selected_content: selected_content)
+            countermeasurerecord = Database::CountermeasureRecordOrm.create(countermeasure_id: countermeasure_id, owner_id: user.id, is_try: is_try, selected_content: selected_content)
 
             routing.redirect "form_complete/#{user.url}/countermeasure"
           end
@@ -867,7 +867,7 @@ module SoMate
               end
               record_date = current_date.strftime('%Y-%m-%d')
 
-              record = Database::RecordOrm.create(access_time: 0, owner_id: session[:watching].id, fill_time: routing.params["fill_time"], record_date: record_date)
+              record = Database::RecordOrm.create(access_time: 0, owner_id: user.id, fill_time: routing.params["fill_time"], record_date: record_date)
               num = routing.params["question_num"].to_i #題數
               (1..num).each { |i| Database::AnswerOrm.create(recordbook_id: record.id, question_num: i, answer_content: routing.params["#{i}"])}
             end
@@ -893,17 +893,6 @@ module SoMate
           # GET /form_complete/#{account}
           routing.get do
             view 'form_complete', engine: 'html.erb', locals: { account: session[:watching].url, is_countermeasure: false }
-          end
-        end
-      end
-
-      routing.on 'all_records' do
-        routing.on String do |account|
-          # GET /all_records/#{account}
-          routing.get do
-            user = session[:watching]
-            records = user.owned_records
-            view 'all_records', engine: 'html.erb', locals: { user: user, records: records, account: user.url }
           end
         end
       end
