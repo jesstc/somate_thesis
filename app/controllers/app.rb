@@ -111,9 +111,12 @@ module SoMate
               end
 
               session[:watching] = user
-              records = user.owned_records
+              is_record = false
               current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
-              is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
+              records = user.owned_records
+              if records.length != 0
+                is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
+              end
 
               # promt text
               prompt_text = "你/妳今天還沒紀錄喔～ 點選「開始紀錄」來填寫吧！"
@@ -353,9 +356,12 @@ module SoMate
             end
             session[:watching] = user
             
-            records = user.owned_records
+            is_record = false
             current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
-            is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
+            records = user.owned_records
+            if records.length != 0
+              is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
+            end
 
             countermeasures = Database::CountermeasureOrm.all
 
@@ -372,9 +378,13 @@ module SoMate
               routing.get do
                 user = session[:watching]
 
-                records = user.owned_records
+                session[:watching] = user
+                is_record = false
                 current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
-                is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
+                records = user.owned_records
+                if records.length != 0
+                  is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
+                end
 
                 pre_or_post = preorpost_currentstartday.split("&")[0]
                 start_of_week = Date.parse(preorpost_currentstartday.split("&")[1])
@@ -427,9 +437,13 @@ module SoMate
           routing.get do
             user = session[:watching]
 
-            records = user.owned_records
+            session[:watching] = user
+            is_record = false
             current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
-            is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
+            records = user.owned_records
+            if records.length != 0
+              is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
+            end
 
             # 算出一週的時間區間
             current_date = Date.today
@@ -900,9 +914,12 @@ module SoMate
           routing.get do
             user = session[:watching]
 
-            records = user.owned_records
+            is_record = false
             current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
-            is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
+            records = user.owned_records
+            if records.length != 0
+              is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
+            end
 
             record = Database::RecordOrm.where(id: record).first
             record.update(access_time: record.access_time+1)
