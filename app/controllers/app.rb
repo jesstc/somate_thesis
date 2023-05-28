@@ -115,6 +115,23 @@ module SoMate
               current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
               is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
 
+              # promt text
+              prompt_text = "你/妳今天還沒紀錄喔～ 點選「開始紀錄」來填寫吧！"
+              if is_record
+                prompt_text_arr = ["可以透過「FoMO 小百科」更了解 FoMO 喔～", "可以透過「我的歷史紀錄」查看自己使用社群媒體的狀況喔！"]
+                q9_ans = ""
+                user_records = Database::RecordOrm.where(owner_id: user.id).all
+                user_records.each do |record|
+                  q9_tmp_ans = Database::AnswerOrm.where(recordbook_id: record.id, question_num: 9).first
+                  q9_tmp_ans = q9_tmp_ans.nil? ? "" : q9_tmp_ans.answer_content
+                  if !q9_tmp_ans.empty? 
+                    q9_ans = q9_tmp_ans
+                  end
+                end
+                prompt_text_arr.push("當你/妳使用社群平台時感到低落時，你/妳可以試著：" + q9_ans) 
+                prompt_text = "恭喜你/妳完成今天的紀錄！" + prompt_text_arr[rand(prompt_text_arr.length) - 1]
+              end
+
               # 算出一週的時間區間
               current_date = date == "current" ? Date.today : Date.parse(date)
               if current_date.strftime('%A') == "Sunday"
@@ -318,7 +335,8 @@ module SoMate
                 viz_4: viz_4,
                 date_start: date_start,
                 date_end: date_end,
-                is_record: is_record}
+                is_record: is_record,
+                prompt_text: prompt_text}
             end
           end
         end
