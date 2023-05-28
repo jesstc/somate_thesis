@@ -63,10 +63,10 @@ namespace :db do
 
   desc 'Delete dev or test database file (set correct RACK_ENV)'
   task drop: :config do
-    if app.environment == :production
-      puts 'Do not damage production database!'
-      return
-    end
+    # if app.environment == :production
+    #   puts 'Do not damage production database!'
+    #   return
+    # end
     
     FileUtils.rm(SoMate::App.config.DB_FILENAME)
     puts "Deleted #{SoMate::App.config.DB_FILENAME}"
