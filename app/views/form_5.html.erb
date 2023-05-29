@@ -219,7 +219,10 @@
             var objs_completed = true;
             $(".q5-text").each(function() {
                 if(check_one_ans($(this)) == "not_completed") {
-                    alert("尚有答案未完整填寫，請先確認所有答案接完整填寫後再前往下一題！");
+                    alert("尚有答案未完整填寫，請先確認所有答案接完整填寫後再前往下一題。");
+                    objs_completed = false;
+                } else if (check_one_ans($(this)) == "empty" && $(".q5-text").length == 1) {
+                    alert("請至少填寫一行你的感受或情緒。");
                     objs_completed = false;
                 }
             });
