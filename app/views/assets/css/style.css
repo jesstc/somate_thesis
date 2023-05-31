@@ -959,6 +959,18 @@ form {
     transition: opacity 0.3s ease-in-out;
 }
 
+.rangeTicks {
+    display: flex; /* 使用flex布局排列刻度标记 */
+    justify-content: space-evenly; /* 在刻度标记之间均匀分布空间 */
+    margin: -20px 5px 0 5px;
+}
+
+.rangeTick {
+    height: 15px; /* 设置刻度标记的高度 */
+    width: 1px; /* 设置刻度标记的宽度 */
+    background-color: #2A868C; /* 设置刻度标记的颜色 */
+}
+
 .form-emoji-scale > .emoji-text {
     /* Auto layout */
     display: flex;
