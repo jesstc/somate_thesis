@@ -22,37 +22,37 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- info alert -->
-                <div id="info-default" class="info-alert">
-                    <div class="info-content info-default">
-                        <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 12px;">
-                            <img src="/information-icon.png" width="25px">
-                            <p class="font content">「感受」與「情緒」的定義</p>
-                        </div>
-                        <img src="/arrow-down.png" width="25px">
-                    </div>
-                </div>
-                <div id="info-extend" class="info-alert" style="display: none;">
-                    <div class="info-content info-extend">
-                        <img src="/information-icon.png" width="25px">
-                        <div class="font content">
-                            <ul style="margin: 0px;">
-                                <li><b>感受：</b>人在面臨某事件後的身體反應。如：手指顫抖、頭腦昏沉、胸口悶痛等。</li>
-                                <li><b>情緒：</b>人在面臨某事件後的心理狀態。六種基本的情緒包括快樂、驚訝、悲傷、恐懼、憤怒、厭惡。</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
         <!-- Selections -->
         <form role="form" id="form_answers" method="POST">
             <div class="form-content">
-                <div class="q-div">
+                <div class="q-div" style="gap: 22px;">
 
                     <img src="/question5-body.png" width="100%" style="padding-bottom: 18px;">
+
+                    <!-- info alert -->
+                    <div id="info-default" class="info-alert">
+                        <div class="info-content info-default">
+                            <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 12px;">
+                                <img src="/information-icon.png" width="25px">
+                                <p class="font content">「情緒」與「感受」的定義</p>
+                            </div>
+                            <img src="/arrow-down.png" width="25px">
+                        </div>
+                    </div>
+                    <div id="info-extend" class="info-alert" style="display: none;">
+                        <div class="info-content info-extend">
+                            <img src="/information-icon.png" width="25px">
+                            <div class="font content">
+                                <ul style="margin: 0px;">
+                                    <li><b>情緒：</b>人在面臨某事件後的心理狀態。六種基本的情緒包括快樂、驚訝、悲傷、恐懼、憤怒、厭惡。</li>
+                                    <li><b>感受：</b>人在面臨某事件後的身體反應。如：手指顫抖、頭腦昏沉、胸口悶痛等。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 
                     <% if !defined?(q5_ans).nil? && !q5_ans.empty? %>
                     <!-- 如果已經有填好答案的話帶入 --> 
