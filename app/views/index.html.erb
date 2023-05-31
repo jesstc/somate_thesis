@@ -23,7 +23,7 @@
                             <img src="/date-right-arrow.png" width="18px">
                         </a>
                     </div>
-                    <h3 class="font viz-title">使用時間與情緒</h3>
+                    <h3 class="font viz-title">IG 使用時間與情緒</h3>
                     <div class="timeemo-viz-div">
                         <% if has_data %>
                             <canvas id="viz-1-chart" ></canvas>
@@ -130,7 +130,7 @@
                             <img src="/date-right-arrow.png" width="18px">
                         </a>
                     </div>
-                    <h3 class="font">我身體的感受與情緒</h3>
+                    <h3 class="font">我的情緒與身體感受</h3>
                     <div class="emofeel-viz-div">
                         <% if has_data %>
                             <!-- <img src="/viz-body.svg" height="95%"> -->
@@ -196,7 +196,7 @@
                                         <option value="I">Ｉ: 下肢</option>
                                     </select>
                                     <p class="font remark-string">平均開心程度:
-                                        <span class="happy-avg" style="color: #FF4A3E;">
+                                        <span class="happy-avg" style="color: #F6BD2B;">
                                             <% if viz_4[:emofeel_by_bodyparts]["A"] != 0 %>
                                                 <%= viz_4[:emofeel_by_bodyparts]["A"][:happy_score] %>
                                             <% else %>
@@ -210,7 +210,8 @@
                                     <% if viz_4[:emofeel_by_bodyparts]["A"] != 0 %>
                                         <% viz_4[:emofeel_by_bodyparts]["A"][:emo_feel].each do |line| %>
                                             <p class="font content">
-                                                <span> <%= line[1] %> </span> 因為 <span> <%= line[0] %> </span> 
+                                                情緒：<span><%= line[0] %> </span> <br>
+                                                身體感受：<span><%= line[1] %> </span> 
                                             </p>
                                         <% end %>
                                     <% else %>
@@ -275,7 +276,8 @@
                         happy_avg = response_arr[selected_bodypart]["happy_score"];
                         emo_feel.forEach(function(line) {
                             lines_content += `<p class="font content">
-                                                <span> ${line[1]} </span> 因為 <span> ${line[0]} </span> 
+                                                情緒：<span>${line[0]} </span> <br>
+                                                身體感受：<span>${line[1]} </span> 
                                             </p>`;
                         });
                     } else {
