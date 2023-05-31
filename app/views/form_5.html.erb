@@ -60,22 +60,26 @@
                             <% line = line_string.split("&") %>
                             <!-- emo: line[0] / body: line[1] / feel: line[2] --> 
                             <div id="q5-text-<%= (index + 1).to_s %>" class="q5-text">
-                                <p class="font small-btn-string">因為</p>
-                                <input class="ans-text" name="emotion[]" type="text" value="<%= line[0] %>" placeholder="情緒" style="width: 60px">
-                                <p class="font small-btn-string">我覺得</p>
-                                <select class="ans-text" name="body[]" style="width: 60px; height: 32px;">
-                                    <option value="">身體</option>
-                                    <option value="A" <%= "selected" if line[1] == "A" %>>A</option>
-                                    <option value="B" <%= "selected" if line[1] == "B" %>>B</option>
-                                    <option value="C" <%= "selected" if line[1] == "C" %>>C</option>
-                                    <option value="D" <%= "selected" if line[1] == "D" %>>D</option>
-                                    <option value="E" <%= "selected" if line[1] == "E" %>>E</option>
-                                    <option value="F" <%= "selected" if line[1] == "F" %>>F</option>
-                                    <option value="G" <%= "selected" if line[1] == "G" %>>G</option>
-                                    <option value="H" <%= "selected" if line[1] == "H" %>>H</option>
-                                    <option value="I" <%= "selected" if line[1] == "I" %>>I</option>
-                                </select>
-                                <input class="ans-text" name="feelings[]" type="text" value="<%= line[2] %>"  placeholder="感受">
+                                <div>
+                                    <p class="font small-btn-string">我感受到</p>
+                                    <input class="ans-text" name="emotion[]" type="text" value="<%= line[0] %>" placeholder="情緒">
+                                </div>
+                                <div>
+                                    <p class="font small-btn-string">我覺得</p>
+                                    <select class="ans-text" name="body[]" style="width: 120px; height: 32px;">
+                                        <option value="">身體</option>
+                                        <option value="A" <%= "selected" if line[1] == "A" %>>A: 頭</option>
+                                        <option value="B" <%= "selected" if line[1] == "B" %>>B: 眼</option>
+                                        <option value="C" <%= "selected" if line[1] == "C" %>>C: 臉</option>
+                                        <option value="D" <%= "selected" if line[1] == "D" %>>D: 肩頸</option>
+                                        <option value="E" <%= "selected" if line[1] == "E" %>>E: 上肢</option>
+                                        <option value="F" <%= "selected" if line[1] == "F" %>>F: 胸腔</option>
+                                        <option value="G" <%= "selected" if line[1] == "G" %>>G: 腹部（胃）</option>
+                                        <option value="H" <%= "selected" if line[1] == "H" %>>H: 腰</option>
+                                        <option value="I" <%= "selected" if line[1] == "I" %>>I: 下肢</option>
+                                    </select>
+                                    <input class="ans-text" name="feelings[]" type="text" value="<%= line[2] %>"  placeholder="感受" style="width: 120px;">
+                                </div>
                             </div>
                         <% end %>
                         <% newline_index = q5_ans.split("|").length + 1 %>
@@ -84,22 +88,26 @@
                     <% end %>
 
                     <div id="q5-text-<%= newline_index %>" class="q5-text">
-                        <p class="font small-btn-string">因為</p>
-                        <input class="ans-text" name="emotion[]" type="text" value="" placeholder="情緒" style="width: 60px">
-                        <p class="font small-btn-string">我覺得</p>
-                        <select class="ans-text" name="body[]" style="width: 60px; height: 32px;">
-                            <option value="" selected>身體</option>
-                            <option value="A">A</option>
-                            <option value="B">B</option>
-                            <option value="C">C</option>
-                            <option value="D">D</option>
-                            <option value="E">E</option>
-                            <option value="F">F</option>
-                            <option value="G">G</option>
-                            <option value="H">H</option>
-                            <option value="I">I</option>
-                        </select>
-                        <input class="ans-text" name="feelings[]" type="text" value=""  placeholder="感受">
+                        <div>
+                            <p class="font small-btn-string">我感受到</p>
+                            <input class="ans-text" name="emotion[]" type="text" value="" placeholder="情緒">
+                        </div>
+                        <div>
+                            <p class="font small-btn-string">我覺得</p>
+                            <select class="ans-text" name="body[]" style="width: 120px; height: 32px;">
+                                <option value="" selected>身體</option>
+                                <option value="A">A: 頭</option>
+                                <option value="B">B: 眼</option>
+                                <option value="C">C: 臉</option>
+                                <option value="D">D: 肩頸</option>
+                                <option value="E">E: 上肢</option>
+                                <option value="F">F: 胸腔</option>
+                                <option value="G">G: 腹部（胃）</option>
+                                <option value="H">H: 腰</option>
+                                <option value="I">I: 下肢</option>
+                            </select>
+                            <input class="ans-text" name="feelings[]" type="text" value=""  placeholder="感受" style="width: 120px;">
+                        </div>
                     </div>
 
                 </div>
@@ -149,9 +157,9 @@
         // 確認一行的答案有沒有填寫完 (return: empty / completed / not_completed)
         function check_one_ans (ans_obj) {
             id = ans_obj.attr("id");
-            var emotion = $("#" + id + " input[name=emotion\\[\\]]").val();
-            var body = $("#" + id + " select[name=body\\[\\]]").val();
-            var feelings = $("#" + id + " input[name=feelings\\[\\]]").val();
+            var emotion = $("#" + id + " div input[name=emotion\\[\\]]").val();
+            var body = $("#" + id + " div select[name=body\\[\\]]").val();
+            var feelings = $("#" + id + " div input[name=feelings\\[\\]]").val();
             if(emotion == "" && body == "" && feelings == "") {
                 return "empty";
             } else if (emotion != "" && body != "" && feelings != "") {
@@ -162,7 +170,7 @@
         }
 
         $("#form_answers").on("change", ".ans-text", function() {
-            var current_obj = $(this).parent(".q5-text");
+            var current_obj = $(this).parent("div").parent(".q5-text");
             var current_status = check_one_ans(current_obj);
 
             //console.log(current_obj.attr("id"), current_status);
@@ -179,22 +187,26 @@
                     var ans_num = $(".q5-text").length + 1;
                     var new_obj_html = `
                         <div id="q5-text-` + ans_num + `" class="q5-text">
-                            <p class="font small-btn-string">因為</p>
-                            <input class="ans-text" name="emotion[]" type="text" value="" placeholder="情緒" style="width: 60px">
-                            <p class="font small-btn-string">我覺得</p>
-                            <select class="ans-text" name="body[]" style="width: 60px; height: 32px;">
-                                <option value="" selected>身體</option>
-                                <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
-                                <option value="D">D</option>
-                                <option value="E">E</option>
-                                <option value="F">F</option>
-                                <option value="G">G</option>
-                                <option value="H">H</option>
-                                <option value="I">I</option>
-                            </select>
-                            <input class="ans-text" name="feelings[]" type="text" value=""  placeholder="感受">
+                            <div>
+                                <p class="font small-btn-string">我感受到</p>
+                                <input class="ans-text" name="emotion[]" type="text" value="" placeholder="情緒">
+                            </div>
+                            <div>
+                                <p class="font small-btn-string">我覺得</p>
+                                <select class="ans-text" name="body[]" style="width: 120px; height: 32px;">
+                                    <option value="" selected>身體</option>
+                                    <option value="A">A: 頭</option>
+                                    <option value="B">B: 眼</option>
+                                    <option value="C">C: 臉</option>
+                                    <option value="D">D: 肩頸</option>
+                                    <option value="E">E: 上肢</option>
+                                    <option value="F">F: 胸腔</option>
+                                    <option value="G">G: 腹部（胃）</option>
+                                    <option value="H">H: 腰</option>
+                                    <option value="I">I: 下肢</option>
+                                </select>
+                                <input class="ans-text" name="feelings[]" type="text" value=""  placeholder="感受" style="width: 120px;">
+                            </div>
                         </div>`;
                     current_obj.parent(".q-div").append(new_obj_html);
                 }
@@ -238,9 +250,9 @@
                     if(check_one_ans($(this)) == "completed") {
                         if($(this).index() != 1) ans += "|";
                         
-                        emotion = $("#" + $(this).attr("id") + " input[name=emotion\\[\\]]").val();
-                        body = $("#" + $(this).attr("id") + " select[name=body\\[\\]]").val();
-                        feelings = $("#" + $(this).attr("id") + " input[name=feelings\\[\\]]").val();
+                        emotion = $("#" + $(this).attr("id") + " div input[name=emotion\\[\\]]").val();
+                        body = $("#" + $(this).attr("id") + " div select[name=body\\[\\]]").val();
+                        feelings = $("#" + $(this).attr("id") + " div input[name=feelings\\[\\]]").val();
 
                         ans = ans + emotion + "&" + body + "&" + feelings;
                     }
