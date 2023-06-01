@@ -18,7 +18,7 @@
                     <div class="info-content info-extend">
                         <img src="/information-icon.png" width="25px">
                         <div class="font content">
-                            回答建議：可以試著用身體的角度去回想你/妳的情緒喔！
+                            回答建議：可以試著用身體的感受去回想你/妳的情緒喔！
                         </div>
                     </div>
                 </div>
@@ -173,7 +173,7 @@
             var current_obj = $(this).parent("div").parent(".q5-text");
             var current_status = check_one_ans(current_obj);
 
-            //console.log(current_obj.attr("id"), current_status);
+            // console.log(current_obj.attr("id"), current_status);
             if(current_status == "completed") {
                 // 先確認所有的 ans 都是 completed 的狀態
                 var objs_completed = true;
@@ -213,7 +213,7 @@
 
                 
             } else if(current_status == "empty") {
-                var obj_current_index = current_obj.index();
+                var obj_current_index = $(".q5-text").index(current_obj) + 1;
                 var obj_total_index = $(".q5-text").length;
 
                 if (obj_current_index != -1 && obj_current_index < obj_total_index) {
@@ -248,7 +248,7 @@
 
                 $(".q5-text").each(function() {
                     if(check_one_ans($(this)) == "completed") {
-                        if($(this).index() != 1) ans += "|";
+                        if($(".q5-text").index($(this)) != 0) ans += "|";
                         
                         emotion = $("#" + $(this).attr("id") + " div input[name=emotion\\[\\]]").val();
                         body = $("#" + $(this).attr("id") + " div select[name=body\\[\\]]").val();
