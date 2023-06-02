@@ -49,7 +49,7 @@
                                 <p class="font content">
                                     <% row_ans = row.split("&") %> 
                                     <% body_parts = {"A"=>"頭", "B"=>"眼睛", "C"=>"臉", "D"=>"肩頸", "E"=>"上肢", "F"=>"胸腔", "G"=>"腹部（胃）", "H"=>"腰", "I"=>"下肢"} %> 
-                                    因為 <span> <%= row_ans[0] %> </span> 
+                                    我感受到 <span> <%= row_ans[0] %> </span> 
                                     我覺得 <span> <%= body_parts[row_ans[1]] %> </span>  <span> <%= row_ans[2] %> </span> 
                                 </p>
                             <% end %>
