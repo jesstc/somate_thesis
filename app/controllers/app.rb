@@ -362,6 +362,8 @@ module SoMate
               is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
             end
 
+            Database::FomoRecordOrm.create(owner_id: user.id)
+
             countermeasures = Database::CountermeasureOrm.all
 
             view 'fomo-dic', engine: 'html.erb', locals: { account: user.url, is_record: is_record, countermeasures: countermeasures }
