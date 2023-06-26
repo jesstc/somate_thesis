@@ -113,7 +113,7 @@ module SoMate
               session[:watching] = user
               is_record = false
               current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
-              records = user.owned_records
+              records = Database::RecordOrm.where(owner_id: user.id).order(:id).all
               if records.length != 0
                 is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
               end
@@ -417,7 +417,7 @@ module SoMate
             
             is_record = false
             current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
-            records = user.owned_records
+            records = Database::RecordOrm.where(owner_id: user.id).order(:id).all
             if records.length != 0
               is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
             end
@@ -441,7 +441,7 @@ module SoMate
 
                 is_record = false
                 current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
-                records = user.owned_records
+                records = Database::RecordOrm.where(owner_id: user.id).order(:id).all
                 if records.length != 0
                   is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
                 end
@@ -501,7 +501,7 @@ module SoMate
             session[:watching] = user
             is_record = false
             current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
-            records = user.owned_records
+            records = Database::RecordOrm.where(owner_id: user.id).order(:id).all
             if records.length != 0
               is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
             end
@@ -967,7 +967,7 @@ module SoMate
 
             is_record = false
             current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
-            records = user.owned_records
+            records = Database::RecordOrm.where(owner_id: user.id).order(:id).all
             if records.length != 0
               is_record = records[-1].record_date == current_date.strftime('%Y-%m-%d').to_s ? true : false
             end
