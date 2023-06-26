@@ -345,6 +345,66 @@ module SoMate
         end
       end
 
+      routing.on 'monitor-records-page' do
+        routing.is do
+          # GET /monitor-records-page/
+          routing.get do
+            current_date = Time.now.strftime("%H").to_i <= 14 ? Date.today-1 : Date.today
+            today_records = Database::RecordOrm.where(record_date: current_date.strftime('%Y-%m-%d').to_s).order(:owner_id).all
+            table_html = "<p class='font remark-string'>查無記錄</p>"
+            if today_records.length != 0
+              table_html = "<table>"
+              table_html += "<thead><tr><th>姓名</th><th>ID</th><th>填寫時間</th></tr></thead>"
+              table_html += "<tbody>"
+              (25..35).each do |user_id|
+                has_record = false
+                current_user = Database::UserOrm.where(id: user_id).first
+                today_records.each do |record|
+                  if record.owner_id == user_id
+                    has_record = true
+                    table_html += "<tr><td>#{current_user.account}</td><td>#{user_id}</td><td>#{record.created_at}</td></tr>"
+                  end
+                end
+                table_html += "<tr><td>#{current_user.account}</td><td>#{user_id}</td><td><div class='font my-badge' style='color:#ff4242; border-color:#ff4242; background:#f4cccc;'>未記錄</div></td></tr>" unless has_record
+              end
+              table_html += "</tbody>"
+              table_html += "</table>"
+            end
+
+            view 'monitor-records-page', engine: 'html.erb', locals: { table_html: table_html, date: current_date }
+          end
+
+          # POST /monitor-records-page/
+          routing.post do
+            response = Hash.new(0)
+            current_date = routing.params['selected_date']
+            today_records = Database::RecordOrm.where(record_date: current_date).order(:owner_id).all
+            table_html = "<p class='font remark-string'>查無記錄</p>"
+            if today_records.length != 0
+              table_html = "<table>"
+              table_html += "<thead><tr><th>姓名</th><th>ID</th><th>填寫時間</th></tr></thead>"
+              table_html += "<tbody>"
+              (25..35).each do |user_id|
+                has_record = false
+                current_user = Database::UserOrm.where(id: user_id).first
+                today_records.each do |record|
+                  if record.owner_id == user_id
+                    has_record = true
+                    table_html += "<tr><td>#{current_user.account}</td><td>#{user_id}</td><td>#{record.created_at}</td></tr>"
+                  end
+                end
+                table_html += "<tr><td>#{current_user.account}</td><td>#{user_id}</td><td><div class='font my-badge' style='color:#ff4242; border-color:#ff4242; background:#f4cccc;'>未記錄</div></td></tr>" unless has_record
+              end
+              table_html += "</tbody>"
+              table_html += "</table>"
+            end
+
+            response[:table_html] = table_html
+            response.to_json
+          end
+        end
+      end
+
       routing.on 'fomo-dic' do
         # GET /fomo-dic
         routing.is do
